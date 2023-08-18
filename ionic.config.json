@@ -1,0 +1,7 @@
+{
+  "name": "ProyectoMiPromedio",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

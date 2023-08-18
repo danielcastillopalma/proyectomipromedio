@@ -1,0 +1,103 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mi Promedio</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+<ion-header [translucent]="true">
+</ion-header>
+
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">This is the menu content.</ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
+</div>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Mi Promedio App</ion-title>
+    </ion-toolbar>
+  </ion-header>
+   
+    <ion-item>
+
+      <ion-select (focus)="tipoPromedioSelect()" [(ngModel)]="tipoPromedio.tipo" aria-label="Default label"
+        placeholder="Elige el tipo de promedio a calcular">
+        <ion-select-option value="basico">Básico</ion-select-option>
+        <ion-select-option value="porcentual">Porcentual</ion-select-option>
+        <ion-select-option value="decimal">Decimal</ion-select-option>
+      </ion-select>
+    </ion-item>
+  
+  <ion-content id="promedioBasico">
+    <div id="container">      
+      <ion-item>
+        <ion-row>
+          <ion-col><ion-label>Nota 1</ion-label></ion-col>
+          <ion-col><ion-input label="N1" label-placement="floating" fill="outline"></ion-input></ion-col>
+          <ion-col><ion-button fill="borderless"><ion-icon
+                name="close-circle-outline"></ion-icon></ion-button></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col><ion-label>Nota 2</ion-label></ion-col>
+          <ion-col><ion-input label="N2" label-placement="floating" fill="outline"></ion-input></ion-col>
+          <ion-col><ion-button fill="borderless"><ion-icon
+                name="close-circle-outline"></ion-icon></ion-button></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col><ion-label>Nota 3</ion-label></ion-col>
+          <ion-col><ion-input label="N3" label-placement="floating" fill="outline"></ion-input></ion-col>
+          <ion-col><ion-button fill="borderless"><ion-icon
+                name="close-circle-outline"></ion-icon></ion-button></ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item>
+        <ion-row>
+          <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
+          <ion-col><ion-button fill="borderless"><ion-icon name="add-outline"></ion-icon></ion-button></ion-col>
+        </ion-row>
+      </ion-item>
+    </div>
+  </ion-content>
+
+  <ion-content id="promedioPorcentual" hidden>
+    <ion-title>porcentual</ion-title>
+  </ion-content>
+  <ion-content id="promedioDecimal" hidden>
+    <ion-title>decimal</ion-title>
+  </ion-content>
+
+
+</ion-content>
+<ion-footer> <ion-toolbar>
+    <ion-title>
+      <ion-row class="ion-justify-content-between">
+        <ion-col size=""><ion-input placeholder="Mi Promedio 1"></ion-input></ion-col>
+        <ion-col size="auto"><ion-button fill="outline">Guardar</ion-button></ion-col>
+      </ion-row>
+
+    </ion-title>
+
+  </ion-toolbar></ion-footer>
