@@ -36,7 +36,7 @@ export class HomePage {
     }else if(this.tipoPromedio.tipo=="porcentual"){
       promPorc.removeAttribute("hidden");
       promBas.setAttribute("hidden","");
-      promDec.setAttribute("hidden","");
+      promDec.setAttribute("hidden","");n
     }else if(this.tipoPromedio.tipo=="decimal"){
       promDec.removeAttribute("hidden");
       promBas.setAttribute("hidden","");
