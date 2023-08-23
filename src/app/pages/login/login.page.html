@@ -1,23 +1,64 @@
 <ion-header [translucent]="true">
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-card>
+<ion-content [fullscreen]="true" class="{{primario}}" >
+
+  <ion-card class="{{primario}}">
     <ion-card-content>
-      <ion-card-title>Iniciar sesión</ion-card-title>
-      <ion-input [(ngModel)]="user.email" type="email" fill="solid" label="Email" labelPlacement="floating" errorText="Correo Invalido" ngModel
-        email></ion-input>
-      <ion-input [(ngModel)]="user.password" label="Contraseña" fill="solid" labelPlacement="floating" type="password">
+      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
+      <ion-input class="{{terciario}}" [(ngModel)]="user.email" type="email" fill="solid" label="Email" labelPlacement="floating"
+        errorText="Correo Invalido" ngModel email></ion-input>
+      <ion-input class="{{terciario}}" [(ngModel)]="user.password" label="Contraseña" fill="solid" labelPlacement="floating" type="password">
       </ion-input>
-      <ion-button expand="block" (click)="logIn()">Iniciar Sesion</ion-button>
+      <ion-button class= "{{secundario}}" expand="block" (click)="logIn()">Iniciar Sesion</ion-button>
     </ion-card-content>
   </ion-card>
-  <ion-card>
+  <ion-card class="{{primario}}">
     <ion-card-header>
-      <ion-card-title>Registrarse</ion-card-title>
-      <ion-button expand="block">Registrar con google</ion-button>
-      <ion-button expand="block">Registrar con facebook</ion-button>
-      <ion-button expand="block">Registrar con Email</ion-button>
+      <ion-card-title class="{{primario}}">Registrarse</ion-card-title>
+      <ion-button class= "{{secundario}}" expand="block">Registrar con google</ion-button>
+      <ion-button class= "{{secundario}}"expand="block">Registrar con facebook</ion-button>
+      <ion-button class= "{{secundario}}"id="open-modal" expand="block">Registrar con Email</ion-button>
     </ion-card-header>
   </ion-card>
+  <!--
+    MODAL DE REGISTRO
+  -->
+  <ion-modal #modal trigger="open-modal" [canDismiss]="canDismiss" [presentingElement]="presentingElement">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Datos de registro</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="modal.dismiss()">Cerrar</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+
+        <ion-img class="profilePicture" src="https://img.freepik.com/vector-premium/icono-perfil-avatar_188544-4755.jpg"
+          alt="The Wisconsin State Capitol building in Madison, WI at night"></ion-img>
+        <ion-item>
+          <ion-input label="Correo Electrónico" labelPlacement="floating" placeholder="Correo Electrónico" type="email"
+            errorText="Correo Invalido" ngModel email></ion-input>
+            <ion-icon name="mail-outline" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Nombre" labelPlacement="floating" placeholder="Nombre"></ion-input>
+          <ion-icon name="create-outline" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Apellidos" labelPlacement="floating" placeholder="Apellidos"></ion-input>
+          <ion-icon name="create-outline" slot="end"></ion-icon>
+        </ion-item>
+        <ion-item>
+          <ion-input label="Celular" labelPlacement="floating" placeholder="Celular" errorText="Telefono invalido"
+            type="number" [counter]="true" maxlength="9"></ion-input>
+            <ion-icon name="call-outline" slot="end"></ion-icon>
+        </ion-item>
+        <ion-button expand="block">Registrarse</ion-button>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

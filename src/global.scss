@@ -24,3 +24,25 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+// PALETA DE COLORES PRINCIPAL
+//#5E81FF
+//#D7F4F2
+//#278F8C
+.primarioBasico{
+    --background:#2C3E50 !important;
+    --color:#BDC3C7;
+}
+.secundarioBasico{
+    --background: #34495E !important;
+    --color:#BDC3C7;
+}
+.terciarioBasico{
+    
+    --background:#ECF0F1 !important;
+    --color:#2C3E50;
+}
+.cuartoBasico{
+    --background:#BDC3C7 !important;
+    --color:#2C3E50;
+}

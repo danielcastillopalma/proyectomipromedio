@@ -18,7 +18,10 @@ export class HomePage {
   tipos: any={
     tipo:""
   }
-
+  primario="primarioBasico";
+  secundario="secundarioBasico";
+  terciario="terciarioBasico";
+  cuarto="cuartoBasico";
   constructor( private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute) {
     this.activateRoute.queryParams.subscribe(params=>{
       if(this.router.getCurrentNavigation()?.extras.state){

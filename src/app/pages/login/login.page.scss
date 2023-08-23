@@ -1,0 +1,22 @@
+ion-row {
+    align-items: center;
+    text-align: center;
+}
+
+.profilePicture {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin-left:15%;
+    
+  }
+  
+  ion-content{
+    align-items: center;
+  }
+  .bgcolor1{
+    background-color: purple;
+  }
