@@ -1,7 +1,7 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
-import { coloresBasicos } from '../../../environments/environment';
+import { coloresBasicos } from '../../app.module'
 
 @Component({
   selector: 'app-profile',

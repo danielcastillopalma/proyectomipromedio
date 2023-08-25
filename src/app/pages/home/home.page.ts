@@ -1,6 +1,6 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coloresBasicos } from '../../../environments/environment';
+import { coloresBasicos } from '../../app.module'
 
 @Component({
   selector: 'app-home',

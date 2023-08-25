@@ -6,12 +6,7 @@ export const environment = {
   production: false
   
 };
-export const coloresBasicos={
-  primario:'primarioBasico',
-  secundario:'secundarioBasico',
-  terciario:'terciarioBasico',
-  cuarto:'cuartoBasico'
-}
+
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -14,3 +14,9 @@ import { AppRoutingModule } from './app-routing.module';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+export const coloresBasicos={
+  primario:'primarioBasico',
+  secundario:'secundarioBasico',
+  terciario:'terciarioBasico',
+  cuarto:'cuartoBasico '
+}
