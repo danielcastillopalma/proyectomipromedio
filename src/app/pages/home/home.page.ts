@@ -1,69 +1,74 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
+import { coloresBasicos } from '../../../environments/environment';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  
+
 })
 
+
 export class HomePage {
-  tipoPromedio:any[] = [
-    {prom:1,tipo:"Aritmético"},
-    {prom:2,tipo:"Ponderado"},
-    {prom:3,tipo:"Otro"},
+  tipoPromedio: any[] = [
+    { prom: 1, tipo: "Aritmético" },
+    { prom: 2, tipo: "Ponderado" },
+    { prom: 3, tipo: "Otro" },
   ]
-  data:any;
-  tipos: any={
-    tipo:""
+  data: any;
+  tipos: any = {
+    tipo: ""
   }
-  primario="primarioBasico";
-  secundario="secundarioBasico";
-  terciario="terciarioBasico";
-  cuarto="cuartoBasico";
-  constructor( private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute) {
-    this.activateRoute.queryParams.subscribe(params=>{
-      if(this.router.getCurrentNavigation()?.extras.state){
-        this.data=this.router.getCurrentNavigation()?.extras.state?.["user"];
+
+  cuarto = coloresBasicos.cuarto;
+  terciario = coloresBasicos.terciario;
+  secundario = coloresBasicos.secundario;
+  primario = coloresBasicos.primario;
+  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute) {
+
+
+    this.activateRoute.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation()?.extras.state) {
+        this.data = this.router.getCurrentNavigation()?.extras.state?.["user"];
         console.log(this.data)
-      }else{
-        this.data=["Mi Promedio"]
+      } else {
+        this.data = ["Mi Promedio"]
       }
     });
   }
-  @ViewChild('promedioBasico') promedioBasico:ElementRef;
-  @ViewChild('promedioPorcentual') promedioPorcentual:ElementRef;
+  @ViewChild('promedioBasico') promedioBasico: ElementRef;
+  @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   ngOnInit() {
   }
 
 
-  logIn(){
+  logIn() {
     this.router.navigate(['/login']);
-    this.data="";
+    this.data = "";
     console.log(this.data)
   }
- 
+
   tipoPromedioSelect() {
-    
-   const promBas= this.promedioBasico.nativeElement;
-   const promPorc= this.promedioPorcentual.nativeElement;
-   
-   if (this.tipos.tipo!=""){
-    if (this.tipos.tipo=="Aritmético"){
-      promBas.removeAttribute("hidden");
-      promPorc.setAttribute("hidden","");
-      
-      
-    }else if(this.tipos.tipo=="Ponderado"){
-      promPorc.removeAttribute("hidden");
-      promBas.setAttribute("hidden","");
-    }else if(this.tipos.tipo=="Otro"){
-      promBas.setAttribute("hidden","");
-      promPorc.setAttribute("hidden","");
+
+    const promBas = this.promedioBasico.nativeElement;
+    const promPorc = this.promedioPorcentual.nativeElement;
+
+    if (this.tipos.tipo != "") {
+      if (this.tipos.tipo == "Aritmético") {
+        promBas.removeAttribute("hidden");
+        promPorc.setAttribute("hidden", "");
+
+
+      } else if (this.tipos.tipo == "Ponderado") {
+        promPorc.removeAttribute("hidden");
+        promBas.setAttribute("hidden", "");
+      } else if (this.tipos.tipo == "Otro") {
+        promBas.setAttribute("hidden", "");
+        promPorc.setAttribute("hidden", "");
+      }
     }
-   }
-   
+
   }
 }
 

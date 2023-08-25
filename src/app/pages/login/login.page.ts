@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { coloresBasicos } from '../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -8,15 +9,17 @@ import { ActionSheetController } from '@ionic/angular';
   styleUrls: ['./login.page.scss',],
 })
 export class LoginPage implements OnInit {
+  cuarto = coloresBasicos.cuarto;
+  terciario = coloresBasicos.terciario;
+  secundario = coloresBasicos.secundario;
+  primario = coloresBasicos.primario;
   user={
     email:"",
     password:""
   }
   presentingElement = undefined;
   
-  primario="primarioBasico";
-  secundario="secundarioBasico";
-  terciario="terciarioBasico";
+
 
 
 

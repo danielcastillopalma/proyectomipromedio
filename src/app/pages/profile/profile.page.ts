@@ -1,6 +1,7 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
+import { coloresBasicos } from '../../../environments/environment';
 
 @Component({
   selector: 'app-profile',
@@ -19,11 +20,11 @@ export class ProfilePage implements OnInit {
       }
     });
   }
-  primario="primarioBasico";
   data:any;
-  secundario="secundarioBasico";
-  terciario="terciarioBasico";
-  cuarto="cuartoBasico";
+  cuarto = coloresBasicos.cuarto;
+  terciario = coloresBasicos.terciario;
+  secundario = coloresBasicos.secundario;
+  primario = coloresBasicos.primario;
   ngOnInit() {
   }
   logIn(){
