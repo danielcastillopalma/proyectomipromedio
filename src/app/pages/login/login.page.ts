@@ -112,14 +112,14 @@ async register() {
       setTimeout(() => {
         
         resolve();
-      }, 1000); // Tiempo de simulación de registro (1 segundo)
+      }, 1000); 
     });
 
     loading.dismiss(); // Ocultar el loading
     this.presentToast('Registrado'); // Mostrar el toast
   } catch (error) {
     console.error(error);
-    loading.dismiss(); // Ocultar el loading en caso de error
+    loading.dismiss(); 
   }
 }
 
@@ -127,9 +127,9 @@ async register() {
 async presentToast(message: string) {
   const toast = await this.toastCtrl.create({
     message: message,
-    duration: 2000, // Duración del toast en milisegundos
+    duration: 2000, // Duración del toast 
     position: 'bottom', // Posición del toast
-    color: 'success', // Color del toast (puedes ajustarlo)
+    color: 'success', // Color
   });
   toast.present();
 }
