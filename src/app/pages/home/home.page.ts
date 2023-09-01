@@ -61,7 +61,9 @@ export class HomePage {
       console.log(this.data);
     }, 1000); // Tiempo del Spinner
   }
-
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
   tipoPromedioSelect() {
 
     const promBas = this.promedioBasico.nativeElement;
