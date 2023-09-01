@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
 
         
         resolve();
-      }, 2000); // Simulación de tiempo de inicio de sesion
+      }, 2000); // tiempo para iniciar la sesion
     });
 
     
