@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, LoadingController} from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
 
 @Component({
@@ -19,11 +19,11 @@ export class LoginPage implements OnInit {
   }
   presentingElement = undefined;
   
+  loading = false;
 
 
 
-
-  constructor(private router: Router,private actionSheetCtrl: ActionSheetController) { }
+  constructor(private router: Router,private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
@@ -49,13 +49,37 @@ export class LoginPage implements OnInit {
 
     return role === 'confirm';
   };
-  logIn(){
+  async logIn(){
     console.log(this.user);
+     
+  const loading = await this.loadingCtrl.create({
+    message: 'Iniciando sesión...',
+    spinner: 'crescent', // cambiar el tipo de spinner
+  });
+  await loading.present();
+
+  try {
+    
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        
+
+        
+        resolve();
+      }, 2000); // Simulación de tiempo de inicio de sesion
+    });
+
+    
+    loading.dismiss();
     let navigationextras: NavigationExtras={
       state:{
         user:this.user
       }
     }
     this.router.navigate(['/home'],navigationextras)
+  }catch (error) {
+    console.error(error);
+    loading.dismiss();
+  }
   }
 }
