@@ -1,6 +1,7 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos } from '../../app.module'
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController) {
 
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -43,10 +44,22 @@ export class HomePage {
   }
 
 
-  logIn() {
-    this.router.navigate(['/login']);
-    this.data = "";
-    console.log(this.data)
+  async logIn() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Cargando...', // Mensaje anim
+      spinner: 'crescent', 
+    });
+  
+    await loading.present();
+  
+    setTimeout(() => {
+      loading.dismiss();
+      this.router.navigate(['/login']); 
+  
+      
+      this.data = "";
+      console.log(this.data);
+    }, 2000); // Tiempo del Spinner
   }
 
   tipoPromedioSelect() {
