@@ -54,7 +54,7 @@ export class LoginPage implements OnInit {
      
   const loading = await this.loadingCtrl.create({
     message: 'Iniciando sesión...',
-    spinner: 'crescent', // cambiar el tipo de spinner
+    spinner: 'dots', // cambiar el tipo de spinner
   });
   await loading.present();
 
@@ -66,7 +66,7 @@ export class LoginPage implements OnInit {
 
         
         resolve();
-      }, 2000); // tiempo para iniciar la sesion
+      }, 1500); // tiempo para iniciar la sesion
     });
 
     

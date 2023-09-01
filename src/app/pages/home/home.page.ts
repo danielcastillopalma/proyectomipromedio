@@ -59,7 +59,7 @@ export class HomePage {
       
       this.data = "";
       console.log(this.data);
-    }, 2000); // Tiempo del Spinner
+    }, 1000); // Tiempo del Spinner
   }
 
   tipoPromedioSelect() {
