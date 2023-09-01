@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ActionSheetController, LoadingController} from '@ionic/angular';
+import { ActionSheetController, LoadingController, ToastController} from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
 
 @Component({
@@ -19,11 +19,16 @@ export class LoginPage implements OnInit {
   }
   presentingElement = undefined;
   
+  // CARGA DE LOGIN
   loading = false;
 
+  // CARGA DE REGISTRO CON EMAIK
+
+  registering = false;
 
 
-  constructor(private router: Router,private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController) { }
+
+  constructor(private router: Router,private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private toastCtrl: ToastController) { }
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
@@ -49,6 +54,8 @@ export class LoginPage implements OnInit {
 
     return role === 'confirm';
   };
+
+  // CARGA DE LOGIN
   async logIn(){
     console.log(this.user);
      
@@ -82,4 +89,50 @@ export class LoginPage implements OnInit {
     loading.dismiss();
   }
   }
+  
+// FUNCION PARA EL BOTON DE RETROCEDER
+  goBack() {
+    this.router.navigate(['/home']);
+  }
+
+// FUNCIONES PARA EL REGISTRO CON EMAIL
+
+async register() {
+  const loading = await this.loadingCtrl.create({
+    message: 'Registrando...', 
+    spinner: 'circles', 
+    
+  });
+
+  await loading.present();
+
+
+  try {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        
+        resolve();
+      }, 1000); // Tiempo de simulación de registro (1 segundo)
+    });
+
+    loading.dismiss(); // Ocultar el loading
+    this.presentToast('Registrado'); // Mostrar el toast
+  } catch (error) {
+    console.error(error);
+    loading.dismiss(); // Ocultar el loading en caso de error
+  }
+}
+
+// Función para mostrar un toast
+async presentToast(message: string) {
+  const toast = await this.toastCtrl.create({
+    message: message,
+    duration: 2000, // Duración del toast en milisegundos
+    position: 'bottom', // Posición del toast
+    color: 'success', // Color del toast (puedes ajustarlo)
+  });
+  toast.present();
+}
+
+
 }

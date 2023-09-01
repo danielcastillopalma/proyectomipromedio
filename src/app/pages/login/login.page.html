@@ -1,10 +1,25 @@
 <ion-header [translucent]="true">
 </ion-header>
+
+<ion-buttons slot="start">
+  <ion-button (click)="goBack()">
+    <ion-icon slot="icon-only" name="arrow-back" class="{{primario}}"></ion-icon>
+  </ion-button>
+</ion-buttons>
+
+
 <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
+
 <ion-content [fullscreen]="true" class="{{primario}}" >
+
+  
+
   <ion-card class="{{primario}}">
     <ion-card-content>
-      <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+      <img class="img_perfil" alt="Silhouette of mountains" src="https://cdn-icons-png.flaticon.com/512/272/272456.png" />
+      <ion-spinner *ngIf="registering" name="crescent"></ion-spinner>
+      <br>
+      <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
       <ion-input class="{{terciario}}" [(ngModel)]="user.email" type="email" fill="solid" label="Email" labelPlacement="floating"
         errorText="Correo Invalido" ngModel email></ion-input>
@@ -66,8 +81,10 @@
             type="number" [counter]="true" maxlength="9"></ion-input>
             <ion-icon name="call-outline" slot="end"></ion-icon>
         </ion-item>
-        <ion-button expand="block">Registrarse</ion-button>
+        <ion-button expand="block" (click)="register()">Registrarse</ion-button>
+        <ion-spinner class="cargaem" *ngIf="registering" name="crescent"></ion-spinner>
       </ion-content>
     </ng-template>
   </ion-modal>
+  
 </ion-content>
