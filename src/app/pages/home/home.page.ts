@@ -1,6 +1,6 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coloresBasicos } from '../../app.module'
+import { coloresBasicos,coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 
 @Component({

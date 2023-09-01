@@ -20,29 +20,28 @@
     <ion-item lines="full">
       <ion-icon name="calculator-outline"></ion-icon>
       <ion-label>Mis promedios</ion-label>
-      <ion-icon  name="lock-closed" slot="end"></ion-icon>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
     <ion-item lines="full">
       <ion-icon name="book-outline"></ion-icon>
       <ion-label>Notas</ion-label>
-      <ion-icon  name="lock-closed" slot="end"></ion-icon>
-    </ion-item>
-    <ion-item lines="full">
-      <ion-icon name="game-controller-outline"></ion-icon>
-      <ion-label>Pasatiempos</ion-label>
-      <ion-icon  name="lock-closed" slot="end"></ion-icon>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
   </ion-content>
-  <ion-footer class="{{secundario}}">
-    <ion-item detail="true" (click)="logIn()" class="{{secundario}}">
-      <ion-label >
-        <h3 *ngIf="data.email;else iniciar">{{data.email}}</h3>
-        <ng-template #iniciar>
-          <h3>Iniciar Sesion</h3>
-        </ng-template>
+  <ion-footer *ngIf="data.email;else iniciar" class="{{secundario}}">
+    <ion-item detail="true" (click)="goToProfile" class="{{secundario}}">
+      <ion-label>
+        <h3>{{data.email}}</h3>
       </ion-label>
     </ion-item>
   </ion-footer>
+  <ng-template #iniciar>
+    <ion-item detail="true" (click)="logIn()" class="{{secundario}}">
+      <ion-label>
+        <h3>Iniciar Sesion</h3>
+      </ion-label>
+    </ion-item>
+  </ng-template>
 </ion-menu>
 <div class="ion-page" id="main-content">
   <ion-header>
@@ -53,7 +52,46 @@
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
 </div>
-
-
+<ion-content>
+  <ion-list lines="full">
+    <ion-item>
+      <ion-img></ion-img>
+      <ion-label>Foto de perfil</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Nombre</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Correo</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-label>Teléfono</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-select (blur)="cambioColor()" [(ngModel)]="colores.colors" placeholder="Elige los colores para la aplicación">
+        <ion-select-option>
+          Original App
+        </ion-select-option>
+        <ion-select-option>
+          DuocUC
+        </ion-select-option>
+        <ion-select-option>
+          USM
+        </ion-select-option>
+        <ion-select-option>
+          Inacap
+        </ion-select-option>
+        <ion-select-option>
+          UNAB
+        </ion-select-option>
+        <ion-select-option>
+          AIEP
+        </ion-select-option>
+        <ion-select-option>
+          Personalizado
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+</ion-content>

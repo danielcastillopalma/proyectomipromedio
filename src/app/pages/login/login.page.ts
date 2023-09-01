@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, LoadingController} from '@ionic/angular';
-import { coloresBasicos } from '../../app.module'
+import { coloresBasicos,coloresDuoc } from '../../app.module'
 
 @Component({
   selector: 'app-login',

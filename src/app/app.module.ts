@@ -21,3 +21,9 @@ export const coloresBasicos={
   terciario:'terciarioBasico',
   cuarto:'cuartoBasico '
 }
+export const coloresDuoc={
+  primario:'pduoc',
+  secundario:'sduoc',
+  terciario:'tduoc',
+  cuarto:'cduoc'
+}
