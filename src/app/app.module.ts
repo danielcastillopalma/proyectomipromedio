@@ -6,7 +6,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,4 +20,10 @@ export const coloresBasicos={
   secundario:'secundarioBasico',
   terciario:'terciarioBasico',
   cuarto:'cuartoBasico '
+}
+export const coloresDuoc={
+  primario:'pduoc',
+  secundario:'sduoc',
+  terciario:'tduoc',
+  cuarto:'cduoc'
 }

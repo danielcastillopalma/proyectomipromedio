@@ -1,6 +1,6 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coloresBasicos } from '../../app.module'
+import { coloresBasicos,coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -61,7 +61,9 @@ export class HomePage {
       console.log(this.data);
     }, 1000); // Tiempo del Spinner
   }
-
+  goToProfile(){
+    this.router.navigate(['/profile']);
+  }
   tipoPromedioSelect() {
 
     const promBas = this.promedioBasico.nativeElement;
