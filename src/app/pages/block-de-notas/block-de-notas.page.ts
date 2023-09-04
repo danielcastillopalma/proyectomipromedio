@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { coloresBasicos } from '../../app.module'
 
 @Component({
   selector: 'app-block-de-notas',
@@ -7,9 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BlockDeNotasPage implements OnInit {
 
-  constructor() { }
+  constructor(private router: Router,) { }
+  cuarto = coloresBasicos.cuarto;
+  terciario = coloresBasicos.terciario;
+  secundario = coloresBasicos.secundario;
+  primario = coloresBasicos.primario;
 
   ngOnInit() {
   }
-
+  retroceso() {
+    this.router.navigate(['/home']);
+  }
 }

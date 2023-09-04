@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
   }
   
 // FUNCION PARA EL BOTON DE RETROCEDER
-  goBack() {
+  retroceso() {
     this.router.navigate(['/home']);
   }
 
@@ -115,8 +115,8 @@ async register() {
       }, 1000); 
     });
 
-    loading.dismiss(); // Ocultar el loading
-    this.presentToast('Registrado'); // Mostrar el toast
+    loading.dismiss(); 
+    this.presentToast('Registrado'); // mostrar toast
   } catch (error) {
     console.error(error);
     loading.dismiss(); 
@@ -127,9 +127,9 @@ async register() {
 async presentToast(message: string) {
   const toast = await this.toastCtrl.create({
     message: message,
-    duration: 2000, // Duración del toast 
-    position: 'bottom', // Posición del toast
-    color: 'success', // Color
+    duration: 2000, // la duracion toast 
+    position: 'bottom', // en donde va el toast
+    color: 'success', // 
   });
   toast.present();
 }

@@ -1,13 +1,23 @@
 <ion-header [translucent]="true">
+  
+
   <ion-toolbar>
     <ion-title>BlockDeNotas</ion-title>
   </ion-toolbar>
 </ion-header>
 
+<ion-buttons slot="start">
+  <ion-button (click)="retroceso()">
+    <ion-icon slot="icon-only" name="arrow-back" class="{{terciario}}"></ion-icon>
+  </ion-button>
+</ion-buttons>
+
+
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">BlockDeNotas</ion-title>
+      <ion-title size="small">NOTAS</ion-title>
     </ion-toolbar>
   </ion-header>
+  
 </ion-content>
