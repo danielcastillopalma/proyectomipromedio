@@ -1,16 +1,57 @@
-<ion-header [translucent]="true">
-  
-
-  <ion-toolbar>
-    <ion-title>BlockDeNotas</ion-title>
+<ion-header>
+  <ion-toolbar class="{{primario}}">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Block De notas</ion-title>
   </ion-toolbar>
 </ion-header>
+<ion-menu contentId="main-content" class="{{terciario}}">
+  <ion-header>
+    <ion-toolbar class="{{primario}}">
+      <ion-title>Mi Promedio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-item lines="full">
+      <ion-icon name="calculator-outline"></ion-icon>
+      <ion-label>Mis promedios</ion-label>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
+    </ion-item>
+   
+    <ion-item lines="full" routerLink="/block-de-notas">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>Block de Notas</ion-label>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
+    </ion-item>
+  </ion-content>
+  <ion-footer *ngIf="data.email;else iniciar" class="{{secundario}}">
+    <ion-item detail="true" (click)="goToProfile" class="{{secundario}}">
+      <ion-label>
+        <h3>{{data.email}}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-footer>
+  <ng-template #iniciar>
+    <ion-item detail="true" (click)="logIn()" class="{{secundario}}">
+      <ion-label>
+        <h3>Iniciar Sesion</h3>
+      </ion-label>
+    </ion-item>
+  </ng-template>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
+</div>
 
-<ion-buttons slot="start">
-  <ion-button (click)="retroceso()">
-    <ion-icon slot="icon-only" name="arrow-back" class="{{terciario}}"></ion-icon>
-  </ion-button>
-</ion-buttons>
 
 
 <ion-content [fullscreen]="true">
