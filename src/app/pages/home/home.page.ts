@@ -1,6 +1,6 @@
 import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { coloresBasicos,coloresDuoc } from '../../app.module'
+import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 
 @Component({
@@ -21,6 +21,12 @@ export class HomePage {
   tipos: any = {
     tipo: ""
   }
+  promArit: any[] = [
+    {pos:1, notArit: ""},
+    {pos:2, notArit: ""},
+    {pos:3, notArit: ""},
+
+  ]
 
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
@@ -42,26 +48,38 @@ export class HomePage {
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   ngOnInit() {
   }
+  sumarProm = 0;
+  nota="notArit"
+  calcularPromArit() {
+    let cant= Object.keys(this.promArit).length
+    for(let x=0;x<cant;x++){
+     let y=x+1
+    console.log( window["notArit"+y.toString()])
 
+      console.log(this.sumarProm)
+    }
+  }
+
+  
 
   async logIn() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando...', // Mensaje anim
-      spinner: 'crescent', 
+      spinner: 'crescent',
     });
-  
+
     await loading.present();
-  
+
     setTimeout(() => {
       loading.dismiss();
-      this.router.navigate(['/login']); 
-  
-      
+      this.router.navigate(['/login']);
+
+
       this.data = "";
       console.log(this.data);
     }, 1000); // Tiempo del Spinner
   }
-  goToProfile(){
+  goToProfile() {
     this.router.navigate(['/profile']);
   }
   tipoPromedioSelect() {
