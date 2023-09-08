@@ -73,7 +73,7 @@
         <ion-row>
           <ion-col><label>Nota {{pos.pos}}</label></ion-col>
           <ion-col><ion-input  (focusout)="calcularPromArit()"  label="N{{pos.pos}}" label-placement="floating" fill="outline"></ion-input></ion-col>
-          <ion-col><ion-button fill="borderless"><ion-icon
+          <ion-col><ion-button (click)="borrarNotaArit('{{pos.pos}}')" fill="borderless"><ion-icon
                 name="close-circle-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
       </ion-item>

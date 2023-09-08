@@ -51,12 +51,16 @@ export class HomePage {
   sumarProm = 0;
   nota="notArit"
   calcularPromArit() {
-    let cant= Object.keys(this.promArit).length
+    let cant= Object.keys(this.promArit).length;
     this.promArit.push
   }
   agregarNotaArit(){
-    let cant= Object.keys(this.promArit).length
-    this.promArit.push({pos:cant+1,notArit:""})
+    let cant= Object.keys(this.promArit).length;
+    this.promArit.push({pos:cant+1,notArit:""});
+  }
+  borrarNotaArit(numero){
+    let cant= Object.keys(this.promArit).length;
+    this.promArit.splice(numero,1);
   }
 
   
