@@ -52,12 +52,11 @@ export class HomePage {
   nota="notArit"
   calcularPromArit() {
     let cant= Object.keys(this.promArit).length
-    for(let x=0;x<cant;x++){
-     let y=x+1
-    console.log( window["notArit"+y.toString()])
-
-      console.log(this.sumarProm)
-    }
+    this.promArit.push
+  }
+  agregarNotaArit(){
+    let cant= Object.keys(this.promArit).length
+    this.promArit.push({pos:cant+1,notArit:""})
   }
 
   

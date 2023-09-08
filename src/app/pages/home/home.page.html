@@ -71,7 +71,7 @@
     <div id="container" >
       <ion-item *ngFor="let pos of promArit">
         <ion-row>
-          <ion-col><ion-label>Nota {{pos.pos}}</ion-label></ion-col>
+          <ion-col><label>Nota {{pos.pos}}</label></ion-col>
           <ion-col><ion-input  (focusout)="calcularPromArit()"  label="N{{pos.pos}}" label-placement="floating" fill="outline"></ion-input></ion-col>
           <ion-col><ion-button fill="borderless"><ion-icon
                 name="close-circle-outline"></ion-icon></ion-button></ion-col>
@@ -81,7 +81,7 @@
       <ion-item>
         <ion-row>
           <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
-          <ion-col><ion-button fill="borderless"><ion-icon name="add-outline"></ion-icon></ion-button></ion-col>
+          <ion-col><ion-button (click)="agregarNotaArit()" fill="borderless"><ion-icon name="add-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
       </ion-item>
       <ion-item>
