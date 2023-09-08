@@ -72,7 +72,7 @@
       <ion-item *ngFor="let pos of promArit">
         <ion-row>
           <ion-col><label>Nota {{pos.pos}}</label></ion-col>
-          <ion-col><ion-input  (focusout)="calcularPromArit()"  label="N{{pos.pos}}" label-placement="floating" fill="outline"></ion-input></ion-col>
+          <ion-col><ion-input  type="number" (focusout)="calcularPromArit()"  label="N{{pos.pos}}" label-placement="floating" fill="outline" [(ngModel)]="pos.notArit"></ion-input></ion-col>
           <ion-col><ion-button (click)="borrarNotaArit('{{pos.pos}}')" fill="borderless"><ion-icon
                 name="close-circle-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
@@ -85,7 +85,7 @@
         </ion-row>
       </ion-item>
       <ion-item>
-        <ion-row><ion-label>Promedio: </ion-label></ion-row>
+        <ion-row><ion-label>Promedio: {{promedioAritmetico}} </ion-label></ion-row>
       </ion-item>
     </div>
   </content>

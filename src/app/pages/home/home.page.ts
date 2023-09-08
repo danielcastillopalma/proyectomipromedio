@@ -22,9 +22,9 @@ export class HomePage {
     tipo: ""
   }
   promArit: any[] = [
-    {pos:1, notArit: ""},
-    {pos:2, notArit: ""},
-    {pos:3, notArit: ""},
+    {pos:1, notArit:0},
+    {pos:2, notArit:0},
+    {pos:3, notArit:0},
 
   ]
 
@@ -48,22 +48,31 @@ export class HomePage {
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   ngOnInit() {
   }
-  sumarProm = 0;
-  nota="notArit"
+  sumarPromArit = 0;
+  totalPromArit=0;
+  promedioAritmetico=0;
   calcularPromArit() {
     let cant= Object.keys(this.promArit).length;
-    this.promArit.push
+    for(let nota of this.promArit){
+      this.sumarPromArit=this.sumarPromArit+parseInt(nota.notArit)
+      this.totalPromArit=this.sumarPromArit/cant        
+    }
+    this.promedioAritmetico=this.totalPromArit
+    console.log(this.totalPromArit)
+    console.log(this.sumarPromArit)
+    this.sumarPromArit=0;
+        
   }
   agregarNotaArit(){
     let cant= Object.keys(this.promArit).length;
-    this.promArit.push({pos:cant+1,notArit:""});
+    this.promArit.push({pos:cant+1,notArit:0});
   }
   borrarNotaArit(numero){
     let cant= Object.keys(this.promArit).length;
     this.promArit.splice(numero,1);
   }
 
-  
+ 
 
   async logIn() {
     const loading = await this.loadingCtrl.create({
