@@ -82,6 +82,15 @@ export class HomePage {
     this.promArit.splice(numero, 1);
   }
 
+  agregarNotaPonde() {
+    let cant = Object.keys(this.promPonde).length;
+    this.promPonde.push({ pos: cant + 1, notPonde: 0 });
+  }
+  borrarNotaPonde(numero) {
+    let cant = Object.keys(this.promPonde).length;
+    this.promPonde.splice(numero, 1);
+  }
+
 
 
   async logIn() {
