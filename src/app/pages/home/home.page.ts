@@ -27,6 +27,11 @@ export class HomePage {
     { pos: 3, notArit: '' },
 
   ]
+  promPonde:any[]=[
+    {pos:1,notPond:'',porcPond:''},
+    {pos:2,notPond:'',porcPond:''},
+    {pos:3,notPond:'',porcPond:''},
+  ]
 
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
