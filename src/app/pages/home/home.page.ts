@@ -1,7 +1,7 @@
-import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController } from '@ionic/angular';
+import { LoadingController,InfiniteScrollCustomEvent } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -52,10 +52,13 @@ export class HomePage {
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   ngOnInit() {
+    
   }
+
   sumarPromArit = 0;
   totalPromArit = 0;
   promedioAritmetico = 0;
+  cantDelArit = 0;
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {
@@ -74,14 +77,21 @@ export class HomePage {
 
   }
   agregarNotaArit() {
-    let cant = Object.keys(this.promArit).length;
-    this.promArit.push({ pos: cant + 1, notArit: '' });
+    if (this.cantDelArit > 0) {
+      let cant = Object.keys(this.promArit).length;
+      this.promArit.push({ pos: cant + 1+this.cantDelArit, notArit: '' });
+    }
+    else {
+      let cant = Object.keys(this.promArit).length;
+      this.promArit.push({ pos: cant + 1, notArit: '' });
+    }
   }
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
     let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));
 
     this.promArit.splice(index, 1);
+    this.cantDelArit = this.cantDelArit + 1;
   }
 
   agregarNotaPonde() {

@@ -53,70 +53,78 @@
   </ion-header>
   <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
 </div>
-
 <ion-content [fullscreen]="true" class="{{terciario}}">
-  <!--
-    Selector
+  <!--    Selector
   -->
-  <ion-item class="{{terciario}}">
-    <ion-select (focus)="tipoPromedioSelect()" [(ngModel)]="tipos.tipo" aria-label="Default label"
-      placeholder="Elige el tipo de promedio a calcular">
-      <ion-select-option *ngFor="let prom of tipoPromedio" [value]="prom.tipo">{{prom.tipo}}</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <!--
+  <ion-content class="{{terciario}}">
+    <ion-item class="selectorProme {{terciario}}">
+      <ion-select (focus)="tipoPromedioSelect()" [(ngModel)]="tipos.tipo" aria-label="Default label"
+        placeholder="Elige el tipo de promedio a calcular">
+        <ion-select-option *ngFor="let prom of tipoPromedio" [value]="prom.tipo">{{prom.tipo}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!--
     Promedio Aritmético
   -->
-  <content #promedioBasico hidden>
-    <div id="container">
-      <ion-item class="{{terciario}}" *ngFor="let pos of promArit">
-        <ion-row>
-          <ion-col><label>Nota {{pos.pos}}</label></ion-col>
-          <ion-col><ion-input type="number" (focusout)="calcularPromArit()" label="N{{pos.pos}}"
-              label-placement="floating" fill="outline" [(ngModel)]="pos.notArit"></ion-input></ion-col>
-          <ion-col><ion-button (click)="borrarNotaArit(pos.pos)" fill="borderless"><ion-icon
-                name="close-circle-outline"></ion-icon></ion-button></ion-col>
-        </ion-row>
-      </ion-item>
 
-      <ion-item class="{{terciario}}">
-        <ion-row>
-          <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
-          <ion-col><ion-button (click)="agregarNotaArit()" fill="borderless"><ion-icon
-                name="add-outline"></ion-icon></ion-button></ion-col>
-        </ion-row>
-      </ion-item>
-      <ion-item class="{{terciario}}">
-        <ion-row><ion-label>Promedio: {{promedioAritmetico}} </ion-label></ion-row>
-      </ion-item>
-    </div>
-  </content>
-  <!--
+    <content class="promedioBasico" #promedioBasico hidden>
+
+      <div id="container">
+        <ion-item class="{{terciario}}" *ngFor="let pos of promArit">
+          <ion-row>
+            <ion-col><label>Nota {{pos.pos}}</label></ion-col>
+            <ion-col><ion-input type="number" (focusout)="calcularPromArit()" label="N{{pos.pos}}"
+                label-placement="floating" fill="outline" [(ngModel)]="pos.notArit"></ion-input></ion-col>
+            <ion-col><ion-button (click)="borrarNotaArit(pos.pos)" fill="borderless"><ion-icon
+                  name="close-circle-outline"></ion-icon></ion-button></ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item class="{{terciario}}">
+          <ion-row>
+            <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
+            <ion-col><ion-button (click)="agregarNotaArit()" fill="borderless"><ion-icon
+                  name="add-outline"></ion-icon></ion-button></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item class="{{terciario}}">
+          <ion-row><ion-label>Promedio: {{promedioAritmetico}} </ion-label></ion-row>
+        </ion-item>
+      </div>
+
+    </content>
+
+    <!--
   Promedio Ponderado
 -->
-  <content #promedioPorcentual hidden>
-    <div id="container">
-      <ion-item class="{{terciario}}" *ngFor="let pos of promPonde">
-        <ion-row >
-          <ion-col><label>Nota {{pos.pos}}</label></ion-col>
-          <ion-col><ion-input label="N{{pos.pos}}" label-placement="floating" fill="outline" [(ngModel)]="pos.notPond"></ion-input></ion-col>
-          <ion-col><ion-input label="%" label-placement="floating" fill="outline" [(ngModel)]="pos.porcPond"></ion-input></ion-col>
-          <ion-col><ion-button (click)="borrarNotaPonde('{{pos.pos}}')" fill="borderless"><ion-icon
-                name="close-circle-outline"></ion-icon></ion-button></ion-col>
-        </ion-row>
-      </ion-item>
-      
-      <ion-item class="{{terciario}}">
-        <ion-row>
-          <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
-          <ion-col><ion-button (click)="agregarNotaPonde()"fill="borderless"><ion-icon name="add-outline"></ion-icon></ion-button></ion-col>
-        </ion-row>
-      </ion-item>
-      <ion-item class="{{terciario}}">
-        <ion-row><ion-label>Promedio: </ion-label></ion-row>
-      </ion-item>
-    </div>
-  </content>
+    <content #promedioPorcentual hidden>
+      <div id="container">
+        <ion-item class="{{terciario}}" *ngFor="let pos of promPonde">
+          <ion-row>
+            <ion-col><label>Nota {{pos.pos}}</label></ion-col>
+            <ion-col><ion-input label="N{{pos.pos}}" label-placement="floating" fill="outline"
+                [(ngModel)]="pos.notPond"></ion-input></ion-col>
+            <ion-col><ion-input label="%" label-placement="floating" fill="outline"
+                [(ngModel)]="pos.porcPond"></ion-input></ion-col>
+            <ion-col><ion-button (click)="borrarNotaPonde('{{pos.pos}}')" fill="borderless"><ion-icon
+                  name="close-circle-outline"></ion-icon></ion-button></ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item class="{{terciario}}">
+          <ion-row>
+            <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
+            <ion-col><ion-button (click)="agregarNotaPonde()" fill="borderless"><ion-icon
+                  name="add-outline"></ion-icon></ion-button></ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item class="{{terciario}}">
+          <ion-row><ion-label>Promedio: </ion-label></ion-row>
+        </ion-item>
+      </div>
+    </content>
+  </ion-content>
 </ion-content>
 <ion-footer> <ion-toolbar class="{{secundario}}">
     <ion-title>
