@@ -69,24 +69,24 @@
   -->
   <content #promedioBasico hidden>
     <div id="container">
-      <ion-item *ngFor="let pos of promArit">
+      <ion-item class="{{terciario}}" *ngFor="let pos of promArit">
         <ion-row>
           <ion-col><label>Nota {{pos.pos}}</label></ion-col>
           <ion-col><ion-input type="number" (focusout)="calcularPromArit()" label="N{{pos.pos}}"
               label-placement="floating" fill="outline" [(ngModel)]="pos.notArit"></ion-input></ion-col>
-          <ion-col><ion-button (click)="borrarNotaArit('{{pos.pos}}')" fill="borderless"><ion-icon
+          <ion-col><ion-button (click)="borrarNotaArit(pos.pos)" fill="borderless"><ion-icon
                 name="close-circle-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
       </ion-item>
 
-      <ion-item>
+      <ion-item class="{{terciario}}">
         <ion-row>
           <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
           <ion-col><ion-button (click)="agregarNotaArit()" fill="borderless"><ion-icon
                 name="add-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
       </ion-item>
-      <ion-item>
+      <ion-item class="{{terciario}}">
         <ion-row><ion-label>Promedio: {{promedioAritmetico}} </ion-label></ion-row>
       </ion-item>
     </div>
@@ -96,8 +96,8 @@
 -->
   <content #promedioPorcentual hidden>
     <div id="container">
-      <ion-item *ngFor="let pos of promPonde">
-        <ion-row>
+      <ion-item class="{{terciario}}" *ngFor="let pos of promPonde">
+        <ion-row >
           <ion-col><label>Nota {{pos.pos}}</label></ion-col>
           <ion-col><ion-input label="N{{pos.pos}}" label-placement="floating" fill="outline" [(ngModel)]="pos.notPond"></ion-input></ion-col>
           <ion-col><ion-input label="%" label-placement="floating" fill="outline" [(ngModel)]="pos.porcPond"></ion-input></ion-col>
@@ -106,13 +106,13 @@
         </ion-row>
       </ion-item>
       
-      <ion-item>
+      <ion-item class="{{terciario}}">
         <ion-row>
           <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
           <ion-col><ion-button (click)="agregarNotaPonde()"fill="borderless"><ion-icon name="add-outline"></ion-icon></ion-button></ion-col>
         </ion-row>
       </ion-item>
-      <ion-item>
+      <ion-item class="{{terciario}}">
         <ion-row><ion-label>Promedio: </ion-label></ion-row>
       </ion-item>
     </div>

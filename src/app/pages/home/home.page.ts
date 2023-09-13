@@ -27,10 +27,10 @@ export class HomePage {
     { pos: 3, notArit: '' },
 
   ]
-  promPonde:any[]=[
-    {pos:1,notPond:'',porcPond:''},
-    {pos:2,notPond:'',porcPond:''},
-    {pos:3,notPond:'',porcPond:''},
+  promPonde: any[] = [
+    { pos: 1, notPond: '', porcPond: '' },
+    { pos: 2, notPond: '', porcPond: '' },
+    { pos: 3, notPond: '', porcPond: '' },
   ]
 
   cuarto = coloresBasicos.cuarto;
@@ -75,11 +75,13 @@ export class HomePage {
   }
   agregarNotaArit() {
     let cant = Object.keys(this.promArit).length;
-    this.promArit.push({ pos: cant + 1, notArit: 0 });
+    this.promArit.push({ pos: cant + 1, notArit: '' });
   }
   borrarNotaArit(numero) {
-    let cant = Object.keys(this.promArit).length;
-    this.promArit.splice(numero, 1);
+    //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
+    let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));
+
+    this.promArit.splice(index, 1);
   }
 
   agregarNotaPonde() {
