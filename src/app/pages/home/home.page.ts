@@ -89,8 +89,10 @@ export class HomePage {
     this.promPonde.push({ pos: cant + 1, notPonde: 0 });
   }
   borrarNotaPonde(numero) {
-    let cant = Object.keys(this.promPonde).length;
-    this.promPonde.splice(numero, 1);
+    //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
+    let index: number = this.promPonde.indexOf(this.promPonde.find(x => x.pos == numero));
+
+    this.promPonde.splice(index, 1);
   }
 
 
