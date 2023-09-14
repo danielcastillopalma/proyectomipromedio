@@ -18,11 +18,12 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
-  },  {
+  },
+  {
     path: 'block-de-notas',
     loadChildren: () => import('./pages/block-de-notas/block-de-notas.module').then( m => m.BlockDeNotasPageModule)
   },
-
+  
   
 ];
 
