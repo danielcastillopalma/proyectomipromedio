@@ -100,7 +100,7 @@ export class LoginPage implements OnInit {
 async register() {
   const loading = await this.loadingCtrl.create({
     message: 'Registrando...', 
-    spinner: 'circles', 
+    spinner: 'dots', 
     
   });
 
@@ -116,7 +116,7 @@ async register() {
     });
 
     loading.dismiss(); 
-    this.presentToast('Registrado'); // mostrar toast
+    this.presentToast('Registrado ✓'); // mostrar toast
   } catch (error) {
     console.error(error);
     loading.dismiss(); 
