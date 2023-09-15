@@ -51,26 +51,31 @@
       <ion-title>Menu</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding"> Tap the button in the toolbar to open the menu. </ion-content>
 </div>
 <ion-content [fullscreen]="true" class="{{terciario}}">
-  <!--    Selector
+  <!--    
+    Selector
   -->
-  <ion-content class="{{terciario}}">
-    <ion-item class="selectorProme {{terciario}}">
+
+  <div class="{{terciario}} container">
+
+    <ion-item class="{{terciario}} selectorProme ">
       <ion-select (focus)="tipoPromedioSelect()" [(ngModel)]="tipos.tipo" aria-label="Default label"
         placeholder="Elige el tipo de promedio a calcular">
         <ion-select-option *ngFor="let prom of tipoPromedio" [value]="prom.tipo">{{prom.tipo}}</ion-select-option>
       </ion-select>
     </ion-item>
 
+
+
     <!--
     Promedio Aritmético
-  -->
+   -->
 
-    <content class="promedioBasico" #promedioBasico hidden>
 
-      <div id="container">
+    <div #promedioBasico hidden>
+
+      <div class="promedioBasico" >
         <ion-item class="{{terciario}}" *ngFor="let pos of promArit">
           <ion-row>
             <ion-col><label>Nota {{pos.pos}}</label></ion-col>
@@ -80,7 +85,7 @@
                   name="close-circle-outline"></ion-icon></ion-button></ion-col>
           </ion-row>
         </ion-item>
-
+        <br>
         <ion-item class="{{terciario}}">
           <ion-row>
             <ion-col><ion-label>Agregar Nota</ion-label></ion-col>
@@ -93,11 +98,12 @@
         </ion-item>
       </div>
 
-    </content>
+    </div>
+
 
     <!--
-  Promedio Ponderado
--->
+    Promedio Ponderado
+    -->
     <content #promedioPorcentual hidden>
       <div id="container">
         <ion-item class="{{terciario}}" *ngFor="let pos of promPonde">
@@ -124,7 +130,7 @@
         </ion-item>
       </div>
     </content>
-  </ion-content>
+  </div>
 </ion-content>
 <ion-footer> <ion-toolbar class="{{secundario}}">
     <ion-title>
