@@ -2,7 +2,7 @@ import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos,coloresDuoc } from '../../app.module'
 import { LoadingController, ModalController} from '@ionic/angular';
-import { NotasComponent } from 'src/app/notas/notas.component';
+import { NotasComponent } from 'src/app/pages/notas/notas.component';
 
 
 @Component({

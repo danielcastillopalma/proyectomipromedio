@@ -5,10 +5,12 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { IonicStorageModule } from '@ionic/storage-angular';
 
 
 @NgModule({
   imports: [
+    IonicStorageModule.forRoot(),
     CommonModule,
     FormsModule,
     IonicModule,

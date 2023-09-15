@@ -21,9 +21,9 @@
       <br>
       <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
-      <ion-input class="{{terciario}}" [(ngModel)]="user.email" type="email" fill="solid" label="Email" labelPlacement="floating"
+      <ion-input class="{{terciario}}" [(ngModel)]="user.email" appAutofill type="email" autocomplete="email"  type="email" fill="solid" label="Email" labelPlacement="floating"
         errorText="Correo Invalido" ngModel email></ion-input>
-      <ion-input class="{{terciario}}" [(ngModel)]="user.password" label="Contraseña" fill="solid" labelPlacement="floating" type="password">
+      <ion-input class="{{terciario}}" [(ngModel)]="user.password" appAutofill type="password" autocomplete="current-password" label="Contraseña" fill="solid" labelPlacement="floating" type="password">
       </ion-input>
       
       <ion-button class= "{{secundario}}" expand="block" (click)="logIn()"> Iniciar Sesion</ion-button>

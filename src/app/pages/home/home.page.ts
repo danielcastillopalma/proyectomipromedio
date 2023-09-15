@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, Inject, ViewChild, Renderer2 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController,InfiniteScrollCustomEvent } from '@ionic/angular';
+import { LoadingController, InfiniteScrollCustomEvent } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +38,7 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController) {
+  constructor(private storage: Storage, private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController) {
 
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -51,8 +52,8 @@ export class HomePage {
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
-  ngOnInit() {
-    
+  async ngOnInit() {
+    await this.storage.create();
   }
 
   sumarPromArit = 0;
@@ -79,7 +80,7 @@ export class HomePage {
   agregarNotaArit() {
     if (this.cantDelArit > 0) {
       let cant = Object.keys(this.promArit).length;
-      this.promArit.push({ pos: cant + 1+this.cantDelArit, notArit: '' });
+      this.promArit.push({ pos: cant + 1 + this.cantDelArit, notArit: '' });
     }
     else {
       let cant = Object.keys(this.promArit).length;
@@ -92,6 +93,7 @@ export class HomePage {
 
     this.promArit.splice(index, 1);
     this.cantDelArit = this.cantDelArit + 1;
+    this.calcularPromArit();
   }
 
   agregarNotaPonde() {
