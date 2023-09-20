@@ -23,6 +23,13 @@ const routes: Routes = [
     path: 'block-de-notas',
     loadChildren: () => import('./pages/block-de-notas/block-de-notas.module').then( m => m.BlockDeNotasPageModule)
   },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
+  },
+ 
+  
+
   
   
 ];

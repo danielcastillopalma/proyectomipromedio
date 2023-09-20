@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Block de Notas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Área de texto para la nota -->
+  <ion-textarea [(ngModel)]="nota" placeholder="Escribe tu nota"></ion-textarea>
+
+  <!-- Botones de operaciones -->
+  <ion-button (click)="guardarNota()">Guardar</ion-button>
+  <ion-button (click)="editarNota()">Editar</ion-button>
+  <ion-button (click)="eliminarNota()">Eliminar</ion-button>
+</ion-content>

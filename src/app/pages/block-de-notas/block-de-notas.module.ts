@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { BlockDeNotasPageRoutingModule } from './block-de-notas-routing.module';
 
 import { BlockDeNotasPage } from './block-de-notas.page';
+import { NotasComponent } from 'src/app/notas/notas.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { BlockDeNotasPage } from './block-de-notas.page';
     IonicModule,
     BlockDeNotasPageRoutingModule
   ],
-  declarations: [BlockDeNotasPage]
+  declarations: [BlockDeNotasPage, NotasComponent]
 })
 export class BlockDeNotasPageModule {}

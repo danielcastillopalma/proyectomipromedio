@@ -2,7 +2,9 @@ import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2 } from '@a
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos,coloresDuoc } from '../../app.module'
 import { LoadingController, ModalController} from '@ionic/angular';
-import { NotasComponent } from 'src/app/notas/notas.component';
+import { NavController } from '@ionic/angular';
+import { Storage } from '@ionic/storage';
+
 
 
 @Component({
@@ -12,7 +14,10 @@ import { NotasComponent } from 'src/app/notas/notas.component';
 })
 export class BlockDeNotasPage {
 
-  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController, private ModalController: ModalController) {
+  mostrarComponente = false;
+
+  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController,
+     private ModalController: ModalController, private navCtrl: NavController, private storage: Storage) {
 
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -29,6 +34,7 @@ export class BlockDeNotasPage {
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   data:any;
+
   ngOnInit() {
   }
   async logIn() {
@@ -54,10 +60,9 @@ export class BlockDeNotasPage {
   retroceso() {
     this.router.navigate(['/home']);
   }
-  async abrirBlocDeNotas() {
-    const modal = await this.ModalController.create({
-      component: NotasComponent, // Reemplaza con el nombre correcto de tu componente
-    });
-    await modal.present();
+
+  mostrarBlockDeNotas() {
+    this.mostrarComponente = !this.mostrarComponente;
   }
+  
 }

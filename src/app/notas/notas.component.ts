@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-notas',
@@ -9,12 +7,28 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class NotasComponent  implements OnInit {
 
-  contenidoNota: string = '';
+  nota: string = '';
 
-  constructor(private ModalController: ModalController,  private storage: Storage) { }
+  constructor() { }
 
   ngOnInit() {}
 
- 
+
+  guardarNota() {
+    // Aquí puedes implementar la lógica para guardar la nota
+    console.log('Nota guardada:', this.nota);
+  }
+
+  editarNota() {
+    // Aquí puedes implementar la lógica para editar la nota
+    console.log('Nota editada:', this.nota);
+  }
+
+  eliminarNota() {
+    // Aquí puedes implementar la lógica para eliminar la nota
+    this.nota = '';
+    console.log('Nota eliminada');
+  }
 }
+
 
