@@ -7,11 +7,12 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
+import { NotaService } from 'src/app/notas/nota.service';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MatProgressBarModule, IonicStorageModule.forRoot(), FormsModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers:  [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy  }, NotaService ], 
   bootstrap: [AppComponent],
 })
 export class AppModule {}

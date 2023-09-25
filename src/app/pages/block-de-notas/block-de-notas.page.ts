@@ -4,6 +4,7 @@ import { coloresBasicos,coloresDuoc } from '../../app.module'
 import { LoadingController, ModalController} from '@ionic/angular';
 import { NavController } from '@ionic/angular';
 import { Storage } from '@ionic/storage';
+import { NotaService } from 'src/app/notas/nota.service';
 
 
 
@@ -15,9 +16,10 @@ import { Storage } from '@ionic/storage';
 export class BlockDeNotasPage {
 
   mostrarComponente = false;
+  notas: string[] = [];
 
   constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController,
-     private ModalController: ModalController, private navCtrl: NavController, private storage: Storage) {
+     private ModalController: ModalController, private navCtrl: NavController, private storage: Storage, notaService: NotaService) {
 
 
     this.activateRoute.queryParams.subscribe(params => {
@@ -63,6 +65,6 @@ export class BlockDeNotasPage {
 
   mostrarBlockDeNotas() {
     this.mostrarComponente = !this.mostrarComponente;
+    this.notas = this.notaService.obtenerNotas(); // obtener las notas al mostrar el componente BUG
   }
-  
 }

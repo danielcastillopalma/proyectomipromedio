@@ -1,32 +1,32 @@
 import { Component, OnInit } from '@angular/core';
+import { NotaService } from './nota.service';
 
 @Component({
   selector: 'app-notas',
   templateUrl: './notas.component.html',
   styleUrls: ['./notas.component.scss'],
 })
-export class NotasComponent  implements OnInit {
+export class NotasComponent  {
 
   nota: string = '';
 
-  constructor() { }
-
-  ngOnInit() {}
-
+  constructor(private notaService: NotaService) {}
 
   guardarNota() {
-    // Aquí puedes implementar la lógica para guardar la nota
+
+    this.notaService.guardarNota//({ contenido: this.nota }); campo bugeado
     console.log('Nota guardada:', this.nota);
+    this.nota = '';  // limpiar campo
   }
 
   editarNota() {
-    // Aquí puedes implementar la lógica para editar la nota
+    
     console.log('Nota editada:', this.nota);
   }
 
   eliminarNota() {
-    // Aquí puedes implementar la lógica para eliminar la nota
-    this.nota = '';
+    
+    this.notaService.eliminarNota(0);  // eliminar nota
     console.log('Nota eliminada');
   }
 }

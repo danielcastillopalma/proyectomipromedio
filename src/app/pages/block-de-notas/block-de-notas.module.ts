@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
+import { NotaService } from 'src/app/notas/nota.service';
 
 import { BlockDeNotasPageRoutingModule } from './block-de-notas-routing.module';
 
@@ -16,6 +17,6 @@ import { NotasComponent } from 'src/app/notas/notas.component';
     IonicModule,
     BlockDeNotasPageRoutingModule
   ],
-  declarations: [BlockDeNotasPage, NotasComponent]
+  declarations: [BlockDeNotasPage, NotasComponent, NotaService]
 })
 export class BlockDeNotasPageModule {}
