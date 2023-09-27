@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ActionSheetController, LoadingController, ToastController} from '@ionic/angular';
+import { ActionSheetController, LoadingController, ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -13,12 +15,14 @@ export class LoginPage implements OnInit {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  user={
-    email:"",
-    password:""
+
+
+  user = {
+    email: "",
+    password: ""
   }
   presentingElement = undefined;
-  
+
   // CARGA DE LOGIN
   loading = false;
 
@@ -26,9 +30,18 @@ export class LoginPage implements OnInit {
 
   registering = false;
 
+  loginForm: FormGroup;
+  mensaje: any= "";
+
+  constructor(private servicio: LoginService, private form: FormBuilder, private router: Router, private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private toastCtrl: ToastController) {
+    this.loginForm = this.form.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
 
 
-  constructor(private router: Router,private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private toastCtrl: ToastController) { }
+
+  }
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
@@ -55,84 +68,93 @@ export class LoginPage implements OnInit {
     return role === 'confirm';
   };
 
-  // CARGA DE LOGIN
-  async logIn(){
-    console.log(this.user);
-     
-  const loading = await this.loadingCtrl.create({
-    message: 'Iniciando sesión...',
-    spinner: 'dots', // cambiar el tipo de spinner
-  });
-  await loading.present();
-
-  try {
-    
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        
-
-        
-        resolve();
-      }, 1500); // tiempo para iniciar la sesion
-    });
-
-    
-    loading.dismiss();
-    let navigationextras: NavigationExtras={
-      state:{
-        user:this.user
+  ValidarLogin() {
+    console.log("Si entra")
+    this.servicio.ValidarLogin(this.loginForm.get("email")?.value, this.loginForm.get("password")?.value).subscribe(datos => {
+      if (datos.length == 0) {
+        this.mensaje = "Incorrecto";
+      } else {
+        console.log(datos);
       }
+    })
+  }
+
+  // CARGA DE LOGIN
+  async logIn() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Iniciando sesión...',
+      spinner: 'dots', // cambiar el tipo de spinner
+    });
+    await loading.present();
+
+    try {
+
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+
+
+
+          resolve();
+        }, 1500); // tiempo para iniciar la sesion
+      });
+
+
+      loading.dismiss();
+      let navigationextras: NavigationExtras = {
+        state: {
+          user: this.user
+        }
+      }
+      //this.router.navigate(['/home'], navigationextras)
+    } catch (error) {
+      console.error(error);
+      loading.dismiss();
     }
-    this.router.navigate(['/home'],navigationextras)
-  }catch (error) {
-    console.error(error);
-    loading.dismiss();
   }
-  }
-  
-// FUNCION PARA EL BOTON DE RETROCEDER
+
+  // FUNCION PARA EL BOTON DE RETROCEDER
   retroceso() {
     this.router.navigate(['/home']);
   }
 
-// FUNCIONES PARA EL REGISTRO CON EMAIL
+  // FUNCIONES PARA EL REGISTRO CON EMAIL
 
-async register() {
-  const loading = await this.loadingCtrl.create({
-    message: 'Registrando...', 
-    spinner: 'dots', 
-    
-  });
+  async register() {
+    const loading = await this.loadingCtrl.create({
+      message: 'Registrando...',
+      spinner: 'dots',
 
-  await loading.present();
-
-
-  try {
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        
-        resolve();
-      }, 1000); 
     });
 
-    loading.dismiss(); 
-    this.presentToast('Registrado ✓'); // mostrar toast
-  } catch (error) {
-    console.error(error);
-    loading.dismiss(); 
-  }
-}
+    await loading.present();
 
-// Función para mostrar un toast
-async presentToast(message: string) {
-  const toast = await this.toastCtrl.create({
-    message: message,
-    duration: 2000, // la duracion toast 
-    position: 'bottom', // en donde va el toast
-    color: 'success', // 
-  });
-  toast.present();
-}
+
+    try {
+      await new Promise<void>((resolve) => {
+        setTimeout(() => {
+
+          resolve();
+        }, 1000);
+      });
+
+      loading.dismiss();
+      this.presentToast('Registrado ✓'); // mostrar toast
+    } catch (error) {
+      console.error(error);
+      loading.dismiss();
+    }
+  }
+
+  // Función para mostrar un toast
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000, // la duracion toast 
+      position: 'bottom', // en donde va el toast
+      color: 'success', // 
+    });
+    toast.present();
+  }
 
 
 }

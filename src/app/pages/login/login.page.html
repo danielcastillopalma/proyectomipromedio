@@ -10,31 +10,37 @@
 
 <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
 
-<ion-content [fullscreen]="true" class="{{primario}}" >
+<ion-content [fullscreen]="true" class="{{primario}}">
 
-  
+
 
   <ion-card class="{{primario}}">
     <ion-card-content>
-      <img class="img_perfil" alt="Silhouette of mountains" src="https://cdn-icons-png.flaticon.com/512/272/272456.png" />
+      
       <ion-spinner *ngIf="registering" name="crescent"></ion-spinner>
       <br>
       <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
-      <ion-input class="{{terciario}}" [(ngModel)]="user.email" appAutofill type="email" autocomplete="email"  type="email" fill="solid" label="Email" labelPlacement="floating"
-        errorText="Correo Invalido" ngModel email></ion-input>
-      <ion-input class="{{terciario}}" [(ngModel)]="user.password" appAutofill type="password" autocomplete="current-password" label="Contraseña" fill="solid" labelPlacement="floating" type="password">
-      </ion-input>
-      
-      <ion-button class= "{{secundario}}" expand="block" (click)="logIn()"> Iniciar Sesion</ion-button>
+      {{mensaje}}
+      <form [formGroup]="loginForm" (ngSubmit)="ValidarLogin()">
+        <ion-input class="{{terciario}}" [(ngModel)]="user.email" formControlName="email" appAutofill type="email"
+          autocomplete="email" type="email" fill="solid" label="Email" labelPlacement="floating"
+          errorText="Correo Invalido" ngModel email></ion-input>
+        <ion-input class="{{terciario}}" [(ngModel)]="user.password" formControlName="password" appAutofill
+          type="password" autocomplete="current-password" label="Contraseña" fill="solid" labelPlacement="floating"
+          type="password">
+        </ion-input>
+        <ion-button type="submit"[disabled]="loginForm.invalid" class="{{secundario}}" expand="block" (click)="logIn()"> Iniciar
+          Sesion</ion-button>
+      </form>
     </ion-card-content>
   </ion-card>
   <ion-card class="{{primario}}">
     <ion-card-header>
       <ion-card-title class="{{primario}}">Registrarse</ion-card-title>
-      <ion-button class= "{{secundario}}" expand="block">Registrar con google</ion-button>
-      <ion-button class= "{{secundario}}"expand="block">Registrar con facebook</ion-button>
-      <ion-button class= "{{secundario}}"id="open-modal" expand="block">Registrar con Email</ion-button>
+      <ion-button class="{{secundario}}" expand="block">Registrar con google</ion-button>
+      <ion-button class="{{secundario}}" expand="block">Registrar con facebook</ion-button>
+      <ion-button class="{{secundario}}" id="open-modal" expand="block">Registrar con Email</ion-button>
     </ion-card-header>
   </ion-card>
   <!--
@@ -57,14 +63,15 @@
         <ion-item>
           <ion-input label="Correo Electrónico" labelPlacement="floating" placeholder="Correo Electrónico" type="email"
             errorText="Correo Invalido" ngModel email></ion-input>
-            <ion-icon name="mail-outline" slot="end"></ion-icon>
+          <ion-icon name="mail-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-item>
           <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="Contraseña"></ion-input>
           <ion-icon name="create-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-input label="Repita su contraseña" type="password" labelPlacement="floating" placeholder="Contraseña"></ion-input>
+          <ion-input label="Repita su contraseña" type="password" labelPlacement="floating"
+            placeholder="Contraseña"></ion-input>
           <ion-icon name="create-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-item>
@@ -79,12 +86,12 @@
         <ion-item>
           <ion-input label="Celular" labelPlacement="floating" placeholder="Celular" errorText="Telefono invalido"
             type="number" [counter]="true" maxlength="9"></ion-input>
-            <ion-icon name="call-outline" slot="end"></ion-icon>
+          <ion-icon name="call-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-button expand="block" (click)="register()">Registrarse</ion-button>
         <ion-spinner class="cargaem" *ngIf="registering" name="crescent"></ion-spinner>
       </ion-content>
     </ng-template>
   </ion-modal>
-  
+
 </ion-content>
