@@ -19,6 +19,7 @@ export class LoginPage implements OnInit {
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   public registrationForm:FormGroup;
+  wrongCredentials="";
 
 
   user = {
@@ -37,6 +38,7 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup;
   mensaje: any = "";
   submitError="";
+  isModalOpen =false;
   constructor(
    
     private form: FormBuilder,
@@ -48,11 +50,8 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController,
     private alertController:AlertController) 
     {
-    
-
-
-
-  }
+      //constructor
+    }
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
@@ -92,12 +91,14 @@ export class LoginPage implements OnInit {
     {  
       const alert=await this.alertController.create(
         {
-          message:"Registration done !",
+          message:"Registrado Correctamente",
           buttons: ['OK'],}
         )
         await alert.present();
 
       this.resetForm();
+      this.setOpen(false);
+      
     }
     else if(res && res.message)
       this.submitError=res.message;
@@ -119,6 +120,9 @@ export class LoginPage implements OnInit {
       }
     };
   } 
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
+  }
   resetForm()
   {
     this.registrationForm.reset();
@@ -130,32 +134,13 @@ export class LoginPage implements OnInit {
   }
   async onSubmit(){
     if(!this.loginForm.valid)return;
-    await this.authenticationService.login(this.loginForm.value);
+    const resp= await this.authenticationService.login(this.loginForm.value);
+    if(resp){
+      this.wrongCredentials=resp;
+
+    }
   }
-  canDismiss = async () => {
-    const actionSheet = await this.actionSheetCtrl.create({
-      header: '¿Quieres salir sin guardar?',
-      buttons: [
-        {
-          text: 'Si',
-          role: 'confirm',
-        },
-        {
-          text: 'No',
-          role: 'cancel',
-        },
-      ],
-    });
-
-    actionSheet.present();
-
-    const { role } = await actionSheet.onWillDismiss();
-
-    return role === 'confirm';
-  };
-
-
-
+  
   // CARGA DE LOGIN
   async logIn() {
     const loading = await this.loadingCtrl.create({

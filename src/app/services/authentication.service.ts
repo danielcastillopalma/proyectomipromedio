@@ -9,6 +9,7 @@ import jwt_decode from "jwt-decode";
   providedIn: 'root'
 })
 export class AuthenticationService {
+  msj="";
   public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   token = '';
   constructor(private storageService: StorageService, private router: Router) { 
@@ -61,9 +62,11 @@ export class AuthenticationService {
         console.log("funciona");
         this.storageService.set("token",res.jwt);
         this.isAuthenticated.next(true);        
-        this.router.navigateByUrl('/home',{replaceUrl:true})        
+        this.router.navigateByUrl('/home',{replaceUrl:true})      
+        return;  
       }else{
-        console.log("Usuario o clave invalido");
+        this.msj="Credenciales invalidas"
+        return (this.msj);
       }
     }catch(e){
       

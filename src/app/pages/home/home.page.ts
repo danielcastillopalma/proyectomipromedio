@@ -1,8 +1,10 @@
-import { Component, ElementRef, OnInit, Inject, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController, InfiniteScrollCustomEvent } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -38,17 +40,18 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  constructor(private storage: Storage, private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute, private loadingCtrl: LoadingController) {
+  constructor(
+    private storage: Storage,
+    private element: ElementRef,
+    private router: Router, 
+    private activateRoute: ActivatedRoute, 
+    private loadingCtrl: LoadingController,
+    private auth: AuthenticationService,
+    private storages: StorageService) {
 
-
-    this.activateRoute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation()?.extras.state) {
-        this.data = this.router.getCurrentNavigation()?.extras.state?.["user"];
-        console.log(this.data)
-      } else {
-        this.data = ["Mi Promedio"]
-      }
-    });
+      this.data=this.storages.get('username');
+      console.log(this.data)
+   
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
