@@ -5,7 +5,7 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 @NgModule({
@@ -15,16 +15,16 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
-export const coloresBasicos={
-  primario:'primarioBasico',
-  secundario:'secundarioBasico',
-  terciario:'terciarioBasico',
-  cuarto:'cuartoBasico '
+export class AppModule { }
+export const coloresBasicos = {
+  primario: 'primarioBasico',
+  secundario: 'secundarioBasico',
+  terciario: 'terciarioBasico',
+  cuarto: 'cuartoBasico '
 }
-export const coloresDuoc={
-  primario:'pduoc',
-  secundario:'sduoc',
-  terciario:'tduoc',
-  cuarto:'cduoc'
+export const coloresDuoc = {
+  primario: 'pduoc',
+  secundario: 'sduoc',
+  terciario: 'tduoc',
+  cuarto: 'cduoc'
 }

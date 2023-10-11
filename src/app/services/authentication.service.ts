@@ -4,6 +4,7 @@ import { StorageService } from './storage.service';
 import { HttpResponse, CapacitorHttp } from '@capacitor/core';
 import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
+import { DatabaseService } from './database.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class AuthenticationService {
   msj="";
   public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   token = '';
-  constructor(private storageService: StorageService, private router: Router) { 
+  constructor(private db: DatabaseService,private storageService: StorageService, private router: Router) { 
     this.loadToken();
   }
   async loadToken(){
@@ -52,6 +53,7 @@ export class AuthenticationService {
     };
    
     try{
+  
       
       const response:HttpResponse=await CapacitorHttp.post(options);
       const res=response.data;
@@ -63,6 +65,7 @@ export class AuthenticationService {
         this.storageService.set("token",res.jwt);
         this.isAuthenticated.next(true);        
         this.router.navigateByUrl('/home',{replaceUrl:true})      
+        localStorage.setItem('usuario',JSON.stringify(res));
         return;  
       }else{
         this.msj="Credenciales invalidas"

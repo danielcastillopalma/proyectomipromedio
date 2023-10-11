@@ -5,7 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
-
+import { DatabaseService } from 'src/app/services/database.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -15,6 +15,7 @@ import { StorageService } from 'src/app/services/storage.service';
 
 
 export class HomePage {
+  token=""
   tipoPromedio: any[] = [
     { prom: 1, tipo: "Aritmético" },
     { prom: 2, tipo: "Ponderado" },
@@ -40,7 +41,9 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
+  userData:any=""
   constructor(
+    private db:DatabaseService,
     private storage: Storage,
     private element: ElementRef,
     private router: Router, 
@@ -48,9 +51,11 @@ export class HomePage {
     private loadingCtrl: LoadingController,
     private auth: AuthenticationService,
     private storages: StorageService) {
-
-      this.data=this.storages.get('username');
-      console.log(this.data)
+      
+      this.userData=JSON.parse(localStorage.getItem('usuario')!);
+      console.log(this.userData)
+      console.log(this.userData.user.username)
+      
    
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
@@ -63,6 +68,7 @@ export class HomePage {
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
+
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {
