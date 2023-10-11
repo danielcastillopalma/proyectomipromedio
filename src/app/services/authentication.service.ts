@@ -40,7 +40,7 @@ export class AuthenticationService {
       console.log(res.jwt)
       if(res&&res.jwt){
         console.log("funciona");
-        this.storageService.set("token",res.token);
+        this.storageService.set("token",res.jwt);
         this.isAuthenticated.next(true);        
         this.router.navigateByUrl('/home',{replaceUrl:true})        
       }else{
