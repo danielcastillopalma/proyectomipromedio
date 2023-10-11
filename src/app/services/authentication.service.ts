@@ -22,6 +22,25 @@ export class AuthenticationService {
       this.isAuthenticated.next(false);
     }
   }
+  async registerUser(formData)
+  {
+      if(!formData) return;
+
+      const options = {
+        url: 'http://localhost:1337/api/auth/local/register', 
+        headers: { 'Content-Type': 'application/json'  },       
+        data: JSON.stringify(formData),
+      };
+    
+      try{
+        const response: HttpResponse = await CapacitorHttp.post(options);        
+        return response.data; 
+      }
+      catch(e)
+      {
+        return;
+      }     
+  }
   async login(formData){
     
     if(!formData) return;

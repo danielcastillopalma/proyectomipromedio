@@ -16,23 +16,29 @@
 
   <ion-card class="{{primario}}">
     <ion-card-content>
-      
       <ion-spinner *ngIf="registering" name="crescent"></ion-spinner>
       <br>
       <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
       {{mensaje}}
+      <!--
+        LOGIN
+      -->
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <ion-input class="{{terciario}}" [(ngModel)]="user.identifier" formControlName="identifier" appAutofill type="email"
-          autocomplete="email" type="email" fill="solid" label="Email" labelPlacement="floating"
+        <ion-input class="{{terciario}}" [(ngModel)]="user.identifier" formControlName="identifier" appAutofill
+          type="email" autocomplete="email" type="email" fill="solid" label="Email" labelPlacement="floating"
           errorText="Correo Invalido" ngModel email></ion-input>
         <ion-input class="{{terciario}}" [(ngModel)]="user.password" formControlName="password" appAutofill
           type="password" autocomplete="current-password" label="Contraseña" fill="solid" labelPlacement="floating"
           type="password">
         </ion-input>
-        <ion-button type="submit"[disabled]="loginForm.invalid" class="{{secundario}}" expand="block" (click)="logIn()"> Iniciar
+        <ion-button type="submit" [disabled]="loginForm.invalid" class="{{secundario}}" expand="block"
+          (click)="logIn()"> Iniciar
           Sesion</ion-button>
       </form>
+      <!--
+        FIN LOGIN
+      -->
     </ion-card-content>
   </ion-card>
   <ion-card class="{{primario}}">
@@ -56,41 +62,37 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
+      
       <ion-content class="ion-padding">
 
-        <ion-img class="profilePicture" src="https://img.freepik.com/vector-premium/icono-perfil-avatar_188544-4755.jpg"
-          alt="The Wisconsin State Capitol building in Madison, WI at night"></ion-img>
+        <!--
+            REGISTRATION
+          -->
+          <form [formGroup]="registrationForm" (ngSubmit)="onSubmitReg()">
         <ion-item>
-          <ion-input label="Correo Electrónico" labelPlacement="floating" placeholder="Correo Electrónico" type="email"
+          <ion-input formControlName= "username" label="Nombre de Usuario" labelPlacement="floating" placeholder="Nombre"></ion-input>
+          <ion-icon name="create-outline" slot="end"></ion-icon>
+        </ion-item>       
+        <ion-item>
+          <ion-input formControlName= "email"  label="Correo Electrónico" labelPlacement="floating" placeholder="Correo Electrónico" type="email"
             errorText="Correo Invalido" ngModel email></ion-input>
           <ion-icon name="mail-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="Contraseña"></ion-input>
+          <ion-input formControlName= "password"  label="Contraseña" type="password" labelPlacement="floating" placeholder="Contraseña"></ion-input>
           <ion-icon name="create-outline" slot="end"></ion-icon>
         </ion-item>
         <ion-item>
-          <ion-input label="Repita su contraseña" type="password" labelPlacement="floating"
+          <ion-input formControlName= "confirmPassword"  label="Repita su contraseña" type="password" labelPlacement="floating"
             placeholder="Contraseña"></ion-input>
           <ion-icon name="create-outline" slot="end"></ion-icon>
         </ion-item>
-        <ion-item>
-          <ion-input label="Nombre" labelPlacement="floating" placeholder="Nombre"></ion-input>
-          <ion-icon name="create-outline" slot="end"></ion-icon>
-        </ion-item>
 
-        <ion-item>
-          <ion-input label="Apellidos" labelPlacement="floating" placeholder="Apellidos"></ion-input>
-          <ion-icon name="create-outline" slot="end"></ion-icon>
-        </ion-item>
-        <ion-item>
-          <ion-input label="Celular" labelPlacement="floating" placeholder="Celular" errorText="Telefono invalido"
-            type="number" [counter]="true" maxlength="9"></ion-input>
-          <ion-icon name="call-outline" slot="end"></ion-icon>
-        </ion-item>
-        <ion-button expand="block" (click)="register()">Registrarse</ion-button>
+        <ion-button expand="block" type="submit" (click)="register()">Registrarse</ion-button>
         <ion-spinner class="cargaem" *ngIf="registering" name="crescent"></ion-spinner>
+      </form>
       </ion-content>
+    
     </ng-template>
   </ion-modal>
 

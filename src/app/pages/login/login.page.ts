@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, LoadingController, ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
+import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
 
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
+  public registrationForm:FormGroup;
 
 
   user = {
@@ -35,16 +36,17 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   mensaje: any = "";
-
+  submitError="";
   constructor(
-    private loginService: LoginService,
+   
     private form: FormBuilder,
     private authenticationService:AuthenticationService,
     private storageService:StorageService,
     private router: Router,
     private actionSheetCtrl: ActionSheetController,
     private loadingCtrl: LoadingController,
-    private toastCtrl: ToastController) 
+    private toastCtrl: ToastController,
+    private alertController:AlertController) 
     {
     
 
@@ -58,6 +60,73 @@ export class LoginPage implements OnInit {
       identifier: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.createForm();
+  }
+  createForm(){
+    this.registrationForm = this.form.group({
+      username:['',Validators.required],
+      email: ['', Validators.required],
+      password:new FormControl('',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(5),
+          Validators.pattern("^(?=.*?[a-z])(?=.*?[0-9]).{5,30}$")]
+        )),
+
+      confirmPassword:new FormControl('',
+          Validators.compose([Validators.required])
+        ),},{
+          validator: this.ConfirmedValidator('password', 'confirmPassword'),
+  
+       }
+    );
+  }
+  async onSubmitReg(){
+    console.log(this.registrationForm.value)
+
+    if(! this.registrationForm.valid) return; 
+    
+    var res=await this.authenticationService.registerUser(this.registrationForm.value);
+    
+    if(res && res.status==='ok')
+    {  
+      const alert=await this.alertController.create(
+        {
+          message:"Registration done !",
+          buttons: ['OK'],}
+        )
+        await alert.present();
+
+      this.resetForm();
+    }
+    else if(res && res.message)
+      this.submitError=res.message;
+    else 
+      this.submitError="Error in submission. Please try again / latter!";
+  }
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
+      
+    return (formGroup: FormGroup) => {
+      const control = formGroup.controls[controlName];
+      
+      const matchingControl = formGroup.controls[matchingControlName];
+      if (matchingControl.errors) { return; }
+
+      if (control.value !== matchingControl.value) {          
+        matchingControl.setErrors({ confirmedValidator: true });
+      } else {
+        matchingControl.setErrors(null);
+      }
+    };
+  } 
+  resetForm()
+  {
+    this.registrationForm.reset();
+
+     Object.keys(this.registrationForm.controls).forEach((key) => {
+        const control = this.registrationForm.controls[key];
+        control.setErrors(null);
+      });
   }
   async onSubmit(){
     if(!this.loginForm.valid)return;
@@ -163,8 +232,6 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-  loginIn() {
-    this.loginService.loginIn()
-  }
+ 
 
 }
