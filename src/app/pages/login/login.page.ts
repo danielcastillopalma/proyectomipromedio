@@ -3,7 +3,10 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, LoadingController, ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from 'src/app/services/login.service';
+import { LoginService } from './login.service';
+
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +21,7 @@ export class LoginPage implements OnInit {
 
 
   user = {
-    email: "",
+    identifier: "",
     password: ""
   }
   presentingElement = undefined;
@@ -31,13 +34,19 @@ export class LoginPage implements OnInit {
   registering = false;
 
   loginForm: FormGroup;
-  mensaje: any= "";
+  mensaje: any = "";
 
-  constructor(private servicio: LoginService, private form: FormBuilder, private router: Router, private actionSheetCtrl: ActionSheetController, private loadingCtrl: LoadingController, private toastCtrl: ToastController) {
-    this.loginForm = this.form.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+  constructor(
+    private loginService: LoginService,
+    private form: FormBuilder,
+    private authenticationService:AuthenticationService,
+    private storageService:StorageService,
+    private router: Router,
+    private actionSheetCtrl: ActionSheetController,
+    private loadingCtrl: LoadingController,
+    private toastCtrl: ToastController) 
+    {
+    
 
 
 
@@ -45,6 +54,14 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
+    this.loginForm = this.form.group({
+      identifier: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+  async onSubmit(){
+    if(!this.loginForm.valid)return;
+    await this.authenticationService.login(this.loginForm.value);
   }
   canDismiss = async () => {
     const actionSheet = await this.actionSheetCtrl.create({
@@ -68,16 +85,7 @@ export class LoginPage implements OnInit {
     return role === 'confirm';
   };
 
-  ValidarLogin() {
-    console.log("Si entra")
-    this.servicio.ValidarLogin(this.loginForm.get("email")?.value, this.loginForm.get("password")?.value).subscribe(datos => {
-      if (datos.length == 0) {
-        this.mensaje = "Incorrecto";
-      } else {
-        console.log(datos);
-      }
-    })
-  }
+
 
   // CARGA DE LOGIN
   async logIn() {
@@ -155,6 +163,8 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
-
+  loginIn() {
+    this.loginService.loginIn()
+  }
 
 }

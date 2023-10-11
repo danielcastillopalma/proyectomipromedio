@@ -8,7 +8,6 @@ import { AppRoutingModule } from './app-routing.module';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
 @NgModule({
   declarations: [AppComponent],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, MatProgressBarModule, IonicStorageModule.forRoot(), FormsModule, HttpClientModule

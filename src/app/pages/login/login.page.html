@@ -22,8 +22,8 @@
       <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
       {{mensaje}}
-      <form [formGroup]="loginForm" (ngSubmit)="ValidarLogin()">
-        <ion-input class="{{terciario}}" [(ngModel)]="user.email" formControlName="email" appAutofill type="email"
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-input class="{{terciario}}" [(ngModel)]="user.identifier" formControlName="identifier" appAutofill type="email"
           autocomplete="email" type="email" fill="solid" label="Email" labelPlacement="floating"
           errorText="Correo Invalido" ngModel email></ion-input>
         <ion-input class="{{terciario}}" [(ngModel)]="user.password" formControlName="password" appAutofill
