@@ -63,7 +63,7 @@ export class AuthenticationService {
         this.isAuthenticated.next(true);        
         this.router.navigateByUrl('/home',{replaceUrl:true})        
       }else{
-        console.log("no funciona");
+        console.log("Usuario o clave invalido");
       }
     }catch(e){
       
