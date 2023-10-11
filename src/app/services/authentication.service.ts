@@ -27,7 +27,7 @@ export class AuthenticationService {
       if(!formData) return;
 
       const options = {
-        url: 'http://localhost:1337/api/auth/local/register', 
+        url: 'https://strapi-production-4838.up.railway.app/api/auth/local/register', 
         headers: { 'Content-Type': 'application/json'  },       
         data: JSON.stringify(formData),
       };
@@ -45,7 +45,7 @@ export class AuthenticationService {
     
     if(!formData) return;
     const options={
-      url:'http://localhost:1337/api/auth/local/',
+      url:'https://strapi-production-4838.up.railway.app/api/auth/local/',
       headers:{'Content-Type':'application/json'},
       data:JSON.stringify(formData)
     };
