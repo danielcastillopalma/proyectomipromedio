@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ActionSheetController, LoadingController, ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
-import { FormBuilder, FormGroup, Validators,FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService, Usuario } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { AlertController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -18,13 +19,21 @@ export class LoginPage implements OnInit {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  public registrationForm:FormGroup;
-  wrongCredentials="";
+  public registrationForm: FormGroup;
+  wrongCredentials = "";
+  usuario: Usuario = {
+    email: "",
+    username: "",
+  }
 
 
   user = {
     identifier: "",
     password: ""
+  }
+  userRegistration = {
+    identifier: "",
+    username: ""
   }
   presentingElement = undefined;
 
@@ -37,21 +46,20 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   mensaje: any = "";
-  submitError="";
-  isModalOpen =false;
+  submitError = "";
+  isModalOpen = false;
   constructor(
-   
+
     private form: FormBuilder,
-    private authenticationService:AuthenticationService,
-    private storageService:StorageService,
+    private authenticationService: AuthenticationService,
+    private storageService: StorageService,
     private router: Router,
     private actionSheetCtrl: ActionSheetController,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private alertController:AlertController) 
-    {
-      //constructor
-    }
+    private alertController: AlertController) {
+    //constructor
+  }
 
   ngOnInit() {
     this.presentingElement! = document.querySelector('.ion-page')!;
@@ -61,86 +69,94 @@ export class LoginPage implements OnInit {
     });
     this.createForm();
   }
-  createForm(){
+  createForm() {
     this.registrationForm = this.form.group({
-      username:['',Validators.required],
+      username: ['', Validators.required],
       email: ['', Validators.required],
-      password:new FormControl('',
+      password: new FormControl('',
         Validators.compose([
           Validators.required,
           Validators.minLength(5),
           Validators.pattern("^(?=.*?[a-z])(?=.*?[0-9]).{5,30}$")]
         )),
 
-      confirmPassword:new FormControl('',
-          Validators.compose([Validators.required])
-        ),},{
-          validator: this.ConfirmedValidator('password', 'confirmPassword'),
-  
-       }
+      confirmPassword: new FormControl('',
+        Validators.compose([Validators.required])
+      ),
+    }, {
+      validator: this.ConfirmedValidator('password', 'confirmPassword'),
+
+    }
     );
   }
-  async onSubmitReg(){
-    console.log(this.registrationForm.value)
+  guardarUsuario(email, username) {
+    this.authenticationService.createUser(email, username)
+    .subscribe((res) => console.log(res), (err) => console.error(err));
+  }
+  async onSubmitReg() {
 
-    if(! this.registrationForm.valid) return; 
-    
-    var res=await this.authenticationService.registerUser(this.registrationForm.value);
-    
-    if(res && res.status==='ok')
-    {  
-      const alert=await this.alertController.create(
+
+    if (!this.registrationForm.valid) return;
+
+    var res = await this.authenticationService.registerUser(this.registrationForm.value);
+    this.guardarUsuario(this.userRegistration.identifier,this.userRegistration.username);
+    if (res && res.status === 'ok') {
+      
+      
+      const alert = await this.alertController.create(
         {
-          message:"Registrado Correctamente",
-          buttons: ['OK'],}
-        )
-        await alert.present();
+          message: "Registrado Correctamente",
+          buttons: ['OK'],
+        }
+      )
+      await alert.present();
 
       this.resetForm();
       this.setOpen(false);
-      
+
     }
-    else if(res && res.message)
-      this.submitError=res.message;
-    else 
-      this.submitError="Error in submission. Please try again / latter!";
+    else if (res && res.message)
+      this.submitError = res.message;
+    else
+      this.submitError = "Error in submission. Please try again / latter!";
   }
+
+
   ConfirmedValidator(controlName: string, matchingControlName: string) {
-      
+
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
-      
+
       const matchingControl = formGroup.controls[matchingControlName];
       if (matchingControl.errors) { return; }
 
-      if (control.value !== matchingControl.value) {          
+      if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ confirmedValidator: true });
       } else {
         matchingControl.setErrors(null);
       }
     };
-  } 
+  }
   setOpen(isOpen: boolean) {
     this.isModalOpen = isOpen;
   }
-  resetForm()
-  {
+  resetForm() {
     this.registrationForm.reset();
 
-     Object.keys(this.registrationForm.controls).forEach((key) => {
-        const control = this.registrationForm.controls[key];
-        control.setErrors(null);
-      });
+    Object.keys(this.registrationForm.controls).forEach((key) => {
+      const control = this.registrationForm.controls[key];
+      control.setErrors(null);
+    });
   }
-  async onSubmit(){
-    if(!this.loginForm.valid)return;
-    const resp= await this.authenticationService.login(this.loginForm.value);
-    if(resp){
-      this.wrongCredentials=resp;
+  async onSubmit() {
+    if (!this.loginForm.valid) return;
+    const resp = await this.authenticationService.login(this.loginForm.value);
+    if (resp) {
+      this.wrongCredentials = resp;
 
     }
   }
-  
+
   // CARGA DE LOGIN
   async logIn() {
     const loading = await this.loadingCtrl.create({
@@ -217,6 +233,6 @@ export class LoginPage implements OnInit {
     });
     toast.present();
   }
- 
+
 
 }
