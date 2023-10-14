@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { DatabaseService } from 'src/app/services/database.service';
-import { StorageService } from 'src/app/services/storage.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',

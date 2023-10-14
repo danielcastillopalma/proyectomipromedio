@@ -4,17 +4,17 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { BlockDeNotasPageRoutingModule } from './block-de-notas-routing.module';
+import { NoteblockPageRoutingModule } from './noteblock-routing.module';
 
-import { BlockDeNotasPage } from './block-de-notas.page';
+import { NoteblockPage } from './noteblock.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    BlockDeNotasPageRoutingModule
+    NoteblockPageRoutingModule
   ],
-  declarations: [BlockDeNotasPage]
+  declarations: [NoteblockPage]
 })
-export class BlockDeNotasPageModule {}
+export class NoteblockPageModule {}

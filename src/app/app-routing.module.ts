@@ -21,8 +21,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'block-de-notas',
-    loadChildren: () => import('./pages/block-de-notas/block-de-notas.module').then( m => m.BlockDeNotasPageModule)
+    path: 'noteblock',
+    loadChildren: () => import('./pages/noteblock/noteblock.module').then( m => m.NoteblockPageModule)
   },
   
   

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BlockDeNotasPage } from './block-de-notas.page';
+import { NoteblockPage } from './noteblock.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: BlockDeNotasPage
+    component: NoteblockPage
   }
 ];
 
@@ -14,4 +14,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BlockDeNotasPageRoutingModule {}
+export class NoteblockPageRoutingModule {}
