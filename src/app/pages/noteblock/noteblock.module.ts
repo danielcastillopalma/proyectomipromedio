@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { NoteblockPageRoutingModule } from './noteblock-routing.module';
 
 import { NoteblockPage } from './noteblock.page';
+import { MenuModule } from 'src/app/modules/menu/menu.module';
+import { NotesComponent } from 'src/app/components/notes/notes.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    NoteblockPageRoutingModule
+    NoteblockPageRoutingModule,
+    MenuModule
   ],
-  declarations: [NoteblockPage]
+  declarations: [NoteblockPage,NotesComponent]
 })
 export class NoteblockPageModule {}

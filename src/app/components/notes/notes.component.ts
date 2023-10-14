@@ -1,14 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss'],
 })
-export class NotesComponent  implements OnInit {
+export class NotesComponent implements OnInit {
+  name: string;
+  constructor(private modalCtrl: ModalController) { }
 
-  constructor() { }
+  ngOnInit() { }
+  cancel() {
+    return this.modalCtrl.dismiss(null, 'cancel');
+  }
 
-  ngOnInit() {}
-
+  confirm() {
+    return this.modalCtrl.dismiss(this.name, 'confirm');
+  }
 }
