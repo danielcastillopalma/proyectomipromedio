@@ -6,6 +6,8 @@ import { HomePage } from './home.page';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { IonicStorageModule } from '@ionic/storage-angular';
+import { MenuModule } from 'src/app/modules/menu/menu.module';
+import { MenuComponent } from 'src/app/components/menu/menu.component';
 
 
 @NgModule({
@@ -14,8 +16,9 @@ import { IonicStorageModule } from '@ionic/storage-angular';
     CommonModule,
     FormsModule,
     IonicModule,
-    HomePageRoutingModule
+    HomePageRoutingModule,
+    MenuModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,]
 })
 export class HomePageModule {}
