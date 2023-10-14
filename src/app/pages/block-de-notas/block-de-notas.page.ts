@@ -65,6 +65,6 @@ export class BlockDeNotasPage {
 
   mostrarBlockDeNotas() {
     this.mostrarComponente = !this.mostrarComponente;
-    this.notas = this.notaService.obtenerNotas(); // obtener las notas al mostrar el componente BUG
-  }
+  //  this.notas = this.notaService.obtenerNotas(); // obtener las notas al mostrar el componente BUG
+}
 }

@@ -27,6 +27,11 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
+  {
+    path: 'tic-tac-toe',
+    loadChildren: () => import('./pages/tic-tac-toe/tic-tac-toe.module').then( m => m.TicTacToePageModule)
+  },
+
  
   
 
