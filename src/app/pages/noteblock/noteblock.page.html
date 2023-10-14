@@ -8,10 +8,22 @@
 
 </ion-header>
 <ion-header [translucent]="true">
-  
+
 </ion-header>
 <app-menu></app-menu>
-<ion-content>
-  {{message}}
+<ion-content *ngIf="notas;else sinnotas">
+  <ion-content *ngFor="let nota of notas()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>{{newTitle}}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        {{newContent}}
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
 </ion-content>
+<ng-template #sinnotas>
+  <h1>No hay notas, agrega alguna</h1>
+</ng-template>
 <ion-button expand="block" (click)="openModal()">Agregar</ion-button>

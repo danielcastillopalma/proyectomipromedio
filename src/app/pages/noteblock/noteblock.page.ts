@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { coloresBasicos } from 'src/app/app.module';
 import { NotesComponent } from 'src/app/components/notes/notes.component';
+import { SqliteService } from 'src/app/services/sqlite.service';
 
 @Component({
   selector: 'app-noteblock',
@@ -14,8 +15,13 @@ export class NoteblockPage implements OnInit {
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   userData: any = ""
-  message="prueba"
-  constructor(private modalCtrl:ModalController) { }
+  newTitle = ""
+  newContent = ""
+  notas = this.database.getNotes();
+  constructor(private modalCtrl: ModalController,
+    private database: SqliteService) {
+
+  }
 
   ngOnInit() {
   }
@@ -28,7 +34,8 @@ export class NoteblockPage implements OnInit {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.message = `Hello, ${data}!`;
+      this.newTitle = data.title;
+      this.newContent = data.content;
     }
   }
 
