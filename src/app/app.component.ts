@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from './services/database.service';
 import { SqliteService } from './services/sqlite.service';
-import { SplashScreen } from '@capacitor/splash-screen';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +13,7 @@ export class AppComponent {
   }
   async initApp(){
     await this.database.iniciarPlugin();
-    SplashScreen.hide();
+    
 
   }
 }
