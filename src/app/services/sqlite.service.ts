@@ -1,7 +1,7 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { SQLiteConnection, CapacitorSQLite, SQLiteDBConnection } from '@capacitor-community/sqlite'
 
-const DB_USERS = 'mipromediodb';
+const DB_NOTES = 'mipromediodb';
 
 export interface Note {
   id: number;
@@ -19,7 +19,7 @@ export class SqliteService {
   constructor() { }
   async iniciarPlugin() {
     this.db = await this.sqlite.createConnection(
-      DB_USERS,
+      DB_NOTES,
       false,
       'no-encryption',
       1,
