@@ -53,8 +53,7 @@ export class HomePage {
     private storages: StorageService) {
       
       this.userData=JSON.parse(localStorage.getItem('usuario')!);
-      console.log(this.userData)
-      console.log(this.userData.user.username)
+    
       
    
   }

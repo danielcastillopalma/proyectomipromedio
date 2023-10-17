@@ -5,16 +5,28 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-item lines="full">
+    <ion-item *ngIf="userData;else mispromedios" lines="full">
+      <ion-icon name="calculator-outline"></ion-icon>
+      <ion-label>Mis promedios</ion-label>
+    </ion-item>
+    <ng-template #mispromedios>
+      <ion-item lines="full">
       <ion-icon name="calculator-outline"></ion-icon>
       <ion-label>Mis promedios</ion-label>
       <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
-    <ion-item lines="full" routerLink="/block-de-notas">
+    </ng-template>
+    <ion-item  *ngIf="userData;else noteblock1" lines="full" clickable="true" routerLink="/noteblock">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>Block de Notas</ion-label>
+    </ion-item>
+    <ng-template #noteblock1>
+      <ion-item lines="full">
       <ion-icon name="document-text-outline"></ion-icon>
       <ion-label>Block de Notas</ion-label>
       <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
+    </ng-template>
   </ion-content>
   <ion-footer *ngIf="userData;else iniciar" class="{{secundario}}">
     <ion-item detail="true" (click)="goToProfile()" class="{{secundario}}">

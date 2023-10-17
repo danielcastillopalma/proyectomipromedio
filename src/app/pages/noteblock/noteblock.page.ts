@@ -17,13 +17,26 @@ export class NoteblockPage implements OnInit {
   userData: any = ""
   newTitle = ""
   newContent = ""
-  notas = this.database.getNotes();
-  constructor(private modalCtrl: ModalController,
+  notas:any=[
+    {
+      title:"Titulo",
+      content:"Contenido"
+    }
+  ]
+  constructor(
+    private modalCtrl: ModalController,
     private database: SqliteService) {
 
   }
 
   ngOnInit() {
+    this.database.dbState().subscribe((res:any)=>{
+      if(res){
+        this.database.fetchNotes().subscribe((item:any)=>{
+          this.notas=item;
+        })
+      }
+    })
   }
   async openModal() {
     const modal = await this.modalCtrl.create({

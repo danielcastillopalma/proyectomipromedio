@@ -21,9 +21,7 @@ export class MenuComponent implements OnInit {
 
 
   constructor(private router: Router, private loadingCtrl: LoadingController) {
-    this.userData = JSON.parse(localStorage.getItem('usuario')!);
-    console.log(this.userData)
-    console.log(this.userData.user.username)
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);    
   }
 
   ngOnInit() { }

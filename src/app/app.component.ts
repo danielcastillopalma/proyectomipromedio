@@ -12,7 +12,7 @@ export class AppComponent {
     this.initApp();
   }
   async initApp(){
-    await this.database.iniciarPlugin();
+    await this.database.crearBD();
     
 
   }
