@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { SqliteService } from 'src/app/services/sqlite.service';
+
 
 @Component({
   selector: 'app-notes',
@@ -14,7 +14,7 @@ export class NotesComponent implements OnInit {
   },]
 
   constructor(private modalCtrl: ModalController,
-    private database: SqliteService) { }
+  ) { }
 
   ngOnInit() { }
   cancel() {
@@ -25,9 +25,8 @@ export class NotesComponent implements OnInit {
     this.addNote();
     return this.modalCtrl.dismiss(this.nota, 'confirm');
   }
-  async addNote(){
-    await this.database.addNote(this.nota.title,this.nota.content);
-    this.nota.title="";
-    this.nota.content="";
+  async addNote() {
+    
+    return this.nota
   }
 }

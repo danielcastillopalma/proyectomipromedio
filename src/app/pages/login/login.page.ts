@@ -167,6 +167,7 @@ export class LoginPage implements OnInit {
 
     try {
 
+      
       await new Promise<void>((resolve) => {
         setTimeout(() => {
 
@@ -183,7 +184,7 @@ export class LoginPage implements OnInit {
           user: this.user
         }
       }
-      //this.router.navigate(['/home'], navigationextras)
+      this.router.navigate(['/home'], navigationextras)
     } catch (error) {
       console.error(error);
       loading.dismiss();

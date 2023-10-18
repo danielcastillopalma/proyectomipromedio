@@ -1,3 +1,4 @@
+<app-menu></app-menu>
 <ion-header>
   <ion-toolbar class="{{primario}}">
     <ion-buttons slot="start">
@@ -10,20 +11,22 @@
 <ion-header [translucent]="true">
 
 </ion-header>
-<app-menu></app-menu>
-<ion-content *ngIf="notas;else sinnotas">
-  <ion-content *ngFor="let nota of notas()">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>{{newTitle}}</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        {{newContent}}
-      </ion-card-content>
-    </ion-card>
-  </ion-content>
+
+
+
+<ion-content *ngFor="let item of notas">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ item.title }}</ion-card-title>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      {{item.content}}
+    </ion-card-content>
+
+  </ion-card>
 </ion-content>
-<ng-template #sinnotas>
-  <h1>No hay notas, agrega alguna</h1>
-</ng-template>
+
 <ion-button expand="block" (click)="openModal()">Agregar</ion-button>

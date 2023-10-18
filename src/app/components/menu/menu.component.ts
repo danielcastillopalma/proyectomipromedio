@@ -28,6 +28,9 @@ export class MenuComponent implements OnInit {
   goToProfile() {
     this.router.navigate(['/profile']);
   }
+  openNoteblock(){
+    this.router.navigate(['/noteblock'])
+  }
   async logIn() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando...', // Mensaje anim

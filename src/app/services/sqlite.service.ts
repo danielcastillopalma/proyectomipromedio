@@ -1,39 +1,24 @@
-import { Injectable, signal, WritableSignal } from '@angular/core';
-
-import { BehaviorSubject, Observable } from 'rxjs';
-import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx'
+import { Injectable } from '@angular/core';
+import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
 import { Platform, ToastController } from '@ionic/angular';
-
-const DB_NOTES = 'mipromediodb';
-
-export interface Note {
-  id: number;
-  title: string;
-  content: string;
-}
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Nota } from '../classes/nota';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SqliteService {
-  public database: SQLiteObject;
-  schema: string = `CREATE TABLE IF NOT EXISTS notes(id INTEGER PRIMARY KEY AUTOINCREMENT,
-    title TEXT,
-    content TEXT,
-    );`;
-  notes = new BehaviorSubject<Note[]>([]);
+  public database!: SQLiteObject;
+  tblNotas: string = "CREATE TABLE IF NOT EXISTS nota(id INTEGER PRIMARY KEY autoincrement, title VARCHAR(50) NOT NULL, content TEXT NOT NULL);";
+  listaNotas = new BehaviorSubject<Nota[]>([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  constructor(
-    private sqlite: SQLite,
-    private platform: Platform,
-    public toastController: ToastController) {
+  constructor(private sqlite: SQLite, private platform: Platform, public toastController: ToastController) {
     this.crearBD();
   }
-
   crearBD() {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'notas.db',
+        name: 'mipromedio.db',
         location: 'default'
       }).then((db: SQLiteObject) => {
         this.database = db;
@@ -42,36 +27,21 @@ export class SqliteService {
         this.crearTablas();
       }).catch(e => this.presentToast(e));
     })
-  }
-  dbState() {
-    return this.isDbReady.asObservable();
-  }
-  fetchNotes(): Observable<Note[]> {
-    return this.notes.asObservable();
+
   }
   async crearTablas() {
     try {
-      await this.database.executeSql(this.schema, []);
+      await this.database.executeSql(this.tblNotas, []);
       this.presentToast("Tabla creada");
-      this.isDbReady.next(true);
+      this.cargarNotas(); this.isDbReady.next(true);
     } catch (error) {
       this.presentToast("Error en Crear Tabla: " + error);
+
     }
   }
-  async presentToast(mensaje: string) {
-    const toast = await this.toastController.create({
-      message: mensaje,
-      duration: 3000
-    });
-    toast.present();
-  }
-
-
-
-  //CRUD
-  loadNotes() {
-    let items: Note[] = []
-    this.database.executeSql('SELECT * FROM notes')
+  cargarNotas() {
+    let items: Nota[] = [];
+    this.database.executeSql('SELECT * FROM nota', [])
       .then(res => {
         if (res.rows.length > 0) {
           for (let i = 0; i < res.rows.length; i++) {
@@ -83,31 +53,35 @@ export class SqliteService {
           }
         }
       });
-    this.notes.next(items);
-
+    this.listaNotas.next(items);
   }
-  async addNote(title: string, content: string) {
-    const query = `INSERT INTO notes(title,content) VALUES('${title},${content}')`;
-    const result = await this.database.executeSql(query);
-    this.loadNotes();
-    return result;
+  async addNota(title: any, content: any) {
+    let data = [title, content];
+    await this.database.executeSql('INSERT INTO nota(title,content)VALUES(?,?)', data);
+    this.cargarNotas();
   }
-  async updateNoteById(id: string, title: string, content: string) {
-    const query = `UPDATE notes SET (title='${title}',content='${content}' WHERE id=${id}`;
-    const result = await this.database.executeSql(query);
-    this.loadNotes();
-    return result;
+  /*** Método que actualiza el título y/o el texto filtrando por el id*/
+  async updateNota(id: any, title: any, content: any) {
+    let data = [title, content, id];
+    await this.database.executeSql('UPDATE nota SET title=?, content=?WHERE id=?', data);
+    this.cargarNotas();
   }
-  async deleteNoteById(id: string) {
-    const query = `DELETE FROM notes WHERE id=${id}`;
-    const result = await this.database.executeSql(query);
-    this.loadNotes();
-    return result;
+  /*** Método que elimina un registro por id de la tabla noticia*/
+  async deleteNota(id: any) {
+    await this.database.executeSql('DELETE FROM nota WHERE id=?', [id]);
+    this.cargarNotas();
   }
-
-  getNotes() {
-    return this.notes;
+  dbState() {
+    return this.isDbReady.asObservable();
   }
-
+  /*** Método que se ejecuta cada vez que se hace un cambio en la tabla dela BD*/
+  fetchNotas(): Observable<Nota[]> {
+    return this.listaNotas.asObservable();
+  }
+  async presentToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje, duration: 3000
+    }); toast.present();
+  }
 
 }

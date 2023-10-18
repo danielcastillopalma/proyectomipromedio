@@ -16,7 +16,7 @@
       <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
     </ng-template>
-    <ion-item  *ngIf="userData;else noteblock1" lines="full" clickable="true" routerLink="/noteblock">
+    <ion-item  *ngIf="userData;else noteblock1" lines="full" (click)="openNoteblock()">
       <ion-icon name="document-text-outline"></ion-icon>
       <ion-label>Block de Notas</ion-label>
     </ion-item>
