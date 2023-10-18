@@ -2,6 +2,10 @@ import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2, OnInit } 
 import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
+import { Storage } from '@ionic/storage-angular';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageService } from 'src/app/services/storage.service';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-profile',
@@ -9,16 +13,19 @@ import { coloresBasicos, coloresDuoc } from '../../app.module'
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
-  constructor(private element: ElementRef, private router: Router, private activateRoute: ActivatedRoute) {
-    this.activateRoute.queryParams.subscribe(params => {
-      if (this.router.getCurrentNavigation()?.extras.state) {
-        this.data = this.router.getCurrentNavigation()?.extras.state?.["user"];
-        console.log(this.data)
-      } else {
-        this.data = ["Mi Promedio"]
-      }
-    });
+  userData:any=""
+  constructor(
+    private db:DatabaseService,
+    private storage: Storage,
+    private element: ElementRef,
+    private router: Router, 
+    private activateRoute: ActivatedRoute, 
+    private auth: AuthenticationService,
+    private storages: StorageService) {
+      this.userData=JSON.parse(localStorage.getItem('usuario')!);
+      console.log(this.userData)
+      console.log(this.userData.user.username)
+    
   }
   data: any;
   colores: any = {

@@ -4,20 +4,20 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilePageRoutingModule } from './profile-routing.module';
+import { NoteblockPageRoutingModule } from './noteblock-routing.module';
 
-import { ProfilePage } from './profile.page';
+import { NoteblockPage } from './noteblock.page';
 import { MenuModule } from 'src/app/modules/menu/menu.module';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
+import { NotesComponent } from 'src/app/components/notes/notes.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProfilePageRoutingModule,
+    NoteblockPageRoutingModule,
     MenuModule
   ],
-  declarations: [ProfilePage]
+  declarations: [NoteblockPage,NotesComponent]
 })
-export class ProfilePageModule { }
+export class NoteblockPageModule {}
