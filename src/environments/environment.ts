@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl:'sql10.freemysqlhosting.net:3306'
-  
+
+
 };
 
 
