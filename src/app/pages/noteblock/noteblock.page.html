@@ -12,21 +12,15 @@
 
 </ion-header>
 
-
-
 <ion-content *ngFor="let item of notas">
 
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{ item.title }}</ion-card-title>
-
     </ion-card-header>
-
     <ion-card-content>
       {{item.content}}
     </ion-card-content>
-
   </ion-card>
 </ion-content>
-
 <ion-button expand="block" (click)="openModal()">Agregar</ion-button>
