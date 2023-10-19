@@ -6,6 +6,8 @@ import { Storage } from '@ionic/storage-angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { DatabaseService } from 'src/app/services/database.service';
+import { DomController } from '@ionic/angular';
+import { waitForAsync } from '@angular/core/testing';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -51,7 +53,8 @@ export class HomePage {
     private activateRoute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private auth: AuthenticationService,
-    private storages: StorageService) {
+    private storages: StorageService
+    , private viewCtrl: DomController) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
 
@@ -63,14 +66,17 @@ export class HomePage {
   async ngOnInit() {
     await this.storage.create();
 
-  }
 
+  }
+  
   sumarPromArit = 0;
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
-  
-  
+
+refresh(){
+  window.location.reload();
+}
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {

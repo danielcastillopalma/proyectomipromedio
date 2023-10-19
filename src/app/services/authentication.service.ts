@@ -127,6 +127,7 @@ export class AuthenticationService {
         this.storageService.set("token", res.jwt);
         this.isAuthenticated.next(true);
         this.router.navigate(['/home']);
+        
         localStorage.setItem('usuario', JSON.stringify(res));
         return;
       } else {
