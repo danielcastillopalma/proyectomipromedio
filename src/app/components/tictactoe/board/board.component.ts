@@ -1,18 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, NgModule, OnInit } from '@angular/core';
+import { TictactoePageModule } from 'src/app/pages/tictactoe/tictactoe.module';
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
+  
 })
+
 export class BoardComponent  implements OnInit {
 
   cells = Array(9).fill(null);
   currentPlayer = 'X';
   winner: string | null = null;
 
-  constructor() { }
-
+  constructor(tictac:TictactoePageModule) { }
+  
   ngOnInit() {}
 
   makeMove(index: number) {

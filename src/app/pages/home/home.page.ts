@@ -15,7 +15,7 @@ import { DatabaseService } from 'src/app/services/database.service';
 
 
 export class HomePage {
-  token=""
+  token = ""
   tipoPromedio: any[] = [
     { prom: 1, tipo: "Aritmético" },
     { prom: 2, tipo: "Ponderado" },
@@ -41,33 +41,36 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  userData:any=""
+  userData: any = ""
+
   constructor(
-    private db:DatabaseService,
+    private db: DatabaseService,
     private storage: Storage,
     private element: ElementRef,
-    private router: Router, 
-    private activateRoute: ActivatedRoute, 
+    private router: Router,
+    private activateRoute: ActivatedRoute,
     private loadingCtrl: LoadingController,
     private auth: AuthenticationService,
     private storages: StorageService) {
-      
-      this.userData=JSON.parse(localStorage.getItem('usuario')!);
-    
-      
-   
+
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+
+
+
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   async ngOnInit() {
     await this.storage.create();
+
   }
 
   sumarPromArit = 0;
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
-
+  
+  
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {

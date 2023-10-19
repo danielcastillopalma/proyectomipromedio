@@ -7,7 +7,6 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 import { IonicStorageModule } from '@ionic/storage-angular';
 import { MenuModule } from 'src/app/modules/menu/menu.module';
-import { MenuComponent } from 'src/app/components/menu/menu.component';
 
 
 @NgModule({
@@ -21,4 +20,8 @@ import { MenuComponent } from 'src/app/components/menu/menu.component';
   ],
   declarations: [HomePage,]
 })
-export class HomePageModule {}
+export class HomePageModule {
+  public refreshPage(){
+    window.location.reload();
+  }
+}

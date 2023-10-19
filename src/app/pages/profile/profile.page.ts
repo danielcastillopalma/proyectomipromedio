@@ -13,19 +13,20 @@ import { DatabaseService } from 'src/app/services/database.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-  userData:any=""
+  userData: any = ""
   constructor(
-    private db:DatabaseService,
+
+    private db: DatabaseService,
     private storage: Storage,
     private element: ElementRef,
-    private router: Router, 
-    private activateRoute: ActivatedRoute, 
+    private router: Router,
+    private activateRoute: ActivatedRoute,
     private auth: AuthenticationService,
     private storages: StorageService) {
-      this.userData=JSON.parse(localStorage.getItem('usuario')!);
-      console.log(this.userData)
-      console.log(this.userData.user.username)
-    
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    console.log(this.userData)
+    console.log(this.userData.user.username)
+
   }
   data: any;
   colores: any = {
@@ -52,6 +53,11 @@ export class ProfilePage implements OnInit {
       this.secundario = coloresDuoc.secundario;
       this.primario = coloresDuoc.primario;
     }
+  }
+  logout() {
+    this.auth.logout();
+    localStorage.clear();
+   
   }
 
 }
