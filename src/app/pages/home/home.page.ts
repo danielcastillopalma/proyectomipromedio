@@ -4,6 +4,7 @@ import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 @Component({
   selector: 'app-home',
@@ -46,6 +47,7 @@ export class HomePage {
     private storage: Storage,
     private router: Router,
     private loadingCtrl: LoadingController,
+    private calendar:Calendar,
   ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -72,6 +74,13 @@ export class HomePage {
     window.location.reload();
   }
   async scheduleNotification() {
+    this.calendar.createEventInteractively(
+      'Titulo',
+      'Ubicacion',
+      undefined,
+      new Date(),
+      undefined
+    )
 
     let options: ScheduleOptions = {
       notifications: [
