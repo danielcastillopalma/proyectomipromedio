@@ -2,10 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { TictactoePageRoutingModule } from './tictactoe-routing.module';
 
+import { TictactoePageRoutingModule } from './tictactoe-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TictactoePage } from './tictactoe.page';
-import { TictactoeModule } from 'src/app/modules/tictactoe/tictactoe.module';
+
 
 
 @NgModule({
@@ -14,8 +15,10 @@ import { TictactoeModule } from 'src/app/modules/tictactoe/tictactoe.module';
     FormsModule,
     IonicModule,
     TictactoePageRoutingModule,
-    TictactoeModule
+    ReactiveFormsModule,
   ],
-  declarations: [TictactoePage]
+  declarations: [TictactoePage],
+ 
+
 })
 export class TictactoePageModule {}
