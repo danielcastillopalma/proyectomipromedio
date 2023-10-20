@@ -3,11 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { DatabaseService } from 'src/app/services/database.service';
-import { DomController } from '@ionic/angular';
-import { waitForAsync } from '@angular/core/testing';
+import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -46,15 +43,10 @@ export class HomePage {
   userData: any = ""
 
   constructor(
-    private db: DatabaseService,
     private storage: Storage,
-    private element: ElementRef,
     private router: Router,
-    private activateRoute: ActivatedRoute,
     private loadingCtrl: LoadingController,
-    private auth: AuthenticationService,
-    private storages: StorageService
-    , private viewCtrl: DomController) {
+  ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
 
@@ -65,18 +57,40 @@ export class HomePage {
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   async ngOnInit() {
     await this.storage.create();
+    LocalNotifications.checkPermissions();
+    LocalNotifications.requestPermissions();
 
 
   }
-  
+
   sumarPromArit = 0;
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
 
-refresh(){
-  window.location.reload();
-}
+  refresh() {
+    window.location.reload();
+  }
+  async scheduleNotification() {
+
+    let options: ScheduleOptions = {
+      notifications: [
+        {
+          id: 1,
+          title: "titulo notificacion",
+          body: "Cuerpo de la notificación",
+          largeBody: "Cuerpo grande de la notificacion",
+          summaryText: "Texto bait"
+        }
+      ]
+    }
+    try {
+      await LocalNotifications.schedule(options)
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+
+  }
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {

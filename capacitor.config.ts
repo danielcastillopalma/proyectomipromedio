@@ -16,6 +16,11 @@ const config: CapacitorConfig = {
         biometricAuth: false,
         biometricTitle: "Biometric login for capacitor sqlite"
       },
+      LocalNotifications: {
+
+        iconColor: "#488AFF",
+
+      },
     }
   }
 };

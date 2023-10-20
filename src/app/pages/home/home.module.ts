@@ -21,5 +21,5 @@ import { MenuModule } from 'src/app/modules/menu/menu.module';
   declarations: [HomePage,]
 })
 export class HomePageModule {
-  
+
 }
