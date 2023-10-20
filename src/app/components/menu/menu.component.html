@@ -1,0 +1,47 @@
+<ion-menu contentId="main-content" class="{{terciario}}">
+  <ion-header>
+    <ion-toolbar class="{{primario}}">
+      <ion-title>Mi Promedio</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-item *ngIf="userData;else mispromedios" lines="full">
+      <ion-icon name="calculator-outline"></ion-icon>
+      <ion-label>Mis promedios</ion-label>
+    </ion-item>
+    <ng-template #mispromedios>
+      <ion-item lines="full">
+      <ion-icon name="calculator-outline"></ion-icon>
+      <ion-label>Mis promedios</ion-label>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
+    </ion-item>
+    </ng-template>
+    <ion-item  *ngIf="userData;else noteblock1" lines="full" (click)="openNoteblock()">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>Block de Notas</ion-label>
+    </ion-item>
+    <ng-template #noteblock1>
+      <ion-item lines="full">
+      <ion-icon name="document-text-outline"></ion-icon>
+      <ion-label>Block de Notas</ion-label>
+      <ion-icon name="lock-closed" slot="end"></ion-icon>
+    </ion-item>
+    </ng-template>
+  </ion-content>
+  <ion-footer *ngIf="userData;else iniciar" class="{{secundario}}">
+    <ion-item detail="true" (click)="goToProfile()" class="{{secundario}}">
+      <ion-label>
+        <h3>{{userData.user.username}}</h3>
+      </ion-label>
+    </ion-item>
+  </ion-footer>
+  <ng-template #iniciar>
+    <ion-item detail="true" (click)="logIn()" class="{{secundario}}">
+      <ion-label>
+        <h3>Iniciar Sesion</h3>
+      </ion-label>
+    </ion-item>
+  </ng-template>
+</ion-menu>
+<div class="ion-page" id="main-content">
+</div>

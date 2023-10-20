@@ -1,0 +1,26 @@
+<app-menu></app-menu>
+<ion-header>
+  <ion-toolbar class="{{primario}}">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Notas </ion-title>
+  </ion-toolbar>
+
+</ion-header>
+<ion-header [translucent]="true">
+
+</ion-header>
+
+<ion-content *ngFor="let item of notas">
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ item.title }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      {{item.content}}
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-button expand="block" (click)="openModal()">Agregar</ion-button>

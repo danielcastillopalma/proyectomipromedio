@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { BlockDeNotasPage } from './block-de-notas.page';
+import { NoteblockPage } from './noteblock.page';
 
-describe('BlockDeNotasPage', () => {
-  let component: BlockDeNotasPage;
-  let fixture: ComponentFixture<BlockDeNotasPage>;
+describe('NoteblockPage', () => {
+  let component: NoteblockPage;
+  let fixture: ComponentFixture<NoteblockPage>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(BlockDeNotasPage);
+    fixture = TestBed.createComponent(NoteblockPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
