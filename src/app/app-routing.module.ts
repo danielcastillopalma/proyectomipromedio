@@ -25,7 +25,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/noteblock/noteblock.module').then( m => m.NoteblockPageModule)
   },
   {
-    path: '**',
+    path: '',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
   {
