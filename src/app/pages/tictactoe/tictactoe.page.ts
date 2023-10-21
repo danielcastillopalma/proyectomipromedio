@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl } from "@angular/forms";
 import { startWith } from "rxjs/operators";
+import { coloresBasicos } from 'src/app/app.module';
 
 @Component({
   selector: 'app-tictactoe',
@@ -8,9 +9,9 @@ import { startWith } from "rxjs/operators";
   styleUrls: ['./tictactoe.page.scss'],
 })
 export class TictactoePage {
- 
+  primario = coloresBasicos.primario;
   title = "Tic Tac Toe";
-  status = "Win"; // 'Win', 'Lose', 'Tie'
+  status = "A"; 
   board = [["", "", ""], ["", "", ""], ["", "", ""]];
   start = true;
   isCircle = this.start;

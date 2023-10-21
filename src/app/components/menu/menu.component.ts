@@ -31,6 +31,10 @@ export class MenuComponent implements OnInit {
   openNoteblock(){
     this.router.navigate(['/noteblock'])
   }
+  goToTicTacToePage() {
+    this.router.navigate(['/tictactoe']); 
+  }
+
   async logIn() {
     const loading = await this.loadingCtrl.create({
       message: 'Cargando...', // Mensaje anim

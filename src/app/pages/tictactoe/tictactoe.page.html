@@ -1,8 +1,17 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div>
-  <h1>{{ title }}</h1>
 
-  <h2>Start With</h2>
+<ion-header>
+  <ion-toolbar class="{{primario}}">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Tic Tac Toe</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-menu></app-menu>
+  <div class="game-container" style="position: relative; z-index: 1;">
+  <h2>Seleccione X - O</h2>
 
   <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary" [class.active]="startWith.value === true">
@@ -27,7 +36,7 @@
     </label>
   </div>
 
-  <h2>Status: {{ status }}</h2>
+  
   <table>
     <tr *ngFor="let board_row of board; let x = index">
       <td *ngFor="let cell of board_row; let y = index" (click)="onclick(x, y)">
@@ -39,8 +48,9 @@
   <h5>{{ this.startWith.value | json }}</h5>
   <div class="action-btn-container">
     <button type="button" class="btn btn-danger" (click)="clear()">
-      Clear
+      Limpiar
     </button>
-    <button type="button" class="btn btn-warning" (click)="undo()">Undo</button>
+   
   </div>
-</div>.
+</div>
+</ion-content>
