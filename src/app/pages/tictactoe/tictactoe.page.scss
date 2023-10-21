@@ -20,7 +20,7 @@ td {
   font-size: 64px;
   border: 2px solid transparent; /* Borde inicial transparente */
   transition: border-color 1.5s; /* Animación de cambio de color en 1.5 segundos */
-  animation: colorChange 3s infinite; /* Cambio de color cada 3 segundos (puedes ajustar el tiempo) */
+  animation: colorChange 3s infinite; /* Cambio de color */
 }
 
 @keyframes colorChange {
@@ -31,13 +31,13 @@ td {
     border-color: rgb(4, 245, 4); /* Cambio de color en 25% de la animación */
   }
   50% {
-    border-color: rgb(4, 4, 245); /* Cambio de color en 50% de la animación */
+    border-color: rgb(4, 4, 245); 
   }
   75% {
-    border-color: rgb(245, 245, 4); /* Cambio de color en 75% de la animación */
+    border-color: rgb(245, 245, 4); 
   }
   100% {
-    border-color: rgb(245, 4, 4); /* Vuelve al color inicial al final de la animación */
+    border-color: rgb(245, 4, 4); 
   }
 }
 
