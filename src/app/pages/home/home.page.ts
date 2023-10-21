@@ -5,6 +5,7 @@ import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
+import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,8 @@ import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 
 
 export class HomePage {
-  token = ""
+  nombrePromArit: any = "";
+  token = "";
   tipoPromedio: any[] = [
     { prom: 1, tipo: "Aritmético" },
     { prom: 2, tipo: "Ponderado" },
@@ -42,15 +44,18 @@ export class HomePage {
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   userData: any = ""
+  userDataEmail: any = ""
 
   constructor(
     private storage: Storage,
     private router: Router,
     private loadingCtrl: LoadingController,
-    private calendar:Calendar,
+    private calendar: Calendar,
+    private db: DatabaseService
   ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    this.userDataEmail = JSON.parse(localStorage.getItem('email')!);
 
 
 
@@ -69,10 +74,12 @@ export class HomePage {
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
-
+  //reloadbutton
   refresh() {
     window.location.reload();
   }
+
+  //notificaciones
   async scheduleNotification() {
     this.calendar.createEventInteractively(
       'Titulo',
@@ -100,6 +107,8 @@ export class HomePage {
     }
 
   }
+
+
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {
@@ -108,12 +117,14 @@ export class HomePage {
         this.totalPromArit = this.sumarPromArit / cant
       } else {
         this.sumarPromArit = this.sumarPromArit + parseInt(nota.notArit)
+
         this.totalPromArit = this.sumarPromArit / cant
       }
     }
     this.promedioAritmetico = this.totalPromArit
     console.log(this.totalPromArit)
     console.log(this.sumarPromArit)
+
     this.sumarPromArit = 0;
 
   }
@@ -127,6 +138,20 @@ export class HomePage {
       this.promArit.push({ pos: cant + 1, notArit: '' });
     }
   }
+
+  guardarNotaArit() {
+    let notas: string = "";
+    for (let nota of this.promArit) {
+      if (nota.notArit != '') {
+        notas = notas + nota.notArit + "/"
+      }
+    }
+    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userDataEmail); }catch{
+      console.log("nofunciona")
+    }
+
+  }
+
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
     let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));

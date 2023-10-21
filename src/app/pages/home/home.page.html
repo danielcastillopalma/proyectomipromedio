@@ -50,8 +50,8 @@
             <ion-col><label>Nota {{pos.pos}}</label></ion-col>
             <ion-col><ion-input type="number" (focusout)="calcularPromArit()" label="N{{pos.pos}}"
                 label-placement="floating" fill="outline" [(ngModel)]="pos.notArit"></ion-input></ion-col>
-            <ion-col><ion-button ionic capacitor build android fill="borderless"(click)="scheduleNotification()"><ion-icon
-                  name="alarm-outline"></ion-icon></ion-button></ion-col>
+            <ion-col><ion-button ionic capacitor build android fill="borderless"
+                (click)="scheduleNotification()"><ion-icon name="alarm-outline"></ion-icon></ion-button></ion-col>
             <ion-col><ion-button (click)="borrarNotaArit(pos.pos)" fill="borderless"><ion-icon
                   name="close-circle-outline"></ion-icon></ion-button></ion-col>
 
@@ -106,8 +106,10 @@
 <ion-footer> <ion-toolbar class="{{secundario}}">
     <ion-title>
       <ion-row class="ion-justify-content-between">
-        <ion-col size=""><ion-input placeholder="Mi Promedio 1" [counter]="true" maxlength="25"></ion-input></ion-col>
-        <ion-col size="auto"><ion-button class="{{cuarto}}" fill="block">Guardar</ion-button></ion-col>
+        <ion-col size=""><ion-input  placeholder="Mi Promedio 1" [counter]="true"
+            maxlength="25" [(ngModel)]="nombrePromArit"></ion-input></ion-col>
+        <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="guardarNotaArit()"
+            fill="block">Guardar</ion-button></ion-col>
       </ion-row>
 
     </ion-title>
