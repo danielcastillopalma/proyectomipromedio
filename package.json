@@ -36,7 +36,7 @@
     "@capacitor/splash-screen": "^5.0.6",
     "@capacitor/status-bar": "5.0.6",
     "@ionic/angular": "^7.3.3",
-    "@ionic/cli": "^7.1.1",
+    "@ionic/cli": "^6.18.0",
     "@ionic/storage": "^4.0.0",
     "@ionic/storage-angular": "^4.0.0",
     "capacitor": "^0.5.6",
