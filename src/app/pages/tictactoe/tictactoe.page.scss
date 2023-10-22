@@ -18,17 +18,17 @@ td {
   height: 128px;
   width: 128px;
   font-size: 64px;
-  border: 2px solid transparent; /* Borde inicial transparente */
-  transition: border-color 1.5s; /* Animación de cambio de color en 1.5 segundos */
-  animation: colorChange 3s infinite; /* Cambio de color */
+  border: 2px solid transparent; 
+  transition: border-color 1.5s; // animacion de cambio de color
+  animation: colorChange 3s infinite; 
 }
 
 @keyframes colorChange {
   0% {
-    border-color: rgb(245, 4, 4); /* Color inicial */
+    border-color: rgb(245, 4, 4); // color inicial
   }
   25% {
-    border-color: rgb(4, 245, 4); /* Cambio de color en 25% de la animación */
+    border-color: rgb(4, 245, 4); // cambio de color cada porcentaje
   }
   50% {
     border-color: rgb(4, 4, 245); 
