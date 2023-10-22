@@ -19,7 +19,7 @@ export class NotfoundPage implements OnInit {
     if (notFoundTitle) {
       const animation: Animation = this.animationCtrl.create()
         .addElement(notFoundTitle)
-        .duration(1000)
+        .duration(2000)
         .iterations(Infinity)
         .fromTo('transform', 'rotate(0deg)', 'rotate(360deg');
   
