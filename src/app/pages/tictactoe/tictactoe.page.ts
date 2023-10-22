@@ -52,7 +52,7 @@ export class TictactoePage {
   }
 
   checkForWinner() {
-    // Comprobar filas
+    // Filas
     for (let i = 0; i < 3; i++) {
       if (
         this.board[i][0] === this.board[i][1] &&
@@ -63,7 +63,7 @@ export class TictactoePage {
       }
     }
 
-    // Comprobar columnas
+    // Columnas
     for (let i = 0; i < 3; i++) {
       if (
         this.board[0][i] === this.board[1][i] &&
@@ -74,7 +74,7 @@ export class TictactoePage {
       }
     }
 
-    // Comprobar diagonales
+    // diagonales
     if (
       this.board[0][0] === this.board[1][1] &&
       this.board[1][1] === this.board[2][2] &&
@@ -87,7 +87,7 @@ export class TictactoePage {
       this.board[1][1] === this.board[2][0] &&
       this.board[0][2] !== ''
     ) {
-      return true; // Diagonal secundaria
+      return true; //
     }
 
     return false; // No hay ganador
