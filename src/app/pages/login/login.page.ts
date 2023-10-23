@@ -59,6 +59,9 @@ export class LoginPage implements OnInit {
     private toastCtrl: ToastController,
     private alertController: AlertController) {
     //constructor
+
+    
+
   }
 
   ngOnInit() {
@@ -119,6 +122,9 @@ export class LoginPage implements OnInit {
       this.submitError = res.message;
     else
       this.submitError = "Error in submission. Please try again / latter!";
+
+
+      
   }
 
 
