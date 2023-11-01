@@ -31,7 +31,11 @@ const routes: Routes = [
   {
     path: 'tictactoe',
     loadChildren: () => import('./pages/tictactoe/tictactoe.module').then( m => m.TictactoePageModule)
+  },  {
+    path: 'mispromedios',
+    loadChildren: () => import('./pages/mispromedios/mispromedios.module').then( m => m.MispromediosPageModule)
   },
+
 
  
   
