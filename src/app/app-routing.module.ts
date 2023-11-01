@@ -25,15 +25,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/noteblock/noteblock.module').then( m => m.NoteblockPageModule)
   },
   {
-    path: 'notfound',
+    path: '',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
   {
     path: 'tictactoe',
     loadChildren: () => import('./pages/tictactoe/tictactoe.module').then( m => m.TictactoePageModule)
-  },  {
-    path: 'mispromedios',
-    loadChildren: () => import('./pages/mispromedios/mispromedios.module').then( m => m.MispromediosPageModule)
   },
 
 
