@@ -5,6 +5,7 @@ const config: CapacitorConfig = {
   appName: 'ProyectoMiPromedio',
   webDir: 'www',
   server: {
+    hostname:'http://localhost:8100',
     androidScheme: 'https'
   },
   plugins: {
