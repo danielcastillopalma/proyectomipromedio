@@ -162,7 +162,7 @@ export class HomePage {
         notas = notas + nota.notArit + "/"
       }
     }
-    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userDataEmail); }catch{
+    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); }catch{
       console.log("nofunciona")
     }
 

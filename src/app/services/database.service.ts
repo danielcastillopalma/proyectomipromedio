@@ -31,12 +31,14 @@ export class DatabaseService {
       url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos?filters[avgemail][$eq]=' + this.userData.user.email,
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `bearer ${this.userData.jwt} `,        
-        "Bearer-Token": this.userData.jwt,
+        "Authorization": `Bearer ${this.storageService.get("key")}`,
+        "Bearer-Token": `${this.storageService.get("key")}`,
       },
     };
     try {
       const response: HttpResponse = await CapacitorHttp.get(options);
+      console.log('Aca entra')
+      console.log(JSON.stringify(response.data));
       return response.data;
     }
     catch (e) {
@@ -46,7 +48,7 @@ export class DatabaseService {
   }
 
   async guardarNotaArit(nombre: string, notas: string, email: string) {
-    email = "dcastillo@gmail.com"
+
     const obj = {
       "data": {
         "avgtitle": nombre,
@@ -56,7 +58,11 @@ export class DatabaseService {
     }
     const options = {
       url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${this.storageService.get("key")}`,
+        "Bearer-Token": `${this.storageService.get("key")}`,
+      },
       data: JSON.stringify(obj),
     };
 
