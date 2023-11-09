@@ -5,22 +5,22 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-item *ngIf="userData;else mispromedios" lines="full">
+    <ion-item *ngIf="userData;else mispromedios" lines="full" (click)="navigate('mispromedios')">
       <ion-icon name="calculator-outline"></ion-icon>
       <ion-label>Mis promedios</ion-label>
     </ion-item>
     <ng-template #mispromedios>
-      <ion-item lines="full">
+      <ion-item lines="full" >
       <ion-icon name="calculator-outline"></ion-icon>
       <ion-label>Mis promedios</ion-label>
       <ion-icon name="lock-closed" slot="end"></ion-icon>
     </ion-item>
     </ng-template>
-    <ion-item  *ngIf="userData;else noteblock1" lines="full" (click)="openNoteblock()">
+    <ion-item  *ngIf="userData;else noteblock1" lines="full" (click)="navigate('noteblock')">
       <ion-icon name="document-text-outline"></ion-icon>
       <ion-label>Block de Notas</ion-label>
     </ion-item>
-    <ion-item lines="full" (click)="goToTicTacToePage()">
+    <ion-item lines="full" (click)="navigate('tictactoe')">
       <ion-icon name="game-controller-outline"></ion-icon> 
       <ion-label>Tic Tac Toe</ion-label>
     </ion-item>
@@ -33,7 +33,7 @@
     </ng-template>
   </ion-content>
   <ion-footer *ngIf="userData;else iniciar" class="{{secundario}}">
-    <ion-item detail="true" (click)="goToProfile()" class="{{secundario}}">
+    <ion-item detail="true" (click)="navigate('profile')" class="{{secundario}}">
       <ion-label>
         <h3>{{userData.user.username}}</h3>
       </ion-label>

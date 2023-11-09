@@ -24,7 +24,10 @@ const routes: Routes = [
     path: 'noteblock',
     loadChildren: () => import('./pages/noteblock/noteblock.module').then( m => m.NoteblockPageModule)
   },
-  
+  {
+    path: 'mispromedios',
+    loadChildren: () => import('./pages/mispromedios/mispromedios.module').then( m => m.MispromediosPageModule)
+  },
   {
     path: 'tictactoe',
     loadChildren: () => import('./pages/tictactoe/tictactoe.module').then( m => m.TictactoePageModule)
@@ -33,6 +36,8 @@ const routes: Routes = [
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
+  
+
 
 
  

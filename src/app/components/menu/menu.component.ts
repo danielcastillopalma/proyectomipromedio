@@ -25,18 +25,14 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() { }
-  goToProfile() {
-    this.router.navigate(['/profile']);
+  navigate(page:string){
+    this.router.navigate(['/'+page]);
   }
+  
   goToHome() {
     this.router.navigate(['/home']);
   }
-  openNoteblock(){
-    this.router.navigate(['/noteblock'])
-  }
-  goToTicTacToePage() {
-    this.router.navigate(['/tictactoe']); 
-  }
+  
 
   async logIn() {
     const loading = await this.loadingCtrl.create({
