@@ -1,13 +1,33 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>mispromedios</ion-title>
+<!--
+  Cabecera principal
+-->
+<app-menu></app-menu>
+<ion-header>
+  <ion-toolbar class="{{primario}}">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mi Promedio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="refresh()"><ion-icon name="refresh"></ion-icon></ion-button>
+
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
+<!--
+  Fin Cabecera principal
+-->
+<!--
+  MENU LATERAL
+-->
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">mispromedios</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+
+
+<!--
+  FIN MENU LATERAL
+-->
+
+
+<ion-footer> <ion-toolbar class="{{secundario}}">
+    
+</ion-toolbar></ion-footer>
