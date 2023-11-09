@@ -24,13 +24,14 @@ const routes: Routes = [
     path: 'noteblock',
     loadChildren: () => import('./pages/noteblock/noteblock.module').then( m => m.NoteblockPageModule)
   },
-  {
-    path: '',
-    loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
-  },
+  
   {
     path: 'tictactoe',
     loadChildren: () => import('./pages/tictactoe/tictactoe.module').then( m => m.TictactoePageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
 
 

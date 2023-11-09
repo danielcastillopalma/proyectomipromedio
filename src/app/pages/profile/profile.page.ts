@@ -54,9 +54,9 @@ export class ProfilePage implements OnInit {
       this.primario = coloresDuoc.primario;
     }
   }
-  logout() {
-    this.auth.logout();
+  async logout() {
     localStorage.clear();
+    await this.auth.logout();       
    
   }
 

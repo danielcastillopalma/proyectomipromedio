@@ -104,14 +104,30 @@
   </div>
 </ion-content>
 <ion-footer> <ion-toolbar class="{{secundario}}">
-    <ion-title>
-      <ion-row class="ion-justify-content-between">
-        <ion-col size=""><ion-input  placeholder="Mi Promedio 1" [counter]="true"
-            maxlength="25" [(ngModel)]="nombrePromArit"></ion-input></ion-col>
+    <ion-title *ngIf="userData;else promLogin">
+      <ion-row *ngIf="tipos.tipo;else tipoSelected" class="ion-justify-content-between">
+        <ion-col size=""><ion-input placeholder="Mi Promedio 1" [counter]="true" maxlength="25"
+            [(ngModel)]="nombrePromArit"></ion-input></ion-col>
         <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="guardarNotaArit()"
             fill="block">Guardar</ion-button></ion-col>
       </ion-row>
 
     </ion-title>
+    <ng-template #tipoSelected>
+      <ion-row  class="ion-justify-content-between">
+        <ion-col size=""><ion-input placeholder="Mi Promedio 1" [counter]="true" maxlength="25"
+            [(ngModel)]="nombrePromArit"></ion-input></ion-col>
+        <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="presentToast('Debes seleccionar un tipo de promedio')"
+            fill="block">Guardar</ion-button></ion-col>
+      </ion-row>
+    </ng-template>
+    <ng-template #promLogin>
+      <ion-row class="ion-justify-content-between">
+        <ion-col size=""><ion-input placeholder="Mi Promedio 1" [counter]="true" maxlength="25"
+            [(ngModel)]="nombrePromArit" disabled></ion-input></ion-col>
+        <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="loginForSave()"
+            fill="block"  >Guardar</ion-button></ion-col>
+      </ion-row>
+    </ng-template>
 
   </ion-toolbar></ion-footer>

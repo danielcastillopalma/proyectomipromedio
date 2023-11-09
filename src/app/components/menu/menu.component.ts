@@ -28,6 +28,9 @@ export class MenuComponent implements OnInit {
   goToProfile() {
     this.router.navigate(['/profile']);
   }
+  goToHome() {
+    this.router.navigate(['/home']);
+  }
   openNoteblock(){
     this.router.navigate(['/noteblock'])
   }

@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
@@ -51,7 +51,8 @@ export class HomePage {
     private router: Router,
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
-    private db: DatabaseService
+    private db: DatabaseService,
+    private toastCtrl: ToastController,
   ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -66,7 +67,9 @@ export class HomePage {
     await this.storage.create();
     LocalNotifications.checkPermissions();
     LocalNotifications.requestPermissions();
-
+    console.log("userdata")
+    console.log(this.userData);
+    console.log("userdata")
 
   }
 
@@ -108,6 +111,19 @@ export class HomePage {
 
   }
 
+  loginForSave(){
+    this.presentToast("Inicia sesión para guardar tus promedios")
+
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000, // la duracion toast 
+      position: 'bottom', // en donde va el toast
+      color: 'warning', // 
+    });
+    toast.present();
+  }
 
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
@@ -171,6 +187,7 @@ export class HomePage {
 
     this.promPonde.splice(index, 1);
   }
+
 
 
 
