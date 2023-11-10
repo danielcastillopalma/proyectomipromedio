@@ -27,6 +27,8 @@ export class DatabaseService {
   getUserData() {
     return this.http.get("https://strapi-production-4838.up.railway.app/api/users/me")
   }
+
+
   async getNotasAritmeticas() {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -40,8 +42,7 @@ export class DatabaseService {
       },
     };
     try {
-      const response: HttpResponse = await CapacitorHttp.get(options);
-     
+      const response: HttpResponse = await CapacitorHttp.get(options);     
       return response.data;
     }
     catch (e) {

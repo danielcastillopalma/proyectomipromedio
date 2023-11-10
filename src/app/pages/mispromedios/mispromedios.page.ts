@@ -37,11 +37,13 @@ export class MispromediosPage implements OnInit {
     this.userDataEmail = JSON.parse(localStorage.getItem('email')!);
 
 
-
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
+
+  promArit:any=[];
   async ngOnInit() {
+    this.obtenerPromArit();
    
   }
 
@@ -50,8 +52,9 @@ export class MispromediosPage implements OnInit {
   refresh() {
     window.location.reload();
   }
-  async obtenerProm() {
-  
+  async obtenerPromArit() {
+    await this.db.getNotasAritmeticas().then((res)=>this.promArit=res);
+    console.log(this.promArit);
   }
 
   async presentToast(message: string) {
