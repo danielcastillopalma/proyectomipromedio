@@ -80,9 +80,9 @@
         <ion-item class="{{terciario}}" *ngFor="let pos of promPonde">
           <ion-row>
             <ion-col><label>Nota {{pos.pos}}</label></ion-col>
-            <ion-col><ion-input label="N{{pos.pos}}" label-placement="floating" fill="outline"
+            <ion-col><ion-input label="N{{pos.pos}}" (focusout)="calcularPromPonde()" label-placement="floating" fill="outline"
                 [(ngModel)]="pos.notPond"></ion-input></ion-col>
-            <ion-col><ion-input label="%" label-placement="floating" fill="outline"
+            <ion-col><ion-input label="%"  (focusout)="calcularPromPonde()" label-placement="floating" fill="outline"
                 [(ngModel)]="pos.porcPond"></ion-input></ion-col>
             <ion-col><ion-button (click)="borrarNotaPonde('{{pos.pos}}')" fill="borderless"><ion-icon
                   name="close-circle-outline"></ion-icon></ion-button></ion-col>
@@ -97,7 +97,7 @@
           </ion-row>
         </ion-item>
         <ion-item class="{{terciario}}">
-          <ion-row><ion-label>Promedio: </ion-label></ion-row>
+          <ion-row><ion-label>Promedio:{{promedioPonderado}} </ion-label><ion-label *ngIf="errorPorcMax"><ion-icon (click)="presentToast(errorPorcMax)"name="warning" color="warning"></ion-icon></ion-label></ion-row>
         </ion-item>
       </div>
     </div>

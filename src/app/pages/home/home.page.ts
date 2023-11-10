@@ -70,11 +70,6 @@ export class HomePage {
 
 
   }
-
-  sumarPromArit = 0;
-  totalPromArit = 0;
-  promedioAritmetico = 0;
-  cantDelArit = 0;
   //reloadbutton
   refresh() {
     window.location.reload();
@@ -109,7 +104,7 @@ export class HomePage {
 
   }
 
-  loginForSave(){
+  loginForSave() {
     this.presentToast("Inicia sesión para guardar tus promedios")
 
   }
@@ -122,7 +117,15 @@ export class HomePage {
     });
     toast.present();
   }
-
+  /**
+   * 
+   * PROMEDIO ARITMETICO
+   * 
+   */
+  sumarPromArit = 0;
+  totalPromArit = 0;
+  promedioAritmetico = 0;
+  cantDelArit = 0;
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
     for (let nota of this.promArit) {
@@ -160,7 +163,7 @@ export class HomePage {
         notas = notas + nota.notArit + "/"
       }
     }
-    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); }catch{
+    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); } catch {
       console.log("nofunciona")
     }
 
@@ -174,7 +177,52 @@ export class HomePage {
     this.cantDelArit = this.cantDelArit + 1;
     this.calcularPromArit();
   }
+  /**
+   * 
+   * PROMEDIO PONDERADO
+   * 
+   */
+  sumarPromPonde = 0;
+  cant = 0;
+  totalPromPonde = 0;
+  promedioPonderado = 0;
+  sumaPorc = 0;
+  errorPorcMax = "";
+  calcularPromPonde() {
+    let cant = Object.keys(this.promPonde).length;
+    for (let nota of this.promPonde) {
 
+      if (nota.notPond == '') {
+        this.sumarPromPonde = this.sumarPromPonde + 0
+      } else {
+        this.sumaPorc = this.sumaPorc + parseInt(nota.porcPond);
+        this.sumarPromPonde = this.sumarPromPonde + (parseInt(nota.notPond) * (parseInt(nota.porcPond) / 100));
+        console.log("if correcto", this.sumarPromPonde)
+        console.log("id:", nota.pos, " cant:", cant)
+        if (nota.pos == cant && this.sumaPorc < 100) {
+          this.errorPorcMax = "La ponderación suma menos de 100%"
+          this.presentToast("Los porcentajes no suman 100%")
+        } else if (this.sumaPorc > 100) {
+          this.errorPorcMax = "La ponderación suma más de 100%"
+          this.presentToast("Los porcentajes suman más de 100%")
+
+        } else {
+          this.errorPorcMax = ""
+        }
+      }
+      console.log("Suma Porcentaje: ", this.sumaPorc)
+
+
+
+    }
+
+    this.promedioPonderado = this.sumarPromPonde;
+    console.log(this.totalPromPonde)
+    console.log(this.sumarPromPonde)
+    this.sumaPorc = 0;
+    this.sumarPromPonde = 0;
+
+  }
   agregarNotaPonde() {
     let cant = Object.keys(this.promPonde).length;
     this.promPonde.push({ pos: cant + 1, notPonde: 0 });
