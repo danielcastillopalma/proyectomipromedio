@@ -81,8 +81,8 @@
           <ion-row>
             <ion-col><label>Nota {{pos.pos}}</label></ion-col>
             <ion-col><ion-input label="N{{pos.pos}}" (focusout)="calcularPromPonde()" label-placement="floating" fill="outline"
-                [(ngModel)]="pos.notPond"></ion-input></ion-col>
-            <ion-col><ion-input label="%"  (focusout)="calcularPromPonde()" label-placement="floating" fill="outline"
+                [(ngModel)]="pos.notPond" type="number"></ion-input></ion-col>
+            <ion-col><ion-input type="number" label="%"  (focusout)="calcularPromPonde()" label-placement="floating" fill="outline"
                 [(ngModel)]="pos.porcPond"></ion-input></ion-col>
             <ion-col><ion-button (click)="borrarNotaPonde('{{pos.pos}}')" fill="borderless"><ion-icon
                   name="close-circle-outline"></ion-icon></ion-button></ion-col>
