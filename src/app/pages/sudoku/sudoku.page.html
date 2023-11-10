@@ -1,0 +1,20 @@
+<app-menu></app-menu>
+<ion-header>
+  <ion-toolbar class="{{primario}}">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Sudoku</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<table fill="outline">
+  <tr *ngFor="let board_row of board; let x = index"fill="outline">
+    <td *ngFor="let cell of board_row; let y = index"fill="outline" >
+      <ion-input *ngIf="cell!=0;celdavacia"  value="{{cell}}" disabled></ion-input>
+      <ng-template #celdavacia ><ion-input value=""></ion-input> </ng-template>
+    </td>
+  </tr>
+</table>
+</ion-content>
+

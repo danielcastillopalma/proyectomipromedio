@@ -37,9 +37,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/pasatiempos/pasatiempos.module').then( m => m.PasatiemposPageModule)
   },
   {
+    path: 'sudoku',
+    loadChildren: () => import('./pages/sudoku/sudoku.module').then( m => m.SudokuPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
+  
+
  
 
   
