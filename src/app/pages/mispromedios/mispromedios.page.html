@@ -20,13 +20,27 @@
 <!--
   Contenido de la Pagina
 -->
-  <ion-item>
-    
-  </ion-item>
+<ion-content>
+<ion-list>  
+    <ion-item-sliding *ngFor="let proms of promArit.data">
+      <ion-item>
+        <ion-label>{{proms.attributes.avgtitle}}</ion-label>
+        <ion-label>{{proms.attributes.notas}}</ion-label>
+        <ion-label><ion-icon name="close"></ion-icon></ion-label>
+        <ion-item-options>
+          <ion-item-option>Favorite</ion-item-option>
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item>
+
+    </ion-item-sliding>
+</ion-list>
+</ion-content>
+
 <!--
   Fin Contenido de la Pagina
 -->
 
 <ion-footer> <ion-toolbar class="{{secundario}}">
-    
-</ion-toolbar></ion-footer>
+
+  </ion-toolbar></ion-footer>
