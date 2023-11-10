@@ -33,9 +33,15 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tictactoe/tictactoe.module').then( m => m.TictactoePageModule)
   },
   {
+    path: 'pasatiempos',
+    loadChildren: () => import('./pages/pasatiempos/pasatiempos.module').then( m => m.PasatiemposPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./pages/notfound/notfound.module').then( m => m.NotfoundPageModule)
   },
+ 
+
   
 
 
