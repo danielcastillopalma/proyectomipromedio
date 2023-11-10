@@ -1,4 +1,4 @@
-
+<app-menu></app-menu>
 <ion-header>
   <ion-toolbar class="{{primario}}">
     <ion-buttons slot="start">
@@ -9,51 +9,39 @@
 </ion-header>
 
 <ion-content>
-  <app-menu></app-menu>
+
   <div class="game-container" style="position: relative; z-index: 1;">
-  <h2>Seleccione X - O</h2>
+    <h2>Seleccione X - O</h2>
 
-  <div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary" [class.active]="startWith.value === true">
-      <input
-        [value]="true"
-        type="radio"
-        name="options"
-        id="option1"
-        [formControl]="startWith"
-      />
-      O
-    </label>
-    <label class="btn btn-secondary" [class.active]="startWith.value === false">
-      <input
-        [value]="false"
-        type="radio"
-        name="options"
-        id="option2"
-        [formControl]="startWith"
-      />
-      X
-    </label>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <label class="btn btn-secondary" [class.active]="startWith.value === true">
+        <input [value]="true" type="radio" name="options" id="option1" [formControl]="startWith" />
+        O
+      </label>
+      <label class="btn btn-secondary" [class.active]="startWith.value === false">
+        <input [value]="false" type="radio" name="options" id="option2" [formControl]="startWith" />
+        X
+      </label>
+    </div>
+
+
+    <table>
+      <tr *ngFor="let board_row of board; let x = index">
+        <td *ngFor="let cell of board_row; let y = index" (click)="onclick(x, y)">
+          {{ cell }}
+        </td>
+      </tr>
+    </table>
+
+
+    <div class="action-btn-container">
+      <button type="button" class="btn btn-danger" (click)="clear()">
+        Limpiar
+      </button>
+
+    </div>
   </div>
-
-  
-  <table>
-    <tr *ngFor="let board_row of board; let x = index">
-      <td *ngFor="let cell of board_row; let y = index" (click)="onclick(x, y)">
-        {{ cell }}
-      </td>
-    </tr>
-  </table>
-
-  
-  <div class="action-btn-container">
-    <button type="button" class="btn btn-danger" (click)="clear()">
-      Limpiar
-    </button>
-   
-  </div>
-</div>
 </ion-content>
 <ion-footer> <ion-toolbar class="{{secundario}}">
-    
-</ion-toolbar></ion-footer>
+
+  </ion-toolbar></ion-footer>
