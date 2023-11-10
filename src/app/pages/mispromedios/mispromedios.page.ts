@@ -42,9 +42,7 @@ export class MispromediosPage implements OnInit {
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   async ngOnInit() {
-    console.log("aa");
-    this.obtenerProm();
-    console.log("aa");
+   
   }
 
 
@@ -53,7 +51,7 @@ export class MispromediosPage implements OnInit {
     window.location.reload();
   }
   async obtenerProm() {
-   await console.log(this.db.getNotasAritmeticas());
+  
   }
 
   async presentToast(message: string) {

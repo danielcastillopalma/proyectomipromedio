@@ -67,9 +67,7 @@ export class HomePage {
     await this.storage.create();
     LocalNotifications.checkPermissions();
     LocalNotifications.requestPermissions();
-    console.log("userdata")
-    console.log(this.userData);
-    console.log("userdata")
+
 
   }
 

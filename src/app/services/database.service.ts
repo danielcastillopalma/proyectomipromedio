@@ -3,22 +3,24 @@ import { HttpClient } from '@angular/common/http';
 import { HttpResponse, CapacitorHttp } from '@capacitor/core';
 import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
-
 import { StorageService } from './storage.service';
 import { BehaviorSubject } from 'rxjs';
 import { CorsRequest } from 'cors';
+import { AuthenticationService } from './authentication.service';
+import { ToastController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class DatabaseService {
   public isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   msj = ""
-
+  key = "";
   userData: any;
-  constructor(
+  constructor(private toastCtrl: ToastController,
     private http: HttpClient, private storageService: StorageService, private router: Router) {
-    console.log(this.storageService.get("key").then(res => console.log(res), err => console.log(err)))
+    
 
   }
 
@@ -26,29 +28,31 @@ export class DatabaseService {
     return this.http.get("https://strapi-production-4838.up.railway.app/api/users/me")
   }
   async getNotasAritmeticas() {
+
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
+    
     const options = {
       url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos?filters[avgemail][$eq]=' + this.userData.user.email,
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${this.storageService.get("key")}`,
-        "Bearer-Token": `${this.storageService.get("key")}`,
+        'Authorization': `Bearer ${this.key} `
       },
     };
     try {
       const response: HttpResponse = await CapacitorHttp.get(options);
-      console.log('Aca entra')
-      console.log(JSON.stringify(response.data));
+     
       return response.data;
     }
     catch (e) {
-      console.log(e)
       return;
     }
   }
 
   async guardarNotaArit(nombre: string, notas: string, email: string) {
-
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
+    
     const obj = {
       "data": {
         "avgtitle": nombre,
@@ -60,21 +64,28 @@ export class DatabaseService {
       url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos',
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${this.storageService.get("key")}`,
-        "Bearer-Token": `${this.storageService.get("key")}`,
+        'Authorization': `Bearer ${this.key} `
       },
       data: JSON.stringify(obj),
     };
 
     try {
-      console.log(obj)
       const response: HttpResponse = await CapacitorHttp.post(options);
+      this.presentToast("Promedio guardado con exito");
       return response.data;
     }
     catch (e) {
-      console.log(e)
       return;
     }
+  }
+  async presentToast(message: string) {
+    const toast = await this.toastCtrl.create({
+      message: message,
+      duration: 2000, // la duracion toast 
+      position: 'bottom', // en donde va el toast
+      color: 'success', // 
+    });
+    toast.present();
   }
 
 }
