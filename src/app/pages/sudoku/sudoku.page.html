@@ -7,14 +7,14 @@
     <ion-title>Sudoku</ion-title>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-<table fill="outline">
-  <tr *ngFor="let board_row of board; let x = index"fill="outline">
-    <td *ngFor="let cell of board_row; let y = index"fill="outline" >
-      <ion-input *ngIf="cell!=0;celdavacia"  value="{{cell}}" disabled></ion-input>
-      <ng-template #celdavacia ><ion-input value=""></ion-input> </ng-template>
+<table class="sudokuTable">
+  <tr *ngFor="let board_row of board; let x = index">
+    <td *ngFor="let cell of board_row; let y = index" >
+      <ion-input *ngIf="cell!=0;else celdavacia" class="celdaSudoku" value="{{cell}}" (change)="celdaLlena(x,y,cell)" disabled></ion-input>
+      <ng-template #celdavacia >
+        <ion-input  id="celda" value= "" class="celdaSudoku" (change)="celdaLlena(x,y,$event)"></ion-input> </ng-template>
     </td>
   </tr>
 </table>
-</ion-content>
+<ion-content></ion-content>
 
