@@ -168,6 +168,20 @@ export class HomePage {
     }
 
   }
+  guardarNotaPonde() {
+    let notas: string = "";
+    let pondes:string="";
+    for (let nota of this.promPonde) {
+      if (nota.notPond != '') {
+        notas = notas + nota.notPond + "/"
+        pondes=pondes+nota.porcPond+"/"
+      }
+    }
+    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); } catch {
+      console.log("nofunciona")
+    }
+
+  }
 
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"

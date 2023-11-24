@@ -21,6 +21,26 @@
   Contenido de la Pagina
 -->
 <ion-content>
+  <ion-item class="{{secundario}}">
+    <ion-label>Promedios Aritméticos</ion-label>
+  </ion-item>
+  <ion-list>
+    <ion-item-sliding *ngFor="let proms of promArit.data">
+      <ion-item>
+        <ion-label>{{proms.attributes.avgtitle}}</ion-label>
+        <ion-label>{{proms.attributes.notas}}</ion-label>
+        <ion-label><ion-icon name="close"></ion-icon></ion-label>
+        <ion-item-options>
+          <ion-item-option>Favorite</ion-item-option>
+          <ion-item-option color="danger">Delete</ion-item-option>
+        </ion-item-options>
+      </ion-item>
+
+    </ion-item-sliding>
+  </ion-list>
+  <ion-item class="{{secundario}}">
+    <ion-label>Promedios Ponderados</ion-label>
+  </ion-item>
   <ion-list>
     <ion-item-sliding *ngFor="let proms of promArit.data">
       <ion-item>
