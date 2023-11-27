@@ -42,8 +42,10 @@ export class MispromediosPage implements OnInit {
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
 
   promArit:any=[];
+  promPonde:any=[];
   async ngOnInit() {
     this.obtenerPromArit();
+    this.obtenerPromPonde();
    
   }
 
@@ -54,6 +56,10 @@ export class MispromediosPage implements OnInit {
   }
   async obtenerPromArit() {
     await this.db.getNotasAritmeticas().then((res)=>this.promArit=res);
+    console.log(this.promArit);
+  }
+  async obtenerPromPonde() {
+    await this.db.getNotasPonderadas().then((res)=>this.promPonde=res);
     console.log(this.promArit);
   }
 

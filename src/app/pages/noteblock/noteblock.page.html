@@ -21,6 +21,9 @@
     <ion-card-content>
       {{item.content}}
     </ion-card-content>
+    <ion-card-content class="{{primario}}">
+      <ion-icon name="share" (click)="share()"></ion-icon>
+    </ion-card-content>
   </ion-card>
 </ion-content>
 <ion-button expand="block" (click)="openModal()">Agregar</ion-button>

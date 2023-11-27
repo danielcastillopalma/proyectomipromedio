@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { EmailComposerOptions } from '@awesome-cordova-plugins/email-composer/ngx';
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { ModalController } from '@ionic/angular';
 import { coloresBasicos } from 'src/app/app.module';
 import { NotesComponent } from 'src/app/components/notes/notes.component';
@@ -29,7 +31,8 @@ export class NoteblockPage implements OnInit {
   constructor(
     private modalCtrl: ModalController,
     private bd: SqliteService,
-    private router: Router
+    private router: Router,
+    private emailComposer:EmailComposer,
   ) { }
   guardar() {
     this.bd.addNota(this.newTitle, this.newContent);
@@ -48,6 +51,15 @@ export class NoteblockPage implements OnInit {
 
   }
 
+  async share(){
+    const email: EmailComposerOptions={
+      to:'',
+      cc:'',
+      subject:this.notas.title,
+      body:this.notas.content,
+    }
+    await this.emailComposer.open(email)
+  }
 
   async openModal() {
     const modal = await this.modalCtrl.create({

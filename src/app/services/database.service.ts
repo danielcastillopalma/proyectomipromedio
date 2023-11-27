@@ -49,6 +49,26 @@ export class DatabaseService {
       return;
     }
   }
+  async getNotasPonderadas() {
+
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
+    
+    const options = {
+      url: 'https://strapi-production-4838.up.railway.app/api/ponderados?filters[avgemail][$eq]=' + this.userData.user.email,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.key} `
+      },
+    };
+    try {
+      const response: HttpResponse = await CapacitorHttp.get(options);     
+      return response.data;
+    }
+    catch (e) {
+      return;
+    }
+  }
 
   async guardarNotaArit(nombre: string, notas: string, email: string) {
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -69,6 +89,38 @@ export class DatabaseService {
       },
       data: JSON.stringify(obj),
     };
+
+
+    try {
+      const response: HttpResponse = await CapacitorHttp.post(options);
+      this.presentToast("Promedio guardado con exito");
+      return response.data;
+    }
+    catch (e) {
+      return;
+    }
+  }
+
+  async guardarNotaPonde(nombre: string, notas: string, email: string) {
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
+    
+    const obj = {
+      "data": {
+        "avgtitle": nombre,
+        "avgemail": email,
+        "notas": notas
+      }
+    }
+    const options = {
+      url: 'https://strapi-production-4838.up.railway.app/api/ponderados',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${this.key} `
+      },
+      data: JSON.stringify(obj),
+    };
+    
 
     try {
       const response: HttpResponse = await CapacitorHttp.post(options);

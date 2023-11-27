@@ -7,6 +7,7 @@ import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { DatabaseService } from 'src/app/services/database.service';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+import { title } from 'process';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -53,7 +54,7 @@ export class HomePage {
     private calendar: Calendar,
     private db: DatabaseService,
     private toastCtrl: ToastController,
-    private emailComposer:EmailComposer,
+    private emailComposer: EmailComposer,
   ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -68,40 +69,56 @@ export class HomePage {
     await this.storage.create();
     LocalNotifications.checkPermissions();
     LocalNotifications.requestPermissions();
-
+    //this.actualizacion()
+    /** 
+    setInterval(()=>{
+      this.actualizacion();
+    },1000)
+*/
 
   }
+
   //reloadbutton
   refresh() {
     window.location.reload();
   }
 
+  async actualizacion() {
+    const today = new Date();
+    console.log(today);
+    console.log(today.getHours())
+    if (today.getHours() == 10 && today.getMinutes() == 30) {
+      console.log("Funciona")
+      let options: ScheduleOptions = {
+        notifications: [
+          {
+            id: 1,
+            title: "¿Estás aburrido?",
+            body: "Prueba alguno de nuestros minijuegos",
+            largeBody: "Puedes jugar una partida de sudoku, o quizás un tictactoe",
+            summaryText: "Texto bait"
+          }
+        ]
+      }
+      try {
+        await LocalNotifications.schedule(options)
+      } catch (ex) {
+        alert(JSON.stringify(ex));
+      }
+    }
+
+  }
+
+
   //notificaciones
-  async scheduleNotification() {
+  async scheduleNotification(nota: string) {
     this.calendar.createEventInteractively(
-      'Titulo',
+      'Nota ' + nota,
       'Ubicacion',
       undefined,
       new Date(),
       undefined
     )
-
-    let options: ScheduleOptions = {
-      notifications: [
-        {
-          id: 1,
-          title: "titulo notificacion",
-          body: "Cuerpo de la notificación",
-          largeBody: "Cuerpo grande de la notificacion",
-          summaryText: "Texto bait"
-        }
-      ]
-    }
-    try {
-      await LocalNotifications.schedule(options)
-    } catch (ex) {
-      alert(JSON.stringify(ex));
-    }
 
   }
 
@@ -156,7 +173,13 @@ export class HomePage {
       this.promArit.push({ pos: cant + 1, notArit: '' });
     }
   }
-
+  guardarNota() {
+    if (this.tipos.tipo == "Aritmetico") {
+      this.guardarNotaArit();
+    } else {
+      this.guardarNotaPonde();
+    }
+  }
   guardarNotaArit() {
     let notas: string = "";
     for (let nota of this.promArit) {
@@ -171,30 +194,22 @@ export class HomePage {
   }
   guardarNotaPonde() {
     let notas: string = "";
-    let pondes:string="";
+    let pondes: string = "";
+    let total: string = "";
     for (let nota of this.promPonde) {
       if (nota.notPond != '') {
         notas = notas + nota.notPond + "/"
-        pondes=pondes+nota.porcPond+"/"
+        pondes = pondes + nota.porcPond + "/"
+        total = "[" + notas + "]" + "{" + pondes + "}"
+
       }
     }
-    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); } catch {
+    try { this.db.guardarNotaPonde(this.nombrePromArit, total, this.userData.user.email); } catch {
       console.log("nofunciona")
     }
 
   }
-  async email(){
-    await strapi.plugins['email'].services.email.send({
-      to: 'valid email address',
-      from: 'your verified email address', //e.g. single sender verification in SendGrid
-      cc: 'valid email address',
-      bcc: 'valid email address',
-      replyTo: 'valid email address',
-      subject: 'The Strapi Email plugin worked successfully',
-      text: 'Hello world!',
-      html: 'Hello world!',
-    }),
-  }
+
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
     let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));
