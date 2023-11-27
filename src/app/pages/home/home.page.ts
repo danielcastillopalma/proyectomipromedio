@@ -6,7 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { DatabaseService } from 'src/app/services/database.service';
-
+import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -53,6 +53,7 @@ export class HomePage {
     private calendar: Calendar,
     private db: DatabaseService,
     private toastCtrl: ToastController,
+    private emailComposer:EmailComposer,
   ) {
 
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
@@ -182,7 +183,18 @@ export class HomePage {
     }
 
   }
-
+  async email(){
+    await strapi.plugins['email'].services.email.send({
+      to: 'valid email address',
+      from: 'your verified email address', //e.g. single sender verification in SendGrid
+      cc: 'valid email address',
+      bcc: 'valid email address',
+      replyTo: 'valid email address',
+      subject: 'The Strapi Email plugin worked successfully',
+      text: 'Hello world!',
+      html: 'Hello world!',
+    }),
+  }
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
     let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));
