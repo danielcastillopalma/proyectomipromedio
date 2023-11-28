@@ -13,7 +13,6 @@
 </ion-header>
 
 <ion-content *ngFor="let item of notas">
-
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{ item.title }}</ion-card-title>
@@ -21,12 +20,26 @@
     <ion-card-content>
       {{item.content}}
     </ion-card-content>
-    <ion-card-content class="{{primario}}">
-      <ion-icon name="share" (click)="share()"></ion-icon>
+    <ion-item lines="full"></ion-item>
+    <ion-card-content >
+      <ion-grid>
+        <ion-row class="ion-justify-content-center ion-text-center">
+          <ion-col >
+            <ion-icon name="share" (click)="share()"></ion-icon>
+          </ion-col>
+          <ion-col>
+            <ion-icon name="pencil" (click)="edit()"></ion-icon>
+          </ion-col>
+          <ion-col>
+            <ion-icon name="trash" (click)="delete()"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
+    
   </ion-card>
 </ion-content>
 <ion-button expand="block" (click)="openModal()">Agregar</ion-button>
 <ion-footer> <ion-toolbar class="{{secundario}}">
-    
-</ion-toolbar></ion-footer>
+
+  </ion-toolbar></ion-footer>

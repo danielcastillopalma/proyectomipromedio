@@ -18,28 +18,6 @@ export class NoteblockPage implements OnInit {
   primario = coloresBasicos.primario;
   userData: any = ""
 
-
-  newTitle = ""
-  newContent = ""
-  notas: any = [
-    {
-      title: this.newTitle,
-      content: this.newContent
-    }
-  ]
-
-  constructor(
-    private modalCtrl: ModalController,
-    private bd: SqliteService,
-    private router: Router,
-    private emailComposer:EmailComposer,
-  ) { }
-  guardar() {
-    this.bd.addNota(this.newTitle, this.newContent);
-    this.bd.presentToast("Nota Agregada");
-    
-  }
-
   ngOnInit() {
     this.bd.dbState().subscribe((res: any) => {
       if (res) {
@@ -50,15 +28,50 @@ export class NoteblockPage implements OnInit {
     });
 
   }
+  newTitle = ""
+  newContent = ""
+  newEmail = ""
+  notas: any = [
+    {
+      title: this.newTitle,
+      content: this.newContent,
+      email: this.newEmail
+    }
+  ]
 
-  async share(){
-    const email: EmailComposerOptions={
-      to:'',
-      cc:'',
-      subject:this.notas.title,
-      body:this.notas.content,
+  constructor(
+    private modalCtrl: ModalController,
+    private bd: SqliteService,
+    private router: Router,
+    private emailComposer: EmailComposer,
+  ) {
+
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    
+
+  }
+  guardar() {
+    this.bd.addNota(this.newTitle, this.newContent, this.userData.user.email);
+    this.bd.presentToast("Nota Agregada");
+
+  }
+
+  
+
+  async share() {
+    const email: EmailComposerOptions = {
+      to: '',
+      cc: '',
+      subject: this.notas.title,
+      body: this.notas.content,
     }
     await this.emailComposer.open(email)
+  }
+  async edit() {
+
+  }
+  async delete() {
+
   }
 
   async openModal() {

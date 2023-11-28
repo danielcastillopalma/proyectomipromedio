@@ -8,17 +8,22 @@ import { Nota } from '../classes/nota';
   providedIn: 'root'
 })
 export class SqliteService {
+  userData: any="";
+  email:any="";
   public database!: SQLiteObject;
-  tblNotas: string = "CREATE TABLE IF NOT EXISTS nota(id INTEGER PRIMARY KEY autoincrement, title VARCHAR(50) NOT NULL, content TEXT NOT NULL);";
+  tblNotas: string = "CREATE TABLE IF NOT EXISTS nota(id INTEGER PRIMARY KEY autoincrement, title VARCHAR(50) NOT NULL, content TEXT NOT NULL, email TEXT NOT NULL);";
   listaNotas = new BehaviorSubject<Nota[]>([]);
   private isDbReady: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(private sqlite: SQLite, private platform: Platform, public toastController: ToastController) {
-    this.crearBD();
+    
+   this.crearBD(); 
+   this.userData = JSON.parse(localStorage.getItem('usuario')!);
+
   }
   crearBD() {
     this.platform.ready().then(() => {
       this.sqlite.create({
-        name: 'mipromedio.db',
+        name: 'mipromedio2.db',
         location: 'default'
       }).then((db: SQLiteObject) => {
         this.database = db;
@@ -33,31 +38,35 @@ export class SqliteService {
     try {
       await this.database.executeSql(this.tblNotas, []);
       this.presentToast("Tabla creada");
-      this.cargarNotas(); this.isDbReady.next(true);
+      this.cargarNotas(); 
+      this.isDbReady.next(true);
     } catch (error) {
       this.presentToast("Error en Crear Tabla: " + error);
 
     }
   }
+  
   cargarNotas() {
     let items: Nota[] = [];
-    this.database.executeSql('SELECT * FROM nota', [])
+    this.database.executeSql('SELECT * FROM nota WHERE email = ?', [this.userData.user.email])
       .then(res => {
         if (res.rows.length > 0) {
           for (let i = 0; i < res.rows.length; i++) {
+           
             items.push({
               id: res.rows.item(i).id,
               title: res.rows.item(i).title,
-              content: res.rows.item(i).content
+              content: res.rows.item(i).content,
+              email:res.rows.item(i).email,
             });
           }
         }
       });
     this.listaNotas.next(items);
   }
-  async addNota(title: any, content: any) {
-    let data = [title, content];
-    await this.database.executeSql('INSERT INTO nota(title,content)VALUES(?,?)', data);
+  async addNota(title: any, content: any, email:any) {
+    let data = [title, content,email];
+    await this.database.executeSql('INSERT INTO nota(title,content,email)VALUES(?,?,?)', data);
     this.cargarNotas();
   }
   /*** Método que actualiza el título y/o el texto filtrando por el id*/
