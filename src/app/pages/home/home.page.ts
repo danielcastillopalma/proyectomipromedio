@@ -174,9 +174,10 @@ export class HomePage {
     }
   }
   guardarNota() {
-    if (this.tipos.tipo == "Aritmetico") {
+    if (this.tipos.tipo == "Aritmético") {
       this.guardarNotaArit();
-    } else {
+    } else
+    if (this.tipos.tipo=="Ponderado") {
       this.guardarNotaPonde();
     }
   }

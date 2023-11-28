@@ -25,7 +25,7 @@ export class DatabaseService {
   }
 
   getUserData() {
-    return this.http.get("https://strapi-production-4838.up.railway.app/api/users/me")
+    return this.http.get("https://strapi-production-1151.up.railway.app/api/users/me")
   }
 
 
@@ -35,7 +35,7 @@ export class DatabaseService {
     await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
     
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos?filters[avgemail][$eq]=' + this.userData.user.email,
+      url: 'https://strapi-production-1151.up.railway.app/api/aritmeticos?filters[avgemail][$eq]=' + this.userData.user.email,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.key} `
@@ -55,7 +55,7 @@ export class DatabaseService {
     await this.storageService.get("token").then((res) => { this.key = res }, err => console.log(err));
     
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/ponderados?filters[avgemail][$eq]=' + this.userData.user.email,
+      url: 'https://strapi-production-1151.up.railway.app/api/ponderados?filters[avgemail][$eq]=' + this.userData.user.email,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.key} `
@@ -82,7 +82,7 @@ export class DatabaseService {
       }
     }
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/aritmeticos',
+      url: 'https://strapi-production-1151.up.railway.app/api/aritmeticos',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.key} `
@@ -113,7 +113,7 @@ export class DatabaseService {
       }
     }
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/ponderados',
+      url: 'https://strapi-production-1151.up.railway.app/api/ponderados',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.key} `

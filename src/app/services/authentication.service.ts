@@ -40,8 +40,7 @@ export class AuthenticationService {
     this.loadToken();
   }
   createUser(email: string, username: string) {
-    this.API = "https://strapi-production-4838.up.railway.app/api/usersdata"
-    console.log("ACA entra")
+    this.API = "https://strapi-production-1151.up.railway.app/api/usersdata"
     return this.http.post(this.API, {
       "data": {
         email, username,
@@ -72,7 +71,7 @@ export class AuthenticationService {
     if (!formData) return;
 
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/auth/local/register',
+      url: 'https://strapi-production-1151.up.railway.app/api/auth/local/register',
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(formData),
     };
@@ -90,7 +89,7 @@ export class AuthenticationService {
     if (!formData) return;
     const obj = { "email": formData.email, "username": formData.username }
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/usersdata',
+      url: 'https://strapi-production-1151.up.railway.app/api/usersdata',
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(obj),
     };
@@ -109,7 +108,7 @@ export class AuthenticationService {
 
     if (!formData) return;
     const options = {
-      url: 'https://strapi-production-4838.up.railway.app/api/auth/local/',
+      url: 'https://strapi-production-1151.up.railway.app/api/auth/local/',
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(formData)
     };

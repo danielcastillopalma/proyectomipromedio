@@ -4,10 +4,7 @@ const config: CapacitorConfig = {
   appId: 'com.mipromedio.app',
   appName: 'ProyectoMiPromedio',
   webDir: 'www',
-  server: {
-    hostname:'http://localhost:8100',
-    androidScheme: 'https'
-  },
+  
   plugins: {
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',
