@@ -31,8 +31,10 @@ export class NoteblockPage implements OnInit {
   newTitle = ""
   newContent = ""
   newEmail = ""
+  newId=""
   notas: any = [
     {
+      id:this.newId,
       title: this.newTitle,
       content: this.newContent,
       email: this.newEmail
@@ -56,7 +58,9 @@ export class NoteblockPage implements OnInit {
 
   }
 
-  
+  async delete(id:number) {
+    this.bd.deleteNota(id)
+  }
 
   async share() {
     const email: EmailComposerOptions = {
@@ -70,9 +74,7 @@ export class NoteblockPage implements OnInit {
   async edit() {
 
   }
-  async delete() {
-
-  }
+  
 
   async openModal() {
     const modal = await this.modalCtrl.create({
