@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import jwt_decode from "jwt-decode";
 import { DatabaseService } from './database.service';
 import { HttpClient } from '@angular/common/http';
+import axios from 'axios';
 export interface Usuario {
   id?: number;
   email: string;
@@ -75,6 +76,16 @@ export class AuthenticationService {
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(formData),
     };
+    axios
+      .post(`https://strapi-production-1151.up.railway.app/api/auth/send-email-confirmation`, {
+        email: formData.email, // user's email
+      })
+      .then(response => {
+        console.log('Your user received an email');
+      })
+      .catch(error => {
+        console.error('An error occurred:', error.response);
+      });
 
     try {
       const response: HttpResponse = await CapacitorHttp.post(options);
@@ -126,7 +137,7 @@ export class AuthenticationService {
         this.storageService.set("token", res.jwt);
         this.isAuthenticated.next(true);
         this.router.navigate(['/home']);
-        
+
         localStorage.setItem('usuario', JSON.stringify(res));
         return;
       } else {
