@@ -3,9 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
+import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { DatabaseService } from 'src/app/services/database.service';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -15,7 +16,8 @@ import { DatabaseService } from 'src/app/services/database.service';
 
 
 export class HomePage {
-  token=""
+  nombrePromArit: any = "";
+  token = "";
   tipoPromedio: any[] = [
     { prom: 1, tipo: "Aritmético" },
     { prom: 2, tipo: "Ponderado" },
@@ -41,32 +43,71 @@ export class HomePage {
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
-  userData:any=""
+  userData: any = ""
+  userDataEmail: any = ""
+
   constructor(
-    private db:DatabaseService,
     private storage: Storage,
-    private element: ElementRef,
-    private router: Router, 
-    private activateRoute: ActivatedRoute, 
+    private router: Router,
     private loadingCtrl: LoadingController,
-    private auth: AuthenticationService,
-    private storages: StorageService) {
-      
-      this.userData=JSON.parse(localStorage.getItem('usuario')!);
-    
-      
-   
+    private calendar: Calendar,
+    private db: DatabaseService
+  ) {
+
+    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+    this.userDataEmail = JSON.parse(localStorage.getItem('email')!);
+
+
+
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
   async ngOnInit() {
     await this.storage.create();
+    LocalNotifications.checkPermissions();
+    LocalNotifications.requestPermissions();
+
+
   }
 
   sumarPromArit = 0;
   totalPromArit = 0;
   promedioAritmetico = 0;
   cantDelArit = 0;
+  //reloadbutton
+  refresh() {
+    window.location.reload();
+  }
+
+  //notificaciones
+  async scheduleNotification() {
+    this.calendar.createEventInteractively(
+      'Titulo',
+      'Ubicacion',
+      undefined,
+      new Date(),
+      undefined
+    )
+
+    let options: ScheduleOptions = {
+      notifications: [
+        {
+          id: 1,
+          title: "titulo notificacion",
+          body: "Cuerpo de la notificación",
+          largeBody: "Cuerpo grande de la notificacion",
+          summaryText: "Texto bait"
+        }
+      ]
+    }
+    try {
+      await LocalNotifications.schedule(options)
+    } catch (ex) {
+      alert(JSON.stringify(ex));
+    }
+
+  }
+
 
   calcularPromArit() {
     let cant = Object.keys(this.promArit).length;
@@ -76,12 +117,14 @@ export class HomePage {
         this.totalPromArit = this.sumarPromArit / cant
       } else {
         this.sumarPromArit = this.sumarPromArit + parseInt(nota.notArit)
+
         this.totalPromArit = this.sumarPromArit / cant
       }
     }
     this.promedioAritmetico = this.totalPromArit
     console.log(this.totalPromArit)
     console.log(this.sumarPromArit)
+
     this.sumarPromArit = 0;
 
   }
@@ -95,6 +138,20 @@ export class HomePage {
       this.promArit.push({ pos: cant + 1, notArit: '' });
     }
   }
+
+  guardarNotaArit() {
+    let notas: string = "";
+    for (let nota of this.promArit) {
+      if (nota.notArit != '') {
+        notas = notas + nota.notArit + "/"
+      }
+    }
+    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userDataEmail); }catch{
+      console.log("nofunciona")
+    }
+
+  }
+
   borrarNotaArit(numero) {
     //Aqui busco la posición en el array del objeto a eliminar segun su variable "pos"
     let index: number = this.promArit.indexOf(this.promArit.find(x => x.pos == numero));

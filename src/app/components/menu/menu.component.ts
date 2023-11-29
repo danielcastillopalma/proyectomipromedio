@@ -44,9 +44,8 @@ export class MenuComponent implements OnInit {
     await loading.present();
 
     setTimeout(() => {
-      loading.dismiss();
+      loading.dismiss();   
       this.router.navigate(['/login']);
-
 
       this.data = "";
       console.log(this.data);

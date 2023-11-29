@@ -94,7 +94,7 @@ export class LoginPage implements OnInit {
   }
   guardarUsuario(email, username) {
     this.authenticationService.createUser(email, username)
-    .subscribe((res) => console.log(res), (err) => console.error(err));
+      .subscribe((res) => console.log(res), (err) => console.error(err));
   }
   async onSubmitReg() {
 
@@ -102,10 +102,10 @@ export class LoginPage implements OnInit {
     if (!this.registrationForm.valid) return;
 
     var res = await this.authenticationService.registerUser(this.registrationForm.value);
-    this.guardarUsuario(this.userRegistration.identifier,this.userRegistration.username);
+    this.guardarUsuario(this.userRegistration.identifier, this.userRegistration.username);
     if (res && res.status === 'ok') {
-      
-      
+
+
       const alert = await this.alertController.create(
         {
           message: "Registrado Correctamente",
@@ -162,7 +162,8 @@ export class LoginPage implements OnInit {
 
     }
   }
-
+  goHome() {
+    this.router.navigate(['/home']) }
   // CARGA DE LOGIN
   async logIn() {
     const loading = await this.loadingCtrl.create({
@@ -173,7 +174,7 @@ export class LoginPage implements OnInit {
 
     try {
 
-      
+
       await new Promise<void>((resolve) => {
         setTimeout(() => {
 
@@ -190,7 +191,7 @@ export class LoginPage implements OnInit {
           user: this.user
         }
       }
-      this.router.navigate(['/home'], navigationextras)
+      
     } catch (error) {
       console.error(error);
       loading.dismiss();

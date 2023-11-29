@@ -39,13 +39,15 @@ export class AuthenticationService {
 
     this.loadToken();
   }
-  createUser(email:string,username:string) {    
-    this.API="https://strapi-production-4838.up.railway.app/api/usersdata"
+  createUser(email: string, username: string) {
+    this.API = "https://strapi-production-4838.up.railway.app/api/usersdata"
     console.log("ACA entra")
-    return this.http.post(this.API, {"data":{
-      email, username,}
+    return this.http.post(this.API, {
+      "data": {
+        email, username,
+      }
     });
-    
+
   }
   async loadToken() {
     const token = await this.storageService.get("token");
@@ -55,6 +57,15 @@ export class AuthenticationService {
       this.isAuthenticated.next(false);
     }
   }
+
+
+  async logout() {
+    this.isAuthenticated.next(false);
+    await this.storageService.remove("token");
+    this.router.navigateByUrl('/login', { skipLocationChange: true }).then(() => { this.router.navigate(["login"]); });
+
+  }
+
 
 
   async registerUser(formData) {
@@ -77,7 +88,7 @@ export class AuthenticationService {
   }
   async registerUser2(formData) {
     if (!formData) return;
-    const obj={"email":formData.email,"username":formData.username}
+    const obj = { "email": formData.email, "username": formData.username }
     const options = {
       url: 'https://strapi-production-4838.up.railway.app/api/usersdata',
       headers: { 'Content-Type': 'application/json' },
@@ -115,7 +126,8 @@ export class AuthenticationService {
         console.log("funciona");
         this.storageService.set("token", res.jwt);
         this.isAuthenticated.next(true);
-        this.router.navigateByUrl('/home', { replaceUrl: true })
+        this.router.navigate(['/home']);
+        
         localStorage.setItem('usuario', JSON.stringify(res));
         return;
       } else {
