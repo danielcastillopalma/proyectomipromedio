@@ -76,16 +76,7 @@ export class AuthenticationService {
       headers: { 'Content-Type': 'application/json' },
       data: JSON.stringify(formData),
     };
-    axios
-      .post(`https://strapi-production-1151.up.railway.app/api/auth/send-email-confirmation`, {
-        email: formData.email, // user's email
-      })
-      .then(response => {
-        console.log('Your user received an email');
-      })
-      .catch(error => {
-        console.error('An error occurred:', error.response);
-      });
+    
 
     try {
       const response: HttpResponse = await CapacitorHttp.post(options);
