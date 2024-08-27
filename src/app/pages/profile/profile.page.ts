@@ -3,9 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DOCUMENT } from '@angular/common';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { Storage } from '@ionic/storage-angular';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-profile',
@@ -16,13 +13,10 @@ export class ProfilePage implements OnInit {
   userData: any = ""
   constructor(
 
-    private db: DatabaseService,
     private storage: Storage,
     private element: ElementRef,
     private router: Router,
-    private activateRoute: ActivatedRoute,
-    private auth: AuthenticationService,
-    private storages: StorageService) {
+    private activateRoute: ActivatedRoute) {
     this.userData = JSON.parse(localStorage.getItem('usuario')!);
     console.log(this.userData)
     console.log(this.userData.user.username)
@@ -54,10 +48,6 @@ export class ProfilePage implements OnInit {
       this.primario = coloresDuoc.primario;
     }
   }
-  async logout() {
-    localStorage.clear();
-    await this.auth.logout();       
-   
-  }
+  
 
 }

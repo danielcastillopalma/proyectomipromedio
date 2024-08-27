@@ -5,7 +5,6 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
-import { DatabaseService } from 'src/app/services/database.service';
 
 @Component({
   selector: 'app-mispromedios',
@@ -29,7 +28,6 @@ export class MispromediosPage implements OnInit {
     private router: Router,
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
-    private db: DatabaseService,
     private toastCtrl: ToastController,
   ) {
 
@@ -44,8 +42,6 @@ export class MispromediosPage implements OnInit {
   promArit:any=[];
   promPonde:any=[];
   async ngOnInit() {
-    this.obtenerPromArit();
-    this.obtenerPromPonde();
    
   }
 
@@ -54,14 +50,7 @@ export class MispromediosPage implements OnInit {
   refresh() {
     window.location.reload();
   }
-  async obtenerPromArit() {
-    await this.db.getNotasAritmeticas().then((res)=>this.promArit=res);
-    console.log(this.promArit);
-  }
-  async obtenerPromPonde() {
-    await this.db.getNotasPonderadas().then((res)=>this.promPonde=res);
-    console.log(this.promArit);
-  }
+ 
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({

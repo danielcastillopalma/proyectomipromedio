@@ -4,12 +4,10 @@ import { ActionSheetController, LoadingController, ToastController } from '@ioni
 import { coloresBasicos } from '../../app.module'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
-import { AuthenticationService, Usuario } from 'src/app/services/authentication.service';
-import { StorageService } from 'src/app/services/storage.service';
 import { AlertController } from '@ionic/angular';
 
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { environment } from 'src/environments/environment';
 
 
@@ -24,7 +22,8 @@ export class LoginPage implements OnInit {
 
   objApp = initializeApp(environment.firebaseConfig);
   objAuth = getAuth(this.objApp);
-
+  //INICIO DE LOGIN GOOGLE
+  provider = new GoogleAuthProvider();
 
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
@@ -33,10 +32,7 @@ export class LoginPage implements OnInit {
   public registrationForm: FormGroup;
   wrongCredentials = "";
 
-  usuario: Usuario = {
-    email: "",
-    username: "",
-  }
+
 
 
   user = {
@@ -65,8 +61,6 @@ export class LoginPage implements OnInit {
   constructor(
 
     private form: FormBuilder,
-    private authenticationService: AuthenticationService,
-    private storageService: StorageService,
     private router: Router,
     private actionSheetCtrl: ActionSheetController,
     private loadingCtrl: LoadingController,
@@ -103,37 +97,30 @@ export class LoginPage implements OnInit {
     }
     );
   }
-  guardarUsuario(email, username) {
-    this.authenticationService.createUser(email, username)
-      .subscribe((res) => console.log(res), (err) => console.error(err));
+  
+  async loginGoogle() {
+    signInWithPopup(this.objAuth, this.provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential!.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        console.log(user);
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
   }
-  async onSubmitReg() {
 
-
-    if (!this.registrationForm.valid) return;
-
-    var res = await this.authenticationService.registerUser(this.registrationForm.value);
-    this.guardarUsuario(this.userRegistration.identifier, this.userRegistration.username);
-    if (res && res.status === 'ok') {
-
-
-      const alert = await this.alertController.create(
-        {
-          message: "Registrado Correctamente",
-          buttons: ['OK'],
-        }
-      )
-      await alert.present();
-
-      this.resetForm();
-      this.setOpen(false);
-
-    }
-    else if (res && res.message)
-      this.submitError = res.message;
-    else
-      this.submitError = "Error in submission. Please try again / latter!";
-  }
 
 
   ConfirmedValidator(controlName: string, matchingControlName: string) {
@@ -162,14 +149,7 @@ export class LoginPage implements OnInit {
       control.setErrors(null);
     });
   }
-  async onSubmit() {
-    if (!this.loginForm.valid) return;
-    const resp = await this.authenticationService.login(this.loginForm.value);
-    if (resp) {
-      this.wrongCredentials = resp;
-
-    }
-  }
+  
   goHome() {
     this.router.navigate(['/home'])
   }

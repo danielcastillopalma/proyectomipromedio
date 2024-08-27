@@ -5,9 +5,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
-import { DatabaseService } from 'src/app/services/database.service';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
-import { title } from 'process';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -52,7 +50,6 @@ export class HomePage {
     private router: Router,
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
-    private db: DatabaseService,
     private toastCtrl: ToastController,
     private emailComposer: EmailComposer,
   ) {
@@ -188,9 +185,7 @@ export class HomePage {
         notas = notas + nota.notArit + "/"
       }
     }
-    try { this.db.guardarNotaArit(this.nombrePromArit, notas, this.userData.user.email); } catch {
-      console.log("nofunciona")
-    }
+   
 
   }
   guardarNotaPonde() {
@@ -205,9 +200,7 @@ export class HomePage {
 
       }
     }
-    try { this.db.guardarNotaPonde(this.nombrePromArit, total, this.userData.user.email); } catch {
-      console.log("nofunciona")
-    }
+    
 
   }
 

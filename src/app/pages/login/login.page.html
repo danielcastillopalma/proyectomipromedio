@@ -49,7 +49,7 @@
   <ion-card class="{{primario}}">
     <ion-card-header>
       <ion-card-title class="{{primario}}">Registrarse</ion-card-title>
-      <ion-button class="{{secundario}}" expand="block">Registrar con google</ion-button>
+      <ion-button class="{{secundario}}" expand="block" (click)="loginGoogle()">Registrar con google</ion-button>
       <ion-button class="{{secundario}}" expand="block">Registrar con facebook</ion-button>
       <ion-button class="{{secundario}}" id="open-modal" (click)="setOpen(true)" expand="block">Registrar con
         Email</ion-button>
