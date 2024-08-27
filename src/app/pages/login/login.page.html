@@ -27,7 +27,7 @@
       <div *ngIf="wrongCredentials">
         <ion-label>{{wrongCredentials}}</ion-label>
       </div>
-      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <form [formGroup]="loginForm">
         <ion-input class="{{terciario}}" [(ngModel)]="user.identifier" formControlName="identifier" appAutofill
           type="email" autocomplete="email" type="email" fill="solid" label="Email" labelPlacement="floating"
           errorText="Correo Invalido" ngModel email></ion-input>
@@ -39,8 +39,7 @@
           (click)="logIn()"> Iniciar
           Sesion</ion-button>
       </form>
-      <ion-label><a href="
-        https://strapi-production-1151.up.railway.app/api/auth/forgot-password">¿Olvidaste tu
+      <ion-label><a href="#">¿Olvidaste tu
           contraseña?</a></ion-label>
       <!--
         FIN LOGIN
@@ -81,7 +80,7 @@
         <!--
             REGISTRATION
           -->
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmitReg()">
+        <form [formGroup]="registrationForm">
 
           <ion-item>
             <ion-input #username formControlName="username" label="Nombre de Usuario"
@@ -96,8 +95,8 @@
           </ion-item>
           <ion-item>
             <ion-input formControlName="password" label="Contraseña" type="password" labelPlacement="floating"
-              placeholder="Contraseña"></ion-input>
-            <ion-icon name="create-outline" slot="end"></ion-icon>
+              placeholder="Contraseña" [(ngModel)]="userRegistration.password"></ion-input>
+            <ion-icon name=" create-outline" slot="end"></ion-icon>
           </ion-item>
           <ion-item>
             <ion-input formControlName="confirmPassword" label="Repita su contraseña" type="password"

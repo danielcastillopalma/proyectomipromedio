@@ -8,6 +8,10 @@ import { AuthenticationService, Usuario } from 'src/app/services/authentication.
 import { StorageService } from 'src/app/services/storage.service';
 import { AlertController } from '@ionic/angular';
 
+import { initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-login',
@@ -15,12 +19,20 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./login.page.scss',],
 })
 export class LoginPage implements OnInit {
+
+  //Inicializar APP firebase
+
+  objApp = initializeApp(environment.firebaseConfig);
+  objAuth = getAuth(this.objApp);
+
+
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   public registrationForm: FormGroup;
   wrongCredentials = "";
+
   usuario: Usuario = {
     email: "",
     username: "",
@@ -33,7 +45,9 @@ export class LoginPage implements OnInit {
   }
   userRegistration = {
     identifier: "",
-    username: ""
+    username: "",
+    password: ""
+
   }
   presentingElement = undefined;
 
@@ -157,7 +171,8 @@ export class LoginPage implements OnInit {
     }
   }
   goHome() {
-    this.router.navigate(['/home']) }
+    this.router.navigate(['/home'])
+  }
   // CARGA DE LOGIN
   async logIn() {
     const loading = await this.loadingCtrl.create({
@@ -166,31 +181,29 @@ export class LoginPage implements OnInit {
     });
     await loading.present();
 
-    try {
+    await new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1500); // tiempo para iniciar la sesion
+    });
+    loading.dismiss();
 
 
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
+    signInWithEmailAndPassword(this.objAuth, this.user.identifier, this.user.password)
+      .then((userCredential) => {
+        // Signed in 
+        const user = userCredential.user;
 
-
-
-          resolve();
-        }, 1500); // tiempo para iniciar la sesion
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
       });
-
-
-      loading.dismiss();
-      let navigationextras: NavigationExtras = {
-        state: {
-          user: this.user
-        }
-      }
-      
-    } catch (error) {
-      console.error(error);
-      loading.dismiss();
-    }
   }
+
 
   // FUNCION PARA EL BOTON DE RETROCEDER
   retroceso() {
@@ -205,24 +218,19 @@ export class LoginPage implements OnInit {
       spinner: 'dots',
 
     });
-
     await loading.present();
-
-
-    try {
-      await new Promise<void>((resolve) => {
-        setTimeout(() => {
-
-          resolve();
-        }, 1000);
+    createUserWithEmailAndPassword(this.objAuth, this.userRegistration.identifier, this.userRegistration.password)
+      .then((userCredential) => {
+        // Signed up 
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // ..
       });
-
-      loading.dismiss();
-      this.presentToast('Registrado ✓'); // mostrar toast
-    } catch (error) {
-      console.error(error);
-      loading.dismiss();
-    }
+    loading.dismiss();
   }
 
   // Función para mostrar un toast
