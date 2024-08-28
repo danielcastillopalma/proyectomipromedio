@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -20,19 +21,19 @@ export class MenuComponent implements OnInit {
   }
 
 
-  constructor(private router: Router, private loadingCtrl: LoadingController) {
-    this.userData = JSON.parse(localStorage.getItem('usuario')!);    
+  constructor(private router: Router, private loadingCtrl: LoadingController, private auth: AuthenticationService) {
+    this.userData = this.auth.objAuth.currentUser;
   }
 
   ngOnInit() { }
-  navigate(page:string){
-    this.router.navigate(['/'+page]);
+  navigate(page: string) {
+    this.router.navigate(['/' + page]);
   }
-  
+
   goToHome() {
     this.router.navigate(['/home']);
   }
-  
+
 
   async logIn() {
     const loading = await this.loadingCtrl.create({
@@ -43,7 +44,7 @@ export class MenuComponent implements OnInit {
     await loading.present();
 
     setTimeout(() => {
-      loading.dismiss();   
+      loading.dismiss();
       this.router.navigate(['/login']);
 
       this.data = "";

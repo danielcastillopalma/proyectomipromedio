@@ -34,16 +34,17 @@
       <ion-label>Apellido</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Nombre de usuario: {{userData.user.username}}</ion-label>
+      <ion-label>Nombre de usuario: {{userData.displayName}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Correo: {{userData.user.email}}</ion-label>
+      <ion-label>Correo: {{userData.email}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Teléfono</ion-label>
     </ion-item>
     <ion-item>
-      <ion-select (blur)="cambioColor()" [(ngModel)]="colores.colors" placeholder="Elige los colores para la aplicación">
+      <ion-select (blur)="cambioColor()" [(ngModel)]="colores.colors"
+        placeholder="Elige los colores para la aplicación">
         <ion-select-option>
           Original App
         </ion-select-option>
@@ -68,8 +69,8 @@
       </ion-select>
     </ion-item>
   </ion-list>
-  <ion-button >Salir</ion-button>
+  <ion-button (click)="logOut()">Salir</ion-button>
 </ion-content>
 <ion-footer> <ion-toolbar class="{{secundario}}">
-    
-</ion-toolbar></ion-footer>
+
+  </ion-toolbar></ion-footer>

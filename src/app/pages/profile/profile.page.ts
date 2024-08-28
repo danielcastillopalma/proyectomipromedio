@@ -1,8 +1,8 @@
-import { Component, ElementRef, VERSION, Inject, ViewChild, Renderer2, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DOCUMENT } from '@angular/common';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { Storage } from '@ionic/storage-angular';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,15 +11,9 @@ import { Storage } from '@ionic/storage-angular';
 })
 export class ProfilePage implements OnInit {
   userData: any = ""
-  constructor(
-
-    private storage: Storage,
-    private element: ElementRef,
-    private router: Router,
-    private activateRoute: ActivatedRoute) {
-    this.userData = JSON.parse(localStorage.getItem('usuario')!);
+  constructor(private router: Router, private auth: AuthenticationService) {
+    this.userData = this.auth.objAuth.currentUser;
     console.log(this.userData)
-    console.log(this.userData.user.username)
 
   }
   data: any;
@@ -48,6 +42,9 @@ export class ProfilePage implements OnInit {
       this.primario = coloresDuoc.primario;
     }
   }
-  
+
+  async logOut() {
+    await this.auth.logOut();
+  }
 
 }

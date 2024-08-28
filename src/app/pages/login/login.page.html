@@ -1,19 +1,15 @@
 <ion-header [translucent]="true">
 </ion-header>
-
 <ion-buttons slot="start">
   <ion-button (click)="retroceso()">
     <ion-icon slot="icon-only" name="arrow-back" class="{{primario}}"></ion-icon>
   </ion-button>
 </ion-buttons>
-
-
 <ion-progress-bar type="indeterminate" *ngIf="loading"></ion-progress-bar>
-
 <ion-content [fullscreen]="true" class="{{primario}}">
-
-
-
+  <!--
+    LOGIN
+    -->
   <ion-card class="{{primario}}">
     <ion-card-content>
       <ion-spinner *ngIf="registering" name="crescent"></ion-spinner>
@@ -21,9 +17,6 @@
       <br>
       <ion-card-title class="{{primario}}">Iniciar sesión</ion-card-title>
       {{mensaje}}
-      <!--
-        LOGIN
-      -->
       <div *ngIf="wrongCredentials">
         <ion-label>{{wrongCredentials}}</ion-label>
       </div>
@@ -39,19 +32,30 @@
           (click)="logIn()"> Iniciar
           Sesion</ion-button>
       </form>
-      <ion-label><a href="#">¿Olvidaste tu
-          contraseña?</a></ion-label>
-      <!--
-        FIN LOGIN
-      -->
+      <ion-label><a href="#">¿Olvidaste tu contraseña?</a></ion-label>
+
+
+    </ion-card-content>
+    <ion-card-content class="divRRSS">
+      <ion-button class="{{primario}}" shape="round" (click)="loginGoogle()"><ion-icon
+          name="logo-google"></ion-icon></ion-button>
+      <ion-button class="{{primario}}" shape="round" (click)="loginFacebook()"><ion-icon
+          name="logo-facebook"></ion-icon></ion-button>
     </ion-card-content>
   </ion-card>
+  <!--
+        FIN LOGIN
+      -->
   <ion-card class="{{primario}}">
     <ion-card-header>
       <ion-card-title class="{{primario}}">Registrarse</ion-card-title>
-      <ion-button class="{{secundario}}" expand="block" (click)="loginGoogle()">Registrar con google</ion-button>
-      <ion-button class="{{secundario}}" expand="block">Registrar con facebook</ion-button>
-      <ion-button class="{{secundario}}" id="open-modal" (click)="setOpen(true)" expand="block">Registrar con
+      <ion-button class="{{secundario}}" expand="block" (click)="loginGoogle()"><ion-icon
+          name="logo-google"></ion-icon>&nbsp;Continuar con google</ion-button>
+      <ion-button class="{{secundario}}" expand="block" (click)="loginFacebook()"><ion-icon
+          name="logo-facebook"></ion-icon>&nbsp;Continuar con
+        facebook</ion-button>
+      <ion-button class="{{secundario}}" id="open-modal" (click)="setOpen(true)" expand="block"><ion-icon
+          name="mail-outline"></ion-icon>&nbsp;Continuar con
         Email</ion-button>
     </ion-card-header>
   </ion-card>
@@ -67,22 +71,22 @@
   <ion-modal #modal trigger="open-modal" [isOpen]="isModalOpen" [presentingElement]="presentingElement">
     <ng-template>
       <ion-header>
-        <ion-toolbar>
-          <ion-title>Datos de registro</ion-title>
+        <ion-toolbar class="{{primario}}">
+          <ion-title >Datos de registro</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="modal.dismiss()">Cerrar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
 
-      <ion-content class="ion-padding">
+      <ion-content class="ion-padding" class="{{terciario}}">
 
         <!--
             REGISTRATION
           -->
         <form [formGroup]="registrationForm">
 
-          <ion-item>
+          <ion-item >
             <ion-input #username formControlName="username" label="Nombre de Usuario"
               [(ngModel)]="userRegistration.username" labelPlacement="floating" placeholder="Nombre"></ion-input>
             <ion-icon name="create-outline" slot="end"></ion-icon>
@@ -104,7 +108,7 @@
             <ion-icon name="create-outline" slot="end"></ion-icon>
           </ion-item>
 
-          <ion-button expand="block" type="submit" (click)="register()"
+          <ion-button class="{{primario}}" expand="block" type="submit" (click)="register()"
             (click)="setOpen(false)">Registrarse</ion-button>
           <ion-spinner class="cargaem" *ngIf="registering" name="crescent"></ion-spinner>
         </form>

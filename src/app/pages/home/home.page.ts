@@ -6,6 +6,7 @@ import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -51,11 +52,14 @@ export class HomePage {
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
     private toastCtrl: ToastController,
-    private emailComposer: EmailComposer,
+    private auth: AuthenticationService
   ) {
 
-    this.userData = JSON.parse(localStorage.getItem('usuario')!);
-    this.userDataEmail = JSON.parse(localStorage.getItem('email')!);
+    this.userData = this.auth.objAuth.currentUser;
+    if (this.userData) {
+      this.userDataEmail = this.userData.email;
+    }
+
 
 
 
@@ -174,9 +178,9 @@ export class HomePage {
     if (this.tipos.tipo == "Aritmético") {
       this.guardarNotaArit();
     } else
-    if (this.tipos.tipo=="Ponderado") {
-      this.guardarNotaPonde();
-    }
+      if (this.tipos.tipo == "Ponderado") {
+        this.guardarNotaPonde();
+      }
   }
   guardarNotaArit() {
     let notas: string = "";
@@ -185,7 +189,7 @@ export class HomePage {
         notas = notas + nota.notArit + "/"
       }
     }
-   
+
 
   }
   guardarNotaPonde() {
@@ -200,7 +204,7 @@ export class HomePage {
 
       }
     }
-    
+
 
   }
 

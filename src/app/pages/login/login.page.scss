@@ -1,31 +1,39 @@
 ion-row {
-    align-items: center;
-    text-align: center;
+  align-items: center;
+  text-align: center;
 }
 
 .profilePicture {
-    display: inline-block;
-    position: relative;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 50%;
-    margin-left:15%;
-    
-  }
-  
-  ion-content{
-    align-items: center;
-  }
-  .bgcolor1{
-    background-color: purple;
-  }
+  display: inline-block;
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: 15%;
 
-  .img_perfil{
+}
 
-    align-items: center;
-    width: 300px;
-    height: 300px;
-  }
+ion-content {
+  align-items: center;
+}
 
-  
+.bgcolor1 {
+  background-color: purple;
+}
+
+.img_perfil {
+
+  align-items: center;
+  width: 300px;
+  height: 300px;
+}
+
+.divRRSS {
+  inset: 0px;
+  width: 12rem;
+  height: 5rem;
+  max-width: 100vw;
+  max-height: 100dvh;
+  margin: auto;
+}

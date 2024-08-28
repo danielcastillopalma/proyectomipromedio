@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoadingController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { AlertController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { SpinnersService } from 'src/app/services/util/spinners.service';
 
@@ -86,7 +85,7 @@ export class LoginPage implements OnInit {
 
 
   goHome() {
-    this.router.navigate(['/home'])
+    this.router.navigate(['/home']);
   }
 
 
@@ -124,6 +123,10 @@ export class LoginPage implements OnInit {
     await this.auth.loginGoogle();
   }
 
+  async loginFacebook() {
+    await this.auth.loginFacebook();
+  }
+
   /**
    * LOGIN CON EMAIL Y CONTRASEÑA
    */
@@ -137,7 +140,7 @@ export class LoginPage implements OnInit {
 
   async register() {
     await this.spinner.spinner('Registrando...', 'dots', 1500);
-    this.auth.register(this.userRegistration.identifier, this.userRegistration.password);
+    this.auth.register(this.userRegistration.identifier, this.userRegistration.password, this.userRegistration.username);
   }
 
   // Función para mostrar un toast
