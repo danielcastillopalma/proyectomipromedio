@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "com.mipromedio.app"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk 34
     defaultConfig {
         applicationId "com.mipromedio.app"
         minSdkVersion rootProject.ext.minSdkVersion

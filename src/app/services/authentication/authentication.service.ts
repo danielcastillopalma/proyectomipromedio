@@ -11,7 +11,7 @@ import { FacebookAuthProvider } from "firebase/auth";
 })
 export class AuthenticationService {
 
-  objApp = initializeApp(environment.firebaseConfig);
+  objApp = initializeApp(environment.firebaseConfig!);
   objAuth = getAuth(this.objApp);
   //INICIO DE LOGIN GOOGLE
   googleProvider = new GoogleAuthProvider();

@@ -7,6 +7,7 @@ import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { AdsService } from 'src/app/services/ads/ads.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -52,9 +53,10 @@ export class HomePage {
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
     private toastCtrl: ToastController,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
+    private anu: AdsService
   ) {
-
+    this.anu.showBanner();
     this.userData = this.auth.objAuth.currentUser;
     if (this.userData) {
       this.userDataEmail = this.userData.email;
