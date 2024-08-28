@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { ActionSheetController, LoadingController, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { coloresBasicos } from '../../app.module'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-
 import { AlertController } from '@ionic/angular';
-
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { environment } from 'src/environments/environment';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { SpinnersService } from 'src/app/services/util/spinners.service';
 
 
 @Component({
@@ -17,23 +14,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./login.page.scss',],
 })
 export class LoginPage implements OnInit {
-
-  //Inicializar APP firebase
-
-  objApp = initializeApp(environment.firebaseConfig);
-  objAuth = getAuth(this.objApp);
-  //INICIO DE LOGIN GOOGLE
-  provider = new GoogleAuthProvider();
-
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
   primario = coloresBasicos.primario;
   public registrationForm: FormGroup;
+
   wrongCredentials = "";
-
-
-
 
   user = {
     identifier: "",
@@ -50,7 +37,7 @@ export class LoginPage implements OnInit {
   // CARGA DE LOGIN
   loading = false;
 
-  // CARGA DE REGISTRO CON EMAIK
+  // CARGA DE REGISTRO CON EMAIL
 
   registering = false;
 
@@ -59,13 +46,11 @@ export class LoginPage implements OnInit {
   submitError = "";
   isModalOpen = false;
   constructor(
-
     private form: FormBuilder,
     private router: Router,
-    private actionSheetCtrl: ActionSheetController,
-    private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private alertController: AlertController) {
+    private auth: AuthenticationService,
+    private spinner: SpinnersService) {
     //constructor
   }
 
@@ -97,28 +82,11 @@ export class LoginPage implements OnInit {
     }
     );
   }
-  
-  async loginGoogle() {
-    signInWithPopup(this.objAuth, this.provider)
-      .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential!.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        console.log(user);
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
-      }).catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.customData.email;
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
-      });
+
+
+
+  goHome() {
+    this.router.navigate(['/home'])
   }
 
 
@@ -149,68 +117,27 @@ export class LoginPage implements OnInit {
       control.setErrors(null);
     });
   }
-  
-  goHome() {
-    this.router.navigate(['/home'])
+  /**
+   * LOGIN Y REGISTER CON GOOGLE
+   */
+  async loginGoogle() {
+    await this.auth.loginGoogle();
   }
-  // CARGA DE LOGIN
+
+  /**
+   * LOGIN CON EMAIL Y CONTRASEÑA
+   */
   async logIn() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Iniciando sesión...',
-      spinner: 'dots', // cambiar el tipo de spinner
-    });
-    await loading.present();
-
-    await new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, 1500); // tiempo para iniciar la sesion
-    });
-    loading.dismiss();
-
-
-    signInWithEmailAndPassword(this.objAuth, this.user.identifier, this.user.password)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-
-        console.log(user);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorMessage);
-      });
+    await this.spinner.spinner('Iniciando sesión...', 'dots', 1500);
+    await this.auth.logIn(this.user.identifier, this.user.password);
   }
 
-
-  // FUNCION PARA EL BOTON DE RETROCEDER
-  retroceso() {
-    this.router.navigate(['/home']);
-  }
 
   // FUNCIONES PARA EL REGISTRO CON EMAIL
 
   async register() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Registrando...',
-      spinner: 'dots',
-
-    });
-    await loading.present();
-    createUserWithEmailAndPassword(this.objAuth, this.userRegistration.identifier, this.userRegistration.password)
-      .then((userCredential) => {
-        // Signed up 
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // ..
-      });
-    loading.dismiss();
+    await this.spinner.spinner('Registrando...', 'dots', 1500);
+    this.auth.register(this.userRegistration.identifier, this.userRegistration.password);
   }
 
   // Función para mostrar un toast
@@ -224,5 +151,10 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
+
+  // FUNCION PARA EL BOTON DE RETROCEDER
+  retroceso() {
+    this.router.navigate(['/home']);
+  }
 
 }
