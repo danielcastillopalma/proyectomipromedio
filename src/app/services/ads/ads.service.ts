@@ -53,7 +53,7 @@ export class AdsService {
 
   async showInterstitial() {
     const options: AdOptions = {
-      adId: '',
+      adId: 'ca-app-pub-7710902676549668/6989057202',
     };
 
     await AdMob.prepareInterstitial(options);

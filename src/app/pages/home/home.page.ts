@@ -230,31 +230,40 @@ export class HomePage {
   sumaPorc = 0;
   errorPorcMax = "";
   calcularPromPonde() {
+    
+    //Esta linea obtiene cuantas notas vamos a calcular.
     let cant = Object.keys(this.promPonde).length;
+    //Se recorre el array de notas de promedio ponderado.    
     for (let nota of this.promPonde) {
-
+      console.log("POS: "+nota.pos)
+      //Si la nota está vacia, se suma 0
       if (nota.notPond == '') {
         this.sumarPromPonde = this.sumarPromPonde + 0
       } else {
-        this.sumaPorc = this.sumaPorc + parseInt(nota.porcPond);
-        this.sumarPromPonde = this.sumarPromPonde + (parseInt(nota.notPond) * (parseInt(nota.porcPond) / 100));
-        console.log("if correcto", this.sumarPromPonde)
-        console.log("id:", nota.pos, " cant:", cant)
-        if (nota.pos == cant && this.sumaPorc < 100) {
-          this.errorPorcMax = "La ponderación suma menos de 100%"
-          this.presentToast("Los porcentajes no suman 100%")
-        } else if (this.sumaPorc > 100) {
-          this.errorPorcMax = "La ponderación suma más de 100%"
-          this.presentToast("Los porcentajes suman más de 100%")
-
+        //Si el porcentaje es vacio, se suma 0
+        if (nota.porcPond == '') {
+          this.sumaPorc = this.sumaPorc + 0;
         } else {
-          this.errorPorcMax = ""
+          //si el porcentaje no es vacio, se suma el valor obtenido
+          this.sumaPorc = this.sumaPorc + parseInt(nota.porcPond);
+          //se suma el resultado del calculo de la nota por el porcentaje.
+          console.log("")
+          this.sumarPromPonde = this.sumarPromPonde + (parseInt(nota.notPond) * (parseInt(nota.porcPond) / 100));
+          
+          if (nota.pos == cant && this.sumaPorc < 100) {
+            console.log("1: " + nota.pos + " 2:" + this.sumaPorc)
+            this.errorPorcMax = "La ponderación suma menos de 100%"
+            this.presentToast("Los porcentajes no suman 100%")
+          } else if (this.sumaPorc > 100) {
+            this.errorPorcMax = "La ponderación suma más de 100%"
+            this.presentToast("Los porcentajes suman más de 100%")
+
+          } else {
+            this.errorPorcMax = ""
+          }
         }
       }
       console.log("Suma Porcentaje: ", this.sumaPorc)
-
-
-
     }
 
     this.promedioPonderado = this.sumarPromPonde;

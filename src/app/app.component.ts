@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AdsService } from './services/ads/ads.service';
 
 
 @Component({
@@ -8,9 +9,10 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  constructor(
+  constructor(private anu: AdsService
 
   ) {
+    this.anu.initialize();
 
 
   }

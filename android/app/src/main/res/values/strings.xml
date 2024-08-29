@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">ProyectoMiPromedio</string>
     <string name="title_activity_main">ProyectoMiPromedio</string>
-    <string name="package_name">com.mipromedio.app</string>
+    <string name="package_name">com.mipromediochile.app</string>
     <string name="custom_url_scheme">com.mipromedio.app</string>
     <string name="admob_app_id">ca-app-pub-7710902676549668~2622604653</string>
 </resources>
