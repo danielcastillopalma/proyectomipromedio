@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.mipromedio.app',
+  appId: 'com.mipromediochile.app',
   appName: 'ProyectoMiPromedio',
   webDir: 'www',
   

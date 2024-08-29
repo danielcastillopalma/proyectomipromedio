@@ -40,6 +40,11 @@ ion-menu{
   position:flex;
 }
 
+#publi{
+  align-items: center;
+  text-align: center;
+}
+
 //esto sirve para hacer funcionar el atributo hidden html
 [hidden] {
   display: none !important;

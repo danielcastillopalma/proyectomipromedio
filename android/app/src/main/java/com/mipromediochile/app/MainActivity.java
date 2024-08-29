@@ -1,4 +1,4 @@
-package com.mipromedio.app;
+package com.mipromediochile.app;
 
 import com.getcapacitor.BridgeActivity;
 
