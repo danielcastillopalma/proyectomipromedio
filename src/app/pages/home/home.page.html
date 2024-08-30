@@ -97,7 +97,7 @@
           </ion-row>
         </ion-item>
         <ion-item class="{{terciario}}">
-          <ion-row><ion-label>Promedio:{{promedioPonderado}} </ion-label><ion-label *ngIf="errorPorcMax"><ion-icon (click)="presentToast(errorPorcMax)"name="warning" color="warning"></ion-icon></ion-label></ion-row>
+          <ion-row><ion-label>Promedio:{{promedioPonderado}} </ion-label><ion-label *ngIf="errorPorcMax"><ion-icon (click)="presentToast(errorPorcMax,'warning')"name="warning" color="warning"></ion-icon></ion-label></ion-row>
         </ion-item>
       </div>
     </div>
@@ -117,7 +117,7 @@
       <ion-row  class="ion-justify-content-between">
         <ion-col size=""><ion-input placeholder="Mi Promedio 1" [counter]="true" maxlength="25"
             [(ngModel)]="nombrePromArit"></ion-input></ion-col>
-        <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="presentToast('Debes seleccionar un tipo de promedio')"
+        <ion-col size="auto"><ion-button class="{{cuarto}}" (click)="presentToast('Debes seleccionar un tipo de promedio','warning')"
             fill="block">Guardar</ion-button></ion-col>
       </ion-row>
     </ng-template>

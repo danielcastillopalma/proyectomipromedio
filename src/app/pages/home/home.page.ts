@@ -1,13 +1,16 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { LocalNotifications, LocalNotificationsPlugin, ScheduleOptions } from '@capacitor/local-notifications'
+import { LocalNotifications,ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
-import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { AdsService } from 'src/app/services/ads/ads.service';
+import { Promedio } from 'src/app/classes/promedio';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { AppComponent } from 'src/app/app.component';
+import { onAuthStateChanged } from 'firebase/auth';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -46,7 +49,10 @@ export class HomePage {
   primario = coloresBasicos.primario;
   userData: any = ""
   userDataEmail: any = ""
+  //prueba
+  prueba = new Promedio
 
+  //prueba
   constructor(
     private storage: Storage,
     private router: Router,
@@ -54,14 +60,10 @@ export class HomePage {
     private calendar: Calendar,
     private toastCtrl: ToastController,
     private auth: AuthenticationService,
-    private anu: AdsService
+    private anu: AdsService,
+    private db: DatabaseService,
   ) {
     this.anu.showBanner();
-    this.userData = this.auth.objAuth.currentUser;
-    if (this.userData) {
-      this.userDataEmail = this.userData.email;
-    }
-
 
 
 
@@ -72,6 +74,17 @@ export class HomePage {
     await this.storage.create();
     LocalNotifications.checkPermissions();
     LocalNotifications.requestPermissions();
+
+    onAuthStateChanged(this.auth.objAuth, (user) => {
+      if (user) {
+        this.userData = user;
+        this.userDataEmail = user.email || '';
+        console.log("HOME: " + this.userDataEmail)
+      } else {
+        this.userData = null;
+        this.userDataEmail = '';
+      }
+    });
     //this.actualizacion()
     /** 
     setInterval(()=>{
@@ -126,15 +139,15 @@ export class HomePage {
   }
 
   loginForSave() {
-    this.presentToast("Inicia sesión para guardar tus promedios")
+    this.presentToast("Inicia sesión para guardar tus promedios",'warning')
 
   }
-  async presentToast(message: string) {
+  async presentToast(message: string,color) {
     const toast = await this.toastCtrl.create({
       message: message,
       duration: 2000, // la duracion toast 
       position: 'bottom', // en donde va el toast
-      color: 'warning', // 
+      color: color, // 
     });
     toast.present();
   }
@@ -191,6 +204,19 @@ export class HomePage {
         notas = notas + nota.notArit + "/"
       }
     }
+    let prom = new Promedio;
+    prom.content = notas;
+    prom.email = this.auth.objAuth.currentUser?.email!;
+    prom.title = this.nombrePromArit;
+    prom.type = 'arit'
+
+    this.db.guardarPromedio(prom)
+
+    this.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    setTimeout(() => {
+      this.refresh();
+    }, 1500);
+
 
 
   }
@@ -206,6 +232,18 @@ export class HomePage {
 
       }
     }
+    let prom = new Promedio;
+    prom.content = total;
+    prom.email = this.auth.objAuth.currentUser?.email!;
+    prom.title = this.nombrePromArit;
+    prom.type = 'ponde'
+
+    this.db.guardarPromedio(prom)
+
+    this.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    setTimeout(() => {
+      this.refresh();
+    }, 1500);
 
 
   }
@@ -230,12 +268,12 @@ export class HomePage {
   sumaPorc = 0;
   errorPorcMax = "";
   calcularPromPonde() {
-    
+
     //Esta linea obtiene cuantas notas vamos a calcular.
     let cant = Object.keys(this.promPonde).length;
     //Se recorre el array de notas de promedio ponderado.    
     for (let nota of this.promPonde) {
-      console.log("POS: "+nota.pos)
+      console.log("POS: " + nota.pos)
       //Si la nota está vacia, se suma 0
       if (nota.notPond == '') {
         this.sumarPromPonde = this.sumarPromPonde + 0
@@ -249,14 +287,14 @@ export class HomePage {
           //se suma el resultado del calculo de la nota por el porcentaje.
           console.log("")
           this.sumarPromPonde = this.sumarPromPonde + (parseInt(nota.notPond) * (parseInt(nota.porcPond) / 100));
-          
+
           if (nota.pos == cant && this.sumaPorc < 100) {
             console.log("1: " + nota.pos + " 2:" + this.sumaPorc)
             this.errorPorcMax = "La ponderación suma menos de 100%"
-            this.presentToast("Los porcentajes no suman 100%")
+            this.presentToast("Los porcentajes no suman 100%",'warning')
           } else if (this.sumaPorc > 100) {
             this.errorPorcMax = "La ponderación suma más de 100%"
-            this.presentToast("Los porcentajes suman más de 100%")
+            this.presentToast("Los porcentajes suman más de 100%",'warning')
 
           } else {
             this.errorPorcMax = ""

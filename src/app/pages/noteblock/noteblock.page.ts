@@ -5,7 +5,7 @@ import { EmailComposer } from '@awesome-cordova-plugins/email-composer/ngx';
 import { ModalController } from '@ionic/angular';
 import { coloresBasicos } from 'src/app/app.module';
 import { NotesComponent } from 'src/app/components/notes/notes.component';
-import { SqliteService } from 'src/app/services/sqlite.service';
+//import { SqliteService } from 'src/app/services/sqlite.service';
 @Component({
   selector: 'app-noteblock',
   templateUrl: './noteblock.page.html',
@@ -19,13 +19,13 @@ export class NoteblockPage implements OnInit {
   userData: any = ""
 
   ngOnInit() {
-    this.bd.dbState().subscribe((res: any) => {
-      if (res) {
-        this.bd.fetchNotas().subscribe((item: any) => {
-          this.notas = item;
-        })
-      }
-    });
+    //this.bd.dbState().subscribe((res: any) => {
+      //if (res) {
+        //this.bd.fetchNotas().subscribe((item: any) => {
+          //this.notas = item;
+        //})
+      //}
+    //});
 
   }
   newTitle = ""
@@ -43,7 +43,7 @@ export class NoteblockPage implements OnInit {
 
   constructor(
     private modalCtrl: ModalController,
-    private bd: SqliteService,
+    //private bd: SqliteService,
     private router: Router,
     private emailComposer: EmailComposer,
   ) {
@@ -53,13 +53,13 @@ export class NoteblockPage implements OnInit {
 
   }
   guardar() {
-    this.bd.addNota(this.newTitle, this.newContent, this.userData.user.email);
-    this.bd.presentToast("Nota Agregada");
+    //this.bd.addNota(this.newTitle, this.newContent, this.userData.user.email);
+    //this.bd.presentToast("Nota Agregada");
 
   }
 
   async delete(id:number) {
-    this.bd.deleteNota(id)
+   // this.bd.deleteNota(id)
   }
 
   async share() {

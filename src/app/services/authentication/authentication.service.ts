@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { initializeApp } from 'firebase/app';
-import { setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, inMemoryPersistence, getAuth, signOut, updateProfile } from 'firebase/auth';
-import { environment } from 'src/environments/environment';
+import { setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, getAuth, signOut, updateProfile } from 'firebase/auth';
 import { FacebookAuthProvider } from "firebase/auth";
+import { AppComponent } from 'src/app/app.component';
 
 
 @Injectable({
@@ -11,13 +10,12 @@ import { FacebookAuthProvider } from "firebase/auth";
 })
 export class AuthenticationService {
 
-  objApp = initializeApp(environment.firebaseConfig!);
-  objAuth = getAuth(this.objApp);
+  objAuth = getAuth(this.app.objApp);
   //INICIO DE LOGIN GOOGLE
   googleProvider = new GoogleAuthProvider();
   facebookProvider = new FacebookAuthProvider();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private app: AppComponent) { }
 
   async loginGoogle() {
     setPersistence(this.objAuth, browserLocalPersistence).then(() => {
@@ -28,7 +26,6 @@ export class AuthenticationService {
           const token = credential!.accessToken;
           // The signed-in user info.
           const user = result.user;
-          console.log(user);
           this.router.navigate(['/home']);
           // IdP data available using getAdditionalUserInfo(result)
           // ...
@@ -78,13 +75,11 @@ export class AuthenticationService {
    * LOGIN CORREO PASSWORD
    */
   async logIn(identifier, password) {
-    setPersistence(this.objAuth, browserLocalPersistence).then(() => {
+    await setPersistence(this.objAuth, browserLocalPersistence).then(() => {
       signInWithEmailAndPassword(this.objAuth, identifier, password)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-
-          console.log(user);
           this.router.navigate(['/home']);
           // ...
         })

@@ -11,6 +11,7 @@ export const environment = {
     storageBucket: "mipromedio-95c99.appspot.com",
     messagingSenderId: "1060938972528",
     appId: "1:1060938972528:web:10e3dbd592135639c323b5",
+    databaseURL: "https://mipromedio-95c99-default-rtdb.firebaseio.com/",
     measurementId: "G-NRWX0971X5"
   }
 
