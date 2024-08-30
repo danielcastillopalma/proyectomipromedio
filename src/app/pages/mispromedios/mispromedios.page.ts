@@ -28,7 +28,7 @@ export class MispromediosPage implements OnInit {
     private db: DatabaseService
   ) {
 
-    this.db.obtenerPromedios(this.userDataEmail);
+    this.db.obtenerPromedios();
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
