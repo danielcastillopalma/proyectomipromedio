@@ -1,9 +1,9 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController, ToastController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
-import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
+import { ToastController } from '@ionic/angular';
+import { onAuthStateChanged } from 'firebase/auth';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
+import { DatabaseService } from 'src/app/services/database/database.service';
 
 @Component({
   selector: 'app-mispromedios',
@@ -23,17 +23,12 @@ export class MispromediosPage implements OnInit {
   userDataEmail: any = ""
 
   constructor(
-    private storage: Storage,
-    private router: Router,
-    private loadingCtrl: LoadingController,
-    private calendar: Calendar,
     private toastCtrl: ToastController,
+    private auth:AuthenticationService,
+    private db: DatabaseService
   ) {
 
-    this.userData = JSON.parse(localStorage.getItem('usuario')!);
-    this.userDataEmail = JSON.parse(localStorage.getItem('email')!);
-
-
+    this.db.obtenerPromedios(this.userDataEmail);
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
@@ -41,7 +36,17 @@ export class MispromediosPage implements OnInit {
   promArit:any=[];
   promPonde:any=[];
   async ngOnInit() {
-   
+    onAuthStateChanged(this.auth.objAuth, (user) => {
+      if (user) {
+        this.userData = user;
+        this.userDataEmail = user.email || '';
+        console.log("HOME: " + this.userDataEmail)
+      } else {
+        this.userData = null;
+        this.userDataEmail = '';
+      }
+    });
+
   }
 
 
