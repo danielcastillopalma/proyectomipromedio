@@ -25,10 +25,9 @@
     <ion-label>Promedios Aritméticos</ion-label>
   </ion-item>
   <ion-list>
-    <ion-item-sliding *ngFor="let proms of promArit.data">
+    <ion-item-sliding *ngFor="let proms of aritmetico">
       <ion-item>
-        <ion-label>{{proms.attributes.avgtitle}}</ion-label>
-        <ion-label>{{proms.attributes.notas}}</ion-label>
+        <ion-label>{{proms}}</ion-label>
         <ion-item-options>
           <ion-item-option>Favorite</ion-item-option>
           <ion-item-option color="danger">Delete</ion-item-option>
@@ -41,10 +40,9 @@
     <ion-label>Promedios Ponderados</ion-label>
   </ion-item>
   <ion-list>
-    <ion-item-sliding *ngFor="let proms of promPonde.data">
+    <ion-item-sliding *ngFor="let proms of ponderado">
       <ion-item>
-        <ion-label>{{proms.attributes.avgtitle}}</ion-label>
-        <ion-label>{{proms.attributes.notas}}</ion-label>
+        <ion-label>{{proms}}</ion-label>
         <ion-item-options>
           <ion-item-option>Favorite</ion-item-option>
           <ion-item-option color="danger">Delete</ion-item-option>

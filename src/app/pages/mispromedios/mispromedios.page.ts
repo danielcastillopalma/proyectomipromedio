@@ -12,9 +12,9 @@ import { DatabaseService } from 'src/app/services/database/database.service';
 })
 export class MispromediosPage implements OnInit {
 
-  token = "";
-
-
+  aritmetico: any = []
+  ponderado: any = []
+  data: any;
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
   secundario = coloresBasicos.secundario;
@@ -24,23 +24,23 @@ export class MispromediosPage implements OnInit {
 
   constructor(
     private toastCtrl: ToastController,
-    private auth:AuthenticationService,
+    private auth: AuthenticationService,
     private db: DatabaseService
   ) {
 
     this.db.obtenerPromedios();
+    this.ordenarPromedios();
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
 
-  promArit:any=[];
-  promPonde:any=[];
+  promArit: any = [];
+  promPonde: any = [];
   async ngOnInit() {
     onAuthStateChanged(this.auth.objAuth, (user) => {
       if (user) {
         this.userData = user;
         this.userDataEmail = user.email || '';
-        console.log("HOME: " + this.userDataEmail)
       } else {
         this.userData = null;
         this.userDataEmail = '';
@@ -54,7 +54,7 @@ export class MispromediosPage implements OnInit {
   refresh() {
     window.location.reload();
   }
- 
+
 
   async presentToast(message: string) {
     const toast = await this.toastCtrl.create({
@@ -64,6 +64,12 @@ export class MispromediosPage implements OnInit {
       color: 'warning', // 
     });
     toast.present();
+  }
+
+  async ordenarPromedios() {
+    this.aritmetico = this.db.aritmetico;
+    this.ponderado=this.db.ponderado;
+
   }
 
 

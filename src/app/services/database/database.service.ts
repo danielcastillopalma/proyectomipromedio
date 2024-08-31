@@ -4,19 +4,21 @@ import { AppComponent } from 'src/app/app.component';
 import { Promedio } from 'src/app/classes/promedio';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { onAuthStateChanged } from 'firebase/auth';
+import { MispromediosPage } from 'src/app/pages/mispromedios/mispromedios.page';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  uid:any = ""
-  aritmetico :any= []
-  ponderado:any = []
+  uid: any = ""
+
+  aritmetico: any = []
+  ponderado: any = []
   constructor(private app: AppComponent,
-    private auth: AuthenticationService
+    private auth: AuthenticationService,
   ) {
     this.generateUid().then(() => {
-      console.log(this.uid);
+      console.log("Uid generado");
     }).catch(error => {
       console.error('Error initializing UID:', error);
     });
@@ -49,12 +51,24 @@ export class DatabaseService {
   async obtenerPromedios() {
     await this.generateUid();
     const db = getDatabase(this.app.objApp);
-    console.log("uid: "+this.uid)
-    get(child(ref(db), `promedio/`+this.uid+'/')).then((snapshot) => {
+    get(child(ref(db), `promedio/` + this.uid + '/')).then((snapshot) => {
       if (snapshot.exists()) {
-        console.log(snapshot.val());
+        const data = snapshot.val();
+        for (const key in data) {
+          if (data.hasOwnProperty(key)) {
+            let tipo = data[key].type;
+            let title = data[key].title;
+            let cont = data[key].content;
+            if (tipo === 'arit'){
+              this.aritmetico.push(title+" "+cont);
+            }else{
+              this.ponderado.push(title+" "+cont);
+            }
 
-        return snapshot;
+            this.aritmetico;
+            this.ponderado;
+          }
+        }
       } else {
         console.log("No data available");
       }
