@@ -4,7 +4,7 @@ const config: CapacitorConfig = {
   appId: 'com.mipromediochile.app',
   appName: 'ProyectoMiPromedio',
   webDir: 'www',
-  
+
   plugins: {
     CapacitorSQLite: {
       iosDatabaseLocation: 'Library/CapacitorDatabase',
@@ -19,6 +19,11 @@ const config: CapacitorConfig = {
         iconColor: "#488AFF",
 
       },
+      GoogleAuth: {
+        scopes: ['profile', 'email'],
+        serverClientId: 'mipromedio-95c99.apps.googleusercontent.com',
+        forceCodeForRefreshToken: true
+      }
     }
   }
 };

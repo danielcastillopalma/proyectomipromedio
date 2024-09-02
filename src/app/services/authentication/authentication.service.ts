@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { setPersistence, browserLocalPersistence, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, getAuth, signOut, updateProfile } from 'firebase/auth';
 import { FacebookAuthProvider } from "firebase/auth";
 import { AppComponent } from 'src/app/app.component';
-
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +16,20 @@ export class AuthenticationService {
   facebookProvider = new FacebookAuthProvider();
 
   constructor(private router: Router, private app: AppComponent) { }
+  /**
+   * Login con google
+   */
 
   async loginGoogle() {
+    try {
+      const user = await GoogleAuth.signIn();
+      console.log('Usuario:', user);
+      // Aquí puedes manejar el usuario autenticado
+    } catch (error) {
+      console.error('Error de autenticación:', error);
+    }
+  }
+  async loginGoogle2() {
     setPersistence(this.objAuth, browserLocalPersistence).then(() => {
       signInWithPopup(this.objAuth, this.googleProvider)
         .then((result) => {

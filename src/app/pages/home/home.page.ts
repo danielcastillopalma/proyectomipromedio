@@ -11,6 +11,7 @@ import { Promedio } from 'src/app/classes/promedio';
 import { DatabaseService } from 'src/app/services/database/database.service';
 import { AppComponent } from 'src/app/app.component';
 import { onAuthStateChanged } from 'firebase/auth';
+import { ToastService } from 'src/app/services/util/toast.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -58,7 +59,7 @@ export class HomePage {
     private router: Router,
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
-    private toastCtrl: ToastController,
+    public toast:ToastService,
     private auth: AuthenticationService,
     private anu: AdsService,
     private db: DatabaseService,
@@ -139,18 +140,10 @@ export class HomePage {
   }
 
   loginForSave() {
-    this.presentToast("Inicia sesión para guardar tus promedios",'warning')
+    this.toast.presentToast("Inicia sesión para guardar tus promedios",'warning')
 
   }
-  async presentToast(message: string,color) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 2000, // la duracion toast 
-      position: 'bottom', // en donde va el toast
-      color: color, // 
-    });
-    toast.present();
-  }
+
   /**
    * 
    * PROMEDIO ARITMETICO
@@ -212,7 +205,7 @@ export class HomePage {
 
     this.db.guardarPromedio(prom)
 
-    this.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    this.toast.presentToast("Tu promedio se ha guardado con éxito!",'success');
     setTimeout(() => {
       this.refresh();
     }, 1500);
@@ -240,7 +233,7 @@ export class HomePage {
 
     this.db.guardarPromedio(prom)
 
-    this.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    this.toast.presentToast("Tu promedio se ha guardado con éxito!",'success');
     setTimeout(() => {
       this.refresh();
     }, 1500);
@@ -291,10 +284,10 @@ export class HomePage {
           if (nota.pos == cant && this.sumaPorc < 100) {
             console.log("1: " + nota.pos + " 2:" + this.sumaPorc)
             this.errorPorcMax = "La ponderación suma menos de 100%"
-            this.presentToast("Los porcentajes no suman 100%",'warning')
+            this.toast.presentToast("Los porcentajes no suman 100%",'warning')
           } else if (this.sumaPorc > 100) {
             this.errorPorcMax = "La ponderación suma más de 100%"
-            this.presentToast("Los porcentajes suman más de 100%",'warning')
+            this.toast.presentToast("Los porcentajes suman más de 100%",'warning')
 
           } else {
             this.errorPorcMax = ""

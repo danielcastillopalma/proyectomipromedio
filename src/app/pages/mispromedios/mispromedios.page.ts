@@ -56,15 +56,7 @@ export class MispromediosPage implements OnInit {
   }
 
 
-  async presentToast(message: string) {
-    const toast = await this.toastCtrl.create({
-      message: message,
-      duration: 2000, // la duracion toast 
-      position: 'bottom', // en donde va el toast
-      color: 'warning', // 
-    });
-    toast.present();
-  }
+ 
 
   async ordenarPromedios() {
     this.aritmetico = this.db.aritmetico;

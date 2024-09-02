@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">ProyectoMiPromedio</string>
-    <string name="title_activity_main">ProyectoMiPromedio</string>
+    <string name="app_name">Mi Promedio</string>
+    <string name="title_activity_main">Mi Promedio</string>
     <string name="package_name">com.mipromediochile.app</string>
     <string name="custom_url_scheme">com.mipromediochile.app</string>
     <string name="admob_app_id">ca-app-pub-7710902676549668~2622604653</string>
