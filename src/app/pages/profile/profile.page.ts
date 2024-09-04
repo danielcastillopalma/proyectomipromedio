@@ -14,6 +14,7 @@ export class ProfilePage implements OnInit {
     let data = localStorage.getItem(this.auth.storageKey)
     if (data) {
       this.userData = JSON.parse(data);
+      console.log(this.userData)
     }
 
   }

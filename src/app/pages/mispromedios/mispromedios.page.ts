@@ -4,6 +4,7 @@ import { ToastController } from '@ionic/angular';
 import { onAuthStateChanged } from 'firebase/auth';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { DatabaseService } from 'src/app/services/database/database.service';
+import { Promedio } from 'src/app/classes/promedio';
 
 @Component({
   selector: 'app-mispromedios',
@@ -11,9 +12,6 @@ import { DatabaseService } from 'src/app/services/database/database.service';
   styleUrls: ['./mispromedios.page.scss'],
 })
 export class MispromediosPage implements OnInit {
-
-  aritmetico: any = []
-  ponderado: any = []
   data: any;
   cuarto = coloresBasicos.cuarto;
   terciario = coloresBasicos.terciario;
@@ -27,9 +25,13 @@ export class MispromediosPage implements OnInit {
     private auth: AuthenticationService,
     private db: DatabaseService
   ) {
+    this.db.obtenerPromedios().subscribe(res => {
+      this.data = res;
+      this.ordenarPromedios();
+    });
+   
 
-    this.db.obtenerPromedios();
-    this.ordenarPromedios();
+
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
   @ViewChild('promedioPorcentual') promedioPorcentual: ElementRef;
@@ -37,11 +39,11 @@ export class MispromediosPage implements OnInit {
   promArit: any = [];
   promPonde: any = [];
   async ngOnInit() {
-    this.data=localStorage.getItem(this.auth.storageKey);
-    if(this.data){
-      this.userData=JSON.parse(this.data);
+    this.data = localStorage.getItem(this.auth.storageKey);
+    if (this.data) {
+      this.userData = JSON.parse(this.data);
       this.userDataEmail = this.userData.email;
-    }else{
+    } else {
       this.userData = null;
       this.userDataEmail = '';
     }
@@ -55,12 +57,20 @@ export class MispromediosPage implements OnInit {
   }
 
 
- 
 
-  async ordenarPromedios() {
-    this.aritmetico = this.db.aritmetico;
-    this.ponderado=this.db.ponderado;
 
+  ordenarPromedios() {
+    for(let prome in this.data){
+     if(this.data[prome].type=='ponde'){
+      this.promPonde.push(this.data[prome]);
+     }else{
+      this.promArit.push(this.data[prome]);
+     }
+
+    }
+
+    console.log("PONDE: "+this.promPonde);
+    console.log("ARIt: "+this)
   }
 
 

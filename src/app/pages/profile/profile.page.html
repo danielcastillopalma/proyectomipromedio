@@ -24,14 +24,14 @@
 <ion-content>
   <ion-list lines="full">
     <ion-item>
-      <ion-img></ion-img>
+      <ion-img src="{{userData.imageUrl}}"></ion-img>
       <ion-label>Foto de perfil</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Nombre</ion-label>
+      <ion-label>Nombre {{userData.givenName}}</ion-label>
     </ion-item>
     <ion-item>
-      <ion-label>Apellido</ion-label>
+      <ion-label>Apellido: {{userData.familyName}}</ion-label>
     </ion-item>
     <ion-item>
       <ion-label>Nombre de usuario: {{userData.name}}</ion-label>
@@ -39,9 +39,7 @@
     <ion-item>
       <ion-label>Correo: {{userData.email}}</ion-label>
     </ion-item>
-    <ion-item>
-      <ion-label>Teléfono</ion-label>
-    </ion-item>
+
     <ion-item>
       <ion-select (blur)="cambioColor()" [(ngModel)]="colores.colors"
         placeholder="Elige los colores para la aplicación">

@@ -65,9 +65,9 @@ export class HomePage {
     private db: DatabaseService,
   ) {
     this.anu.showBanner();
-    this.userData=localStorage.getItem(this.auth.storageKey);
+    this.userData = localStorage.getItem(this.auth.storageKey);
     this.userDataEmail = JSON.parse(this.userData).email
-    
+
 
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
@@ -194,11 +194,12 @@ export class HomePage {
     }
     let prom = new Promedio;
     prom.content = notas;
-    prom.email = this.userData.email;
+    prom.email = JSON.parse(this.userData).email||null;
     prom.title = this.nombrePromArit;
     prom.type = 'arit'
-
-    this.db.guardarPromedio(prom)
+    console.log(JSON.parse(this.userData).id)
+    console.log(prom)
+    this.db.guardarPromedio(prom, JSON.parse(this.userData).id)
 
     this.toast.presentToast("Tu promedio se ha guardado con éxito!", 'success');
     setTimeout(() => {
@@ -222,11 +223,11 @@ export class HomePage {
     }
     let prom = new Promedio;
     prom.content = total;
-    prom.email = this.auth.objAuth.currentUser?.email!;
+    prom.email = JSON.parse(this.userData).email||null;
     prom.title = this.nombrePromArit;
     prom.type = 'ponde'
-
-    this.db.guardarPromedio(prom)
+    
+    this.db.guardarPromedio(prom, JSON.parse(this.userData).id)
 
     this.toast.presentToast("Tu promedio se ha guardado con éxito!", 'success');
     setTimeout(() => {
