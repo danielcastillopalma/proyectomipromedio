@@ -5,4 +5,5 @@
     <string name="package_name">com.mipromediochile.app</string>
     <string name="custom_url_scheme">com.mipromediochile.app</string>
     <string name="admob_app_id">ca-app-pub-7710902676549668~2622604653</string>
+    <string name="server_client_id">202512548799-e99hevb2olfbd04huonr03uav1q8hs71.apps.googleusercontent.com</string>
 </resources>

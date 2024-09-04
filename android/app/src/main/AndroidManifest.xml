@@ -13,10 +13,7 @@
         android:name="com.google.android.gms.ads.APPLICATION_ID"
         android:value="@string/admob_app_id"
         />
-        <meta-data
-        android:name="com.google.android.gms.client_id"
-        android:value="YOUR_SERVER_CLIENT_ID" />
-
+       
         <activity
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
             android:name=".MainActivity"

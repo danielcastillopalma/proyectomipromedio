@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AdsService } from './services/ads/ads.service';
 import { environment } from 'src/environments/environment';
 import { initializeApp } from 'firebase/app';
+import { isPlatform } from '@ionic/angular';
+import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 
 
 @Component({
@@ -16,6 +18,9 @@ export class AppComponent {
 
   ) {
     this.anu.initialize();
+    if (!isPlatform('capacitor')) {
+      GoogleAuth.initialize();
+    }
   }
 
 }

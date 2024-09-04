@@ -19,11 +19,11 @@ const config: CapacitorConfig = {
         iconColor: "#488AFF",
 
       },
-      GoogleAuth: {
-        scopes: ['profile', 'email'],
-        serverClientId: 'mipromedio-95c99.apps.googleusercontent.com',
-        forceCodeForRefreshToken: true
-      }
+
+    }, GoogleAuth: {
+      scopes: ['profile', 'email'],
+      serverClientId: '202512548799-e99hevb2olfbd04huonr03uav1q8hs71.apps.googleusercontent.com',
+      forceCodeForRefreshToken: true
     }
   }
 };

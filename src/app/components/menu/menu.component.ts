@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
-import { onAuthStateChanged } from 'firebase/auth';
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
@@ -27,13 +26,12 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit() {
-    onAuthStateChanged(this.auth.objAuth, (user) => {
-      if (user) {
-        this.userData = user;
-      } else {
-        this.userData = null;
-      }
-    })
+    let data = localStorage.getItem(this.auth.storageKey);
+    if (data) {
+      this.userData = JSON.parse(data);
+      console.log(this.userData.name)
+    }
+
   }
 
 

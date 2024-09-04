@@ -37,15 +37,14 @@ export class MispromediosPage implements OnInit {
   promArit: any = [];
   promPonde: any = [];
   async ngOnInit() {
-    onAuthStateChanged(this.auth.objAuth, (user) => {
-      if (user) {
-        this.userData = user;
-        this.userDataEmail = user.email || '';
-      } else {
-        this.userData = null;
-        this.userDataEmail = '';
-      }
-    });
+    this.data=localStorage.getItem(this.auth.storageKey);
+    if(this.data){
+      this.userData=JSON.parse(this.data);
+      this.userDataEmail = this.userData.email;
+    }else{
+      this.userData = null;
+      this.userDataEmail = '';
+    }
 
   }
 

@@ -5,14 +5,12 @@
 export const environment = {
   production: true,
   firebaseConfig: {
-    apiKey: "AIzaSyDBDDlwhYdg4aJrMOidxtlP_UnisfI5AtY",
-    authDomain: "mipromedio-95c99.firebaseapp.com",
-    projectId: "mipromedio-95c99",
-    storageBucket: "mipromedio-95c99.appspot.com",
-    messagingSenderId: "1060938972528",
-    appId: "1:1060938972528:web:10e3dbd592135639c323b5",
-    databaseURL: "https://mipromedio-95c99-default-rtdb.firebaseio.com/",
-    measurementId: "G-NRWX0971X5"
+    apiKey: "AIzaSyCcmQrNR1pNk3KlSmnI0wfq7jnFbKLBtrU",
+    authDomain: "mipromediochile.firebaseapp.com",
+    projectId: "mipromediochile",
+    storageBucket: "mipromediochile.appspot.com",
+    messagingSenderId: "202512548799",
+    appId: "1:202512548799:web:cd31444c2141951590170a"
   }
 
 };

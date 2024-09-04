@@ -1,7 +1,6 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { Storage } from '@ionic/storage-angular';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
@@ -12,8 +11,10 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 export class ProfilePage implements OnInit {
   userData: any = ""
   constructor(private router: Router, private auth: AuthenticationService) {
-    this.userData = this.auth.objAuth.currentUser;
-    console.log(this.userData)
+    let data = localStorage.getItem(this.auth.storageKey)
+    if (data) {
+      this.userData = JSON.parse(data);
+    }
 
   }
   data: any;

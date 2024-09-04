@@ -1,82 +1,66 @@
 import { Injectable } from '@angular/core';
-import { child, get, getDatabase, push, ref } from "firebase/database";
-import { AppComponent } from 'src/app/app.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Promedio } from 'src/app/classes/promedio';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { onAuthStateChanged } from 'firebase/auth';
-import { MispromediosPage } from 'src/app/pages/mispromedios/mispromedios.page';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  uid: any = ""
+  private collectionName = 'promedios';  // Nombre de la colección en Firestore
+  uid: string = '';
+  aritmetico: string[] = [];
+  ponderado: string[] = [];
 
-  aritmetico: any = []
-  ponderado: any = []
-  constructor(private app: AppComponent,
-    private auth: AuthenticationService,
+  constructor(
+    private firestore: AngularFirestore,
+    private auth: AuthenticationService
   ) {
-    this.generateUid().then(() => {
-      console.log("Uid generado");
-    }).catch(error => {
-      console.error('Error initializing UID:', error);
-    });
+    const data = localStorage.getItem(this.auth.storageKey);
+    if (data) {
+      const userData = JSON.parse(data);
+      console.log(userData);
+      this.uid = userData.id;
+    }
   }
 
-  async generateUid(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      onAuthStateChanged(this.auth.objAuth, (user) => {
-        if (user) {
-          this.uid = user.uid;
-          resolve();
+  // Guardar un nuevo documento en Firestore
+  async guardarPromedio(promedio: Promedio): Promise<void> {
+    const docRef = this.firestore.collection(this.collectionName).doc(this.uid).collection('items').doc();
+    try {
+      await docRef.set({
+        title: promedio.title,
+        content: promedio.content,
+        type: promedio.type,
+        email: promedio.email
+      });
+    } catch (error) {
+      console.error('Error al guardar documento:', error);
+      throw error;
+    }
+  }
+
+  // Obtener documentos de Firestore
+  obtenerPromedios(): Observable<Promedio[]> {
+    return this.firestore.collection(this.collectionName).doc(this.uid).collection('items').valueChanges();
+  }
+
+  // Procesar los promedios obtenidos y clasificarlos
+  procesarPromedios() {
+    this.obtenerPromedios().subscribe(data => {
+      this.aritmetico = [];
+      this.ponderado = [];
+
+      data.forEach(promedio => {
+        if (promedio.type === 'arit') {
+          this.aritmetico.push(`${promedio.title} ${promedio.content}`);
         } else {
-          reject('No user logged in');
+          this.ponderado.push(`${promedio.title} ${promedio.content}`);
         }
       });
+    }, error => {
+      console.error('Error al obtener promedios:', error);
     });
   }
-  async guardarPromedio(promedio: Promedio) {
-
-    const db = getDatabase(this.app.objApp);
-    push(ref(db, 'promedio/' + this.uid + '/'), {
-      title: promedio.title,
-      content: promedio.content,
-      type: promedio.type,
-      email: promedio.email
-    });
-
-  }
-
-  async obtenerPromedios() {
-    await this.generateUid();
-    const db = getDatabase(this.app.objApp);
-    get(child(ref(db), `promedio/` + this.uid + '/')).then((snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        for (const key in data) {
-          if (data.hasOwnProperty(key)) {
-            let tipo = data[key].type;
-            let title = data[key].title;
-            let cont = data[key].content;
-            if (tipo === 'arit'){
-              this.aritmetico.push(title+" "+cont);
-            }else{
-              this.ponderado.push(title+" "+cont);
-            }
-
-            this.aritmetico;
-            this.ponderado;
-          }
-        }
-      } else {
-        console.log("No data available");
-      }
-    }).catch((error) => {
-      console.error(error);
-    });
-  }
-
 }
-
-

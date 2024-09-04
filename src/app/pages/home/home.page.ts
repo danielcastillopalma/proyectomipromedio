@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
-import { LocalNotifications,ScheduleOptions } from '@capacitor/local-notifications'
+import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
 import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 import { AdsService } from 'src/app/services/ads/ads.service';
@@ -59,14 +59,15 @@ export class HomePage {
     private router: Router,
     private loadingCtrl: LoadingController,
     private calendar: Calendar,
-    public toast:ToastService,
+    public toast: ToastService,
     private auth: AuthenticationService,
     private anu: AdsService,
     private db: DatabaseService,
   ) {
     this.anu.showBanner();
-
-
+    this.userData=localStorage.getItem(this.auth.storageKey);
+    this.userDataEmail = JSON.parse(this.userData).email
+    
 
   }
   @ViewChild('promedioBasico') promedioBasico: ElementRef;
@@ -76,16 +77,7 @@ export class HomePage {
     LocalNotifications.checkPermissions();
     LocalNotifications.requestPermissions();
 
-    onAuthStateChanged(this.auth.objAuth, (user) => {
-      if (user) {
-        this.userData = user;
-        this.userDataEmail = user.email || '';
-        console.log("HOME: " + this.userDataEmail)
-      } else {
-        this.userData = null;
-        this.userDataEmail = '';
-      }
-    });
+
     //this.actualizacion()
     /** 
     setInterval(()=>{
@@ -126,6 +118,9 @@ export class HomePage {
 
   }
 
+  ocultarBanner() {
+    this.anu.dismissBanner();
+  }
 
   //notificaciones
   async scheduleNotification(nota: string) {
@@ -140,7 +135,7 @@ export class HomePage {
   }
 
   loginForSave() {
-    this.toast.presentToast("Inicia sesión para guardar tus promedios",'warning')
+    this.toast.presentToast("Inicia sesión para guardar tus promedios", 'warning')
 
   }
 
@@ -199,13 +194,13 @@ export class HomePage {
     }
     let prom = new Promedio;
     prom.content = notas;
-    prom.email = this.auth.objAuth.currentUser?.email!;
+    prom.email = this.userData.email;
     prom.title = this.nombrePromArit;
     prom.type = 'arit'
 
     this.db.guardarPromedio(prom)
 
-    this.toast.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    this.toast.presentToast("Tu promedio se ha guardado con éxito!", 'success');
     setTimeout(() => {
       this.refresh();
     }, 1500);
@@ -233,7 +228,7 @@ export class HomePage {
 
     this.db.guardarPromedio(prom)
 
-    this.toast.presentToast("Tu promedio se ha guardado con éxito!",'success');
+    this.toast.presentToast("Tu promedio se ha guardado con éxito!", 'success');
     setTimeout(() => {
       this.refresh();
     }, 1500);
@@ -284,10 +279,10 @@ export class HomePage {
           if (nota.pos == cant && this.sumaPorc < 100) {
             console.log("1: " + nota.pos + " 2:" + this.sumaPorc)
             this.errorPorcMax = "La ponderación suma menos de 100%"
-            this.toast.presentToast("Los porcentajes no suman 100%",'warning')
+            this.toast.presentToast("Los porcentajes no suman 100%", 'warning')
           } else if (this.sumaPorc > 100) {
             this.errorPorcMax = "La ponderación suma más de 100%"
-            this.toast.presentToast("Los porcentajes suman más de 100%",'warning')
+            this.toast.presentToast("Los porcentajes suman más de 100%", 'warning')
 
           } else {
             this.errorPorcMax = ""
