@@ -1,8 +1,10 @@
+// src/app/services/database.service.ts
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/firestore';
+import { Firestore, collection, doc, setDoc, getDocs, query, where } from '@angular/fire/firestore';
 import { Promedio } from 'src/app/classes/promedio';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Observable } from 'rxjs';
+import { getDocs as getFirestoreDocs } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class DatabaseService {
   ponderado: string[] = [];
 
   constructor(
-    private firestore: AngularFirestore,
+    private firestore: Firestore,  // Usa Firestore en lugar de AngularFirestore
     private auth: AuthenticationService
   ) {
     const data = localStorage.getItem(this.auth.storageKey);
@@ -27,9 +29,9 @@ export class DatabaseService {
 
   // Guardar un nuevo documento en Firestore
   async guardarPromedio(promedio: Promedio): Promise<void> {
-    const docRef = this.firestore.collection(this.collectionName).doc(this.uid).collection('items').doc();
+    const docRef = doc(collection(this.firestore, this.collectionName), this.uid, 'items', this.generateId());
     try {
-      await docRef.set({
+      await setDoc(docRef, {
         title: promedio.title,
         content: promedio.content,
         type: promedio.type,
@@ -43,7 +45,19 @@ export class DatabaseService {
 
   // Obtener documentos de Firestore
   obtenerPromedios(): Observable<Promedio[]> {
-    return this.firestore.collection(this.collectionName).doc(this.uid).collection('items').valueChanges();
+    const q = query(collection(this.firestore, this.collectionName, this.uid, 'items'));
+    return new Observable(observer => {
+      getDocs(q).then(querySnapshot => {
+        const data: Promedio[] = [];
+        querySnapshot.forEach(doc => {
+          data.push(doc.data() as Promedio);
+        });
+        observer.next(data);
+        observer.complete();
+      }).catch(error => {
+        observer.error(error);
+      });
+    });
   }
 
   // Procesar los promedios obtenidos y clasificarlos
@@ -62,5 +76,10 @@ export class DatabaseService {
     }, error => {
       console.error('Error al obtener promedios:', error);
     });
+  }
+
+  // Generar un ID único para cada documento
+  private generateId(): string {
+    return Math.random().toString(36).substring(2);
   }
 }
