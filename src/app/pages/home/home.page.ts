@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { coloresBasicos, coloresDuoc } from '../../app.module'
-import { LoadingController, ToastController } from '@ionic/angular';
+import { LoadingController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { LocalNotifications, ScheduleOptions } from '@capacitor/local-notifications'
 import { Calendar } from '@awesome-cordova-plugins/calendar/ngx';
@@ -9,8 +9,6 @@ import { AuthenticationService } from 'src/app/services/authentication/authentic
 import { AdsService } from 'src/app/services/ads/ads.service';
 import { Promedio } from 'src/app/classes/promedio';
 import { DatabaseService } from 'src/app/services/database/database.service';
-import { AppComponent } from 'src/app/app.component';
-import { onAuthStateChanged } from 'firebase/auth';
 import { ToastService } from 'src/app/services/util/toast.service';
 @Component({
   selector: 'app-home',
@@ -66,7 +64,10 @@ export class HomePage {
   ) {
     this.anu.showBanner();
     this.userData = localStorage.getItem(this.auth.storageKey);
-    this.userDataEmail = JSON.parse(this.userData).email
+    if (this.userData) {
+      this.userDataEmail = JSON.parse(this.userData).email;
+    }
+
 
 
   }
@@ -194,7 +195,7 @@ export class HomePage {
     }
     let prom = new Promedio;
     prom.content = notas;
-    prom.email = JSON.parse(this.userData).email||null;
+    prom.email = JSON.parse(this.userData).email || null;
     prom.title = this.nombrePromArit;
     prom.type = 'arit'
     console.log(JSON.parse(this.userData).id)
@@ -223,10 +224,10 @@ export class HomePage {
     }
     let prom = new Promedio;
     prom.content = total;
-    prom.email = JSON.parse(this.userData).email||null;
+    prom.email = JSON.parse(this.userData).email || null;
     prom.title = this.nombrePromArit;
     prom.type = 'ponde'
-    
+
     this.db.guardarPromedio(prom, JSON.parse(this.userData).id)
 
     this.toast.presentToast("Tu promedio se ha guardado con éxito!", 'success');

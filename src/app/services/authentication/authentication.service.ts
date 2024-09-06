@@ -7,6 +7,7 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { isPlatform } from '@ionic/angular';
 import { ToastService } from '../util/toast.service';
 import { initializeApp } from 'firebase/app';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +21,12 @@ export class AuthenticationService {
 
   user: any = null;
 
-  objAuth: any = null;
 
+  objApp: any = initializeApp(environment.firebaseConfig);
+  objAuth: any = getAuth(this.objApp);
   constructor(private router: Router, private app: AppComponent, private toast: ToastService) {
     this.verificarLogin();
-    if (!isPlatform('capacitor')) {
+    if (isPlatform('capacitor')) {
       GoogleAuth.initialize();
     }
   }
@@ -42,7 +44,7 @@ export class AuthenticationService {
       localStorage.setItem(this.storageKey, JSON.stringify(this.user));
       this.router.navigate(['/home']);
 
-  //this.router.navigate(['/home']);
+      //this.router.navigate(['/home']);
     } catch (error: any) {
       console.error('Google sign-in failed:', error);
       this.toast.presentToast(error.code, 'warning');
@@ -55,7 +57,7 @@ export class AuthenticationService {
    * LOGIN CON FACEBOOK
    */
   async loginFacebook() {
-    /**
+
     setPersistence(this.objAuth, browserLocalPersistence).then(() => {
       signInWithPopup(this.objAuth, this.facebookProvider)
         .then((result) => {
@@ -84,18 +86,19 @@ export class AuthenticationService {
           // ...
         });
     })
-         */
+
   }
   /**
    * LOGIN CORREO PASSWORD
    */
   async logIn(identifier, password) {
-    /** 
+
     await setPersistence(this.objAuth, browserLocalPersistence).then(() => {
       signInWithEmailAndPassword(this.objAuth, identifier, password)
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
+          localStorage.setItem(this.storageKey, JSON.stringify(user));
           this.router.navigate(['/home']);
           // ...
         })
@@ -106,14 +109,13 @@ export class AuthenticationService {
           this.toast.presentToast(error.message, 'warning')
         });
     })
-        */
+
   }
 
 
   // FUNCIONES PARA EL REGISTRO CON EMAIL
 
   async register(identifier, password, name) {
-    /**
     setPersistence(this.objAuth, browserLocalPersistence).then(() => {
       createUserWithEmailAndPassword(this.objAuth, identifier, password)
         .then((userCredential) => {
@@ -129,17 +131,18 @@ export class AuthenticationService {
           // ..
         });
     })
-         */
+
   }
 
   async logOut() {
     await GoogleAuth.signOut();
     this.user = null;
     localStorage.clear();
+    this.router.navigate(['/home']);
   }
 
-  async verificarLogin(){
-    if(localStorage.getItem(this.storageKey)){
+  async verificarLogin() {
+    if (localStorage.getItem(this.storageKey)) {
       this.router.navigate(['/home']);
     }
   }

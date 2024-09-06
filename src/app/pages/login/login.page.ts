@@ -127,7 +127,7 @@ export class LoginPage implements OnInit {
   }
 
   async loginFacebook() {
-    await this.auth.logOut();
+    await this.auth.loginFacebook();
   }
 
   /**
